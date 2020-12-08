@@ -18,7 +18,7 @@ t_vec3	vminus(t_vec3 vec, t_vec3 vec2);
 t_vec3	vminus_(t_vec3 vec, double x, double y, double z);
 t_vec3	vmult(t_vec3 vec, double t);
 t_vec3	vmult_(t_vec3 vec, t_vec3 vec2);
-t_vec3	vdevide(t_vec3 vec, double t);
+t_vec3	vdivide(t_vec3 vec, double t);
 double	vdot(t_vec3 vec, t_vec3 vec2);
 t_vec3	vcross(t_vec3 vec, t_vec3 vec2);
 t_vec3	vunit(t_vec3 vec);
