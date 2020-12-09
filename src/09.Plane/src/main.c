@@ -33,7 +33,7 @@ int	main(void)
 	oadd(&objects, object(PL, plane(point3(0, 0, -10), vec3(0, 0, 1), color3(0.3, 0.3, 0.3))));
 	oadd(&objects, object(PL, plane(point3(-7, 0, 0), vec3(1, 0, 0), color3(0.3, 0.3, 0.3))));
 	oadd(&objects, object(PL, plane(point3(7, 0, 0), vec3(-1, 0, 0), color3(0.3, 0.3, 0.3))));
-	oadd(&objects, object(PL, plane(point3(0, -0.5, 0), vec3(0, 1, 0), color3(0.3, 0.3, 0.3))));
+	oadd(&objects, object(PL, plane(point3(0, -0.5, 0), vec3(0, -1, 0), color3(0.3, 0.3, 0.3))));
 
 	// Render
 	// P3 means colors are in ASCII, then columns(width) and rows(height)
