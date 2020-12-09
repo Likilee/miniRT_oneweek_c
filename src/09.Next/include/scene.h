@@ -14,7 +14,7 @@ int			osize(t_objects **lst);
 void		odelone(t_objects *obj);
 void		oclear(t_objects **lst);
 t_light		*light(t_point3 light_origin, t_color3 light_color);
-
+t_plane		*plane(t_point3 p, t_vec3 normal, t_color3 color);
 
 
 #endif

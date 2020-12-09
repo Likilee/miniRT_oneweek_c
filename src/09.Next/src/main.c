@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <time.h>
 #include "structures.h"
 #include "vec3_utils.h"
 #include "ray.h"
@@ -7,6 +8,10 @@
 
 int	main(void)
 {
+	clock_t		start, end;
+	double		result;
+
+	start = clock();// 시간 측정 시작
 	int			i;
 	int			j;
 	double		u;
@@ -20,11 +25,15 @@ int	main(void)
 
 	//Scene setting;
 	canv = canvas(1920, 1080);
-	cam = camera(&canv, point3(0, 0, 0), 2.0, 1.0);
+	cam = camera(&canv, point3(0, 0, 0), 2.0, 1);
 	objects = object(SP, sphere(point3(0, 0, -2), 0.5, color3(0.5, 0.3, 0.3)));
-	oadd(&objects, object(SP, sphere(point3(0, -100.5, -1), 100, color3(0.2, 0.2, 0.2))));
-	oadd(&objects, object(LIGHT, light(point3(3, 3, 0), color3(1, 0, 0))));
-	oadd(&objects, object(LIGHT, light(point3(0, 3, 0), color3(0, 0, 1.0))));
+	// oadd(&objects, object(SP, sphere(point3(0, -100.5, -1), 100, color3(0.2, 0.2, 0.2))));
+	// oadd(&objects, object(LIGHT, light(point3(3, 3, 0), color3(1, 1, 1))));
+	oadd(&objects, object(LIGHT, light(point3(0, 3, 0), color3(1, 1, 1))));
+	oadd(&objects, object(PL, plane(point3(0, 0, -10), vec3(0, 0, 1), color3(0.3, 0.3, 0.3))));
+	oadd(&objects, object(PL, plane(point3(-7, 0, 0), vec3(1, 0, 0), color3(0.3, 0.3, 0.3))));
+	oadd(&objects, object(PL, plane(point3(7, 0, 0), vec3(-1, 0, 0), color3(0.3, 0.3, 0.3))));
+	oadd(&objects, object(PL, plane(point3(0, -0.5, 0), vec3(0, 1, 0), color3(0.3, 0.3, 0.3))));
 
 	// Render
 	// P3 means colors are in ASCII, then columns(width) and rows(height)
@@ -49,5 +58,10 @@ int	main(void)
 		}
 	--j;
 	}
+
+	end = clock(); // 시간 측정  끝!;
+	//시간 측정 결과 출력
+	result = (double)(end - start);
+	dprintf(2, "프로그램 동작 시간:%f\n", result / CLOCKS_PER_SEC);
 	return (0);
 }

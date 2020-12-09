@@ -26,7 +26,7 @@ t_color3	ray_color(t_ray *r, t_objects *objs)
 	double		t;
 	t_hit_record rec;
 
-	rec.tmin = 0;
+	rec.tmin = 0.0001;
 	rec.tmax = INFINITY;
 	//광선이 구에 적중하면(광선과 구가 교점이 있고, 교점이 카메라 앞쪽이라면!)
 	if (hit(objs, r, &rec))

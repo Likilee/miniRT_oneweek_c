@@ -36,3 +36,12 @@ albedo - 반사율
 2. 난반사도 > 오직 난반사만 하면 램버시안 물체
 3. 하이라이트
 
+
+### Direct_specular / Caustics/ Monte_carlo
+
+이친구 레이트레이서 메인함수 참고하면 좋을듯
+
+
+### 평면 교점 구하기
+
+[스크래치픽셀](https://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/ray-plane-and-ray-disk-intersection)

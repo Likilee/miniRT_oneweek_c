@@ -11,6 +11,7 @@ typedef struct s_sphere t_sphere;
 typedef struct s_hit_record t_hit_record;
 typedef struct s_objects	t_objects;
 typedef struct s_light	t_light;
+typedef struct s_plane t_plane;
 
 typedef int	t_bool;
 
@@ -21,6 +22,7 @@ typedef int	t_objects_type;
 
 # define SP 0
 # define LIGHT 1
+# define PL	2
 
 typedef int t_material_type;
 
@@ -87,6 +89,13 @@ struct s_light
 {
 	t_point3	p;
 	t_color3	light_color;
+};
+
+struct s_plane
+{
+	t_point3	p;
+	t_vec3		normal;
+	t_color3	color;
 };
 
 #endif
