@@ -28,12 +28,12 @@ int	main(void)
 	cam = camera(&canv, point3(0, 0, 0), 2.0, 1);
 	objects = object(SP, sphere(point3(0, 0, -2), 0.5, color3(0.5, 0.3, 0.3)));
 	// oadd(&objects, object(SP, sphere(point3(0, -100.5, -1), 100, color3(0.2, 0.2, 0.2))));
-	oadd(&objects, object(LIGHT, light(point3(0, 2.3, 0), color3(1, 1, 1))));
-	oadd(&objects, object(LIGHT, light(point3(1, 2.4, 0), color3(1, 1, 1))));
+	oadd(&objects, object(LIGHT, light(point3(0, 0, -2.8), color3(0.6, 1, 1))));
+	// oadd(&objects, object(LIGHT, light(point3(1, 1.5, 0), color3(1, 1, 0.6))));
 	oadd(&objects, object(SQ, square(point3(0, 0, -5), vec3(0, 0, 1), 5, color3(0.5, 0.5, 0.8))));
 	oadd(&objects, object(SQ, square(point3(2.5, 0, -2.5), vec3(1, 0, 0), 5, color3(0.5, 0.5, 0.8))));
 	oadd(&objects, object(SQ, square(point3(-2.5, 0, -2.5), vec3(1, 0, 0), 5, color3(0.5, 0.5, 0.8))));
-	oadd(&objects, object(PL, plane(point3(0, 2.5, 0), vec3(0, 1, 0), color3(0.5, 0.5, 0.8))));
+	oadd(&objects, object(PL, plane(point3(0, 2.5, 0), vec3(0, -1, 0), color3(0.5, 0.5, 0.8))));
 	oadd(&objects, object(PL, plane(point3(0, -2.5, 0), vec3(0, 1, 0), color3(0.5, 0.5, 0.8))));
 	// oadd(&objects, object(PL, plane(point3(0, -0.5, 0), vec3(0, -1, 0), color3(0.3, 0.3, 0.3))));
 

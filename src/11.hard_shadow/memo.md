@@ -54,3 +54,10 @@ cause (중점과 법선 외에 다른 정보가 없음)
 ## Transformin
 
 [MIT ppt](http://groups.csail.mit.edu/graphics/classes/6.837/F03/lectures/05_transformation_hierarchy.ppt)
+
+
+## 실린더 교점 구하기
+
+[강의pdf](https://mrl.cs.nyu.edu/~dzorin/rend05/lecture2.pdf)
+
+## 그림자 이슈! 빛이 뒤에있을 때.

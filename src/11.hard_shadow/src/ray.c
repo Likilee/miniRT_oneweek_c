@@ -93,6 +93,11 @@ t_color3		phong_color(t_objects *objs, t_ray *r, t_hit_record *rec)
 
 t_bool			in_shadow(t_objects *objs, t_ray light_ray, t_hit_record rec)
 {
+	double	light_len;
+	light_len = vlength(light_ray.dir);
+	rec.tmin = 0.0001;
+	rec.tmax = light_len;
+	light_ray.dir = vunit(light_ray.dir);
 	if (hit(objs, &light_ray, &rec))
 		return (TRUE);
 	return (FALSE);
@@ -114,9 +119,10 @@ t_color3		phong_color_get(t_objects *objs, t_light *light, t_ray *r, t_hit_recor
 	double		ks;
 	double		ksn;
 	double		spec;
-	light_dir = vunit(vminus(light->p, rec->p));
-	if (in_shadow(objs, ray(vplus(rec->p, vmult(rec->normal, 1e-4)), light_dir), *rec))
+	light_dir = vminus(light->p, rec->p);
+	if (in_shadow(objs, ray(rec->p, light_dir), *rec))
 		return (color3(0,0,0));
+	light_dir = vunit(light_dir);
 	unit_norm = vunit(rec->normal);
 	view_dir = vunit(vmult(r->dir, -1));
 	reflect_dir = reflect(vmult(light_dir, -1), unit_norm);
