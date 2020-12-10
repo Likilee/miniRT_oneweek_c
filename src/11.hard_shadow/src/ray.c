@@ -103,6 +103,15 @@ t_bool			in_shadow(t_objects *objs, t_ray light_ray, t_hit_record rec)
 	return (FALSE);
 }
 
+double			saturate(double value)
+{
+	if (value < 0)
+		return (0);
+	if (value > 1)
+		return (1);
+	return (value);
+}
+
 t_color3		phong_color_get(t_objects *objs, t_light *light, t_ray *r, t_hit_record *rec)
 {
 	t_color3	ambient;
@@ -126,10 +135,10 @@ t_color3		phong_color_get(t_objects *objs, t_light *light, t_ray *r, t_hit_recor
 	unit_norm = vunit(rec->normal);
 	view_dir = vunit(vmult(r->dir, -1));
 	reflect_dir = reflect(vmult(light_dir, -1), unit_norm);
-	ka = 0.1; // ambient strength;
+	ka = 0.05; // ambient strength;
 	kd = fmax(vdot(unit_norm, light_dir), 0.0);// diffuse strength;
 	ks = 0.3; // specular strength;
-	ksn = 32;
+	ksn = 256;
 	ambient = vmult(light->light_color, ka);
 	diffuse = vmult(light->light_color, kd);
 	spec = pow(fmax(vdot(view_dir, reflect_dir), 0.0), ksn);

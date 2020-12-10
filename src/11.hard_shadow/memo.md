@@ -60,4 +60,6 @@ cause (중점과 법선 외에 다른 정보가 없음)
 
 [강의pdf](https://mrl.cs.nyu.edu/~dzorin/rend05/lecture2.pdf)
 
-## 그림자 이슈! 빛이 뒤에있을 때.
+## 빛에대해서 설명 되게 잘해놓은 블로그
+
+[PBR이란 무엇인가?](https://lifeisforu.tistory.com/category/Physically%20Based%20Rendering)
