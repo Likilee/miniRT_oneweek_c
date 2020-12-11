@@ -127,10 +127,14 @@ struct s_cylinder
 
 struct s_triangle
 {
-	t_point3 p0;
-	t_point3 p1;
-	t_point3 p2;
-	t_color3 color;
+	t_point3	p0;
+	t_point3	p1;
+	t_point3	p2;
+	t_vec3		p0p1;
+	t_vec3		p1p2;
+	t_vec3		p2p0;
+	t_vec3		normal;
+	t_color3 	color;
 };
 
 #endif

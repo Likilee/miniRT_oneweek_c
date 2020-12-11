@@ -1,7 +1,13 @@
+# ISSUE
+-[x] light가 objects의 첫번째 요소일 때 제대로 동작 안하는 문제.
+> 해결 : ray_color 안에 if hit 안에 objs->type == LIGHT 이 부분이 문제. 삭제
+---
 
-[광원 / 퐁모델](https://zamezzz.tistory.com/154)
+# Study
+
 
 ## 광원
+[광원 / 퐁모델](https://zamezzz.tistory.com/154)
 
 점광원(조명) -- 거리에 반비례해서 광량이 줄어든다.
 무한대 광원(태양)  -- 거리에 비례해서 광량이 줄지 않는다. 1.0
@@ -66,3 +72,4 @@ cause (중점과 법선 외에 다른 정보가 없음)
 ## 각종 quadrics 방정식
 
 [이거](https://mrl.cs.nyu.edu/~dzorin/cg05/lecture12.pdf)
+

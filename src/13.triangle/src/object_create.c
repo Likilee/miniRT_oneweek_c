@@ -101,6 +101,10 @@ t_triangle *triangle(t_point3 p0, t_point3 p1, t_point3 p2, t_color3 color)
 	tr->p0 = p0;
 	tr->p1 = p1;
 	tr->p2 = p2;
+	tr->p0p1 = vminus(p1, p0);
+	tr->p1p2 = vminus(p2, p1);
+	tr->p2p0 = vminus(p0, p2);
+	tr->normal = vunit(vcross(tr->p0p1, vminus(p2, p0)));
 	tr->color = color;
 	return (tr);
 }

@@ -27,17 +27,19 @@ int	main(void)
 	canv = canvas(600, 480);
 	cam = camera(&canv, point3(0, 0, 0), 2.0, 1);
 	objects = NULL;
-	objects = object(SP, sphere(point3(0, 0, -1), 0.2, color3(0.5, 0.3, 0.3)));
 	// objects = object(CY, cylinder(point3(0, 0, -2.5), vec3(0, 0, 0.5), 1.0, 2, color3(0.5, 0.1, 0.1)));
 	// oadd(&objects, object(SP, sphere(point3(0, -100.5, -1), 100, color3(0.2, 0.2, 0.2))));
-	// oadd(&objects, object(LIGHT, light(point3(0, 1, -2.8), color3(0.6, 1, 1))));
+	objects = object(LIGHT, light(point3(0, 1, -2.8), color3(0.6, 1, 1)));
+	oadd(&objects, object(SP, sphere(point3(0, 0, -1), 0.2, color3(0.5, 0.3, 0.3))));
 	oadd(&objects, object(LIGHT, light(point3(1, 1.5, 0), color3(1, 1, 0.6))));
 	oadd(&objects, object(SQ, square(point3(0, 0, -5), vec3(0, 0, 1), 5, color3(0.5, 0.5, 0.8))));
-	oadd(&objects, object(TR, triangle(point3(-1, 0, -2), point3(-1, -1, -1.5), point3(-1,-1,-2.5),color3(0.3, 0.5, 0.7))));
 	oadd(&objects, object(SQ, square(point3(2.5, 0, -2.5), vec3(1, 0, 0), 5, color3(0.5, 0.5, 0.8))));
 	oadd(&objects, object(SQ, square(point3(-2.5, 0, -2.5), vec3(1, 0, 0), 5, color3(0.5, 0.5, 0.8))));
+	// oadd(&objects, object(SQ, square(point3(-1, 0, -2.5), vec3(1, 0, 0), 2, color3(0.5, 0.3, 0.2))));
 	oadd(&objects, object(PL, plane(point3(0, 2.5, 0), vec3(0, -1, 0), color3(0.5, 0.5, 0.8))));
 	oadd(&objects, object(PL, plane(point3(0, -2, 0), vec3(0, 1, 0), color3(0.5, 0.5, 0.8))));
+	oadd(&objects, object(TR, triangle(point3(-2, 0.5, -3), point3(-2, -0.5, -3.5), point3(-2, -0.5,-2.5),color3(0.3, 0.5, 0.7))));
+	oadd(&objects, object(TR, triangle(point3(0, 2.5, -3), point3(-2, -1, -3), point3(2, -1, -3),color3(0.3, 0.5, 0.7))));
 	// oadd(&objects, object(PL, plane(point3(0, -0.5, 0), vec3(0, -1, 0), color3(0.3, 0.3, 0.3))));
 
 	// Render
@@ -56,7 +58,7 @@ int	main(void)
 			r.orig = cam.orig;
 			// left_bottom + u * horizontal + v * vertical - origin
 			r.dir = vunit(vminus(vplus(vplus(cam.left_bottom, vmult(cam.horizontal, u)), vmult(cam.vertical, v)), cam.orig));
-			// if (i == 300 && j == 295)
+			// if (i == 513 && j == 263)
 			pixel_color = ray_color(&r, objects);
 			write_color(pixel_color);
 		++i;

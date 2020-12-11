@@ -31,9 +31,8 @@ t_color3	ray_color(t_ray *r, t_objects *objs)
 	//광선이 구에 적중하면(광선과 구가 교점이 있고, 교점이 카메라 앞쪽이라면!)
 	if (hit(objs, r, &rec))
 	{
-		if (objs->type == LIGHT)
-			return (((t_light *)(objs->element))->light_color);
 		// 빛을 찾아서어어~!
+		
 		return (phong_color(objs, r, &rec));
 	}
 	else
@@ -112,6 +111,8 @@ double			saturate(double value)
 	return (value);
 }
 
+
+////https://lifeisforu.tistory.com/373?category=567143 여기 공식 참고
 t_color3		phong_color_get(t_objects *objs, t_light *light, t_ray *r, t_hit_record *rec)
 {
 	t_color3	ambient;
@@ -120,7 +121,6 @@ t_color3		phong_color_get(t_objects *objs, t_light *light, t_ray *r, t_hit_recor
 	t_vec3		light_dir;
 	t_vec3		view_dir;
 	t_vec3		reflect_dir;
-	t_vec3		unit_norm;
 	t_color3	lightintensity;
 	double		lightattenuation;
 	double		distanceattenuation;
@@ -138,11 +138,10 @@ t_color3		phong_color_get(t_objects *objs, t_light *light, t_ray *r, t_hit_recor
 		return (color3(0,0,0));
 	light_len = vlength(light_dir);
 	light_dir = vunit(light_dir);
-	unit_norm = vunit(rec->normal);
 	view_dir = vunit(vmult(r->dir, -1));
-	reflect_dir = reflect(vmult(light_dir, -1), unit_norm);
+	reflect_dir = reflect(vmult(light_dir, -1), rec->normal);
 	ka = 0.05; // ambient strength;
-	kd = fmax(vdot(unit_norm, light_dir), 0.0);// diffuse strength;
+	kd = fmax(vdot(rec->normal, light_dir), 0.0);// diffuse strength;
 	ks = 0.3; // specular strength;
 	ksn = 256;
 	ambient = vmult(light->light_color, ka);
@@ -163,5 +162,5 @@ t_color3		phong_color_get(t_objects *objs, t_light *light, t_ray *r, t_hit_recor
 	lightradiusmask = pow(saturate(1 - pow((pow(light_len,2) / pow(AttenuationRadius,2)), 2)), 2);
 	distanceattenuation = 1 / (pow((light_len),2) + 1);
 	lightattenuation = distanceattenuation * lightradiusmask;
-	return (vmult(lightintensity, lightattenuation)); //https://lifeisforu.tistory.com/373?category=567143 여기 공식 참고
+	return (vmult(lightintensity, lightattenuation));
 }

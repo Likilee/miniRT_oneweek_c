@@ -29,7 +29,7 @@ t_bool		hit_obj(t_objects *obj, t_ray *ray, t_hit_record *rec)
 	if (obj->type == SP)
 		hit_result = hit_sphere(obj->element, ray, rec);
 	else if (obj->type == LIGHT)
-		hit_result = FALSE;
+		hit_result = (FALSE);
 	else if (obj->type == PL)
 		hit_result = hit_plane(obj->element, ray, rec);
 	else if (obj->type == SQ)
@@ -97,7 +97,7 @@ t_bool		hit_plane(t_plane *pl, t_ray *ray, t_hit_record *rec)
 	rec->t = root;
 	rec->p = ray_at(ray, root);
 	 // rec의 법선벡터와 광선의 방향벡터를 비교해서 앞면인지 뒷면인지 확인해서 저장.
-	rec->normal = pl->normal;
+	rec->normal = vunit(pl->normal);
 	set_face_normal(ray, rec);
 	rec->color = pl->color;
 	return (TRUE);
@@ -148,7 +148,7 @@ t_bool		hit_square(t_square *sq, t_ray *ray, t_hit_record *rec)
 		rec->t = root;
 		rec->p = hit_point;
 		// rec의 법선벡터와 광선의 방향벡터를 비교해서 앞면인지 뒷면인지 확인해서 저장.
-		rec->normal = sq->normal;
+		rec->normal = vunit(sq->normal);
 		set_face_normal(ray, rec);
 		rec->color = sq->color;
 		return (TRUE);
@@ -266,76 +266,65 @@ t_bool		hit_cylinder(t_cylinder *cy, t_ray *ray, t_hit_record *rec)
 	return (TRUE);
 }
 
+/* 평면 교점
+	double	denominator;
+	t_vec3	r0_p0; // ray origin to plane point p
+	double	root;
+
+	denominator = vdot(pl->normal, ray->dir);
+	if (fabs(denominator) < 0.000001) // 분모가 거의 0이면! = 평면과 직선은 평행 또는 평면위에 있음.
+		return (FALSE);
+	r0_p0 = vminus(pl->p, ray->orig);
+	root = vdot(r0_p0, pl->normal) / denominator;
+	if (root < rec->tmin || root > rec->tmax)
+			return (FALSE);
+	rec->t = root;
+	rec->p = ray_at(ray, root);
+	 // rec의 법선벡터와 광선의 방향벡터를 비교해서 앞면인지 뒷면인지 확인해서 저장.
+	rec->normal = vunit(pl->normal);
+	set_face_normal(ray, rec);
+	rec->color = pl->color;
+	return (TRUE);
+	*/
 //이건 스크래치픽셀스 방식으로https://www.scratchapixel.com/lessons/3d-basic-rendering/ray-tracing-rendering-a-triangle/ray-triangle-intersection-geometric-solution
 t_bool hit_triangle(t_triangle *tr, t_ray *ray, t_hit_record *rec)
 {
     // compute plane's normal
-    t_vec3 p0p1;
-	t_vec3 p0p2;
-	t_vec3 p1p2;
-	t_vec3 n;
 	t_vec3 p;
-	double area2;
-	double ndotraydir;
-	double d;
-	double t;
+	t_vec3 c0;
+	t_vec3 c1;
+	t_vec3 c2; // vector perpendicular to triangle's plane
+	t_vec3 vp;
+	t_vec3 r0_p0; // ray origin to plane point p
 
-	// 얘네 생성자로 빼도 되지 않을까? 그리고 그림자는 왜 안생기는지  확인해보쟈!! 
-	p0p1 = vminus(tr->p1, tr->p0);//Vec3f v0v1 = v1 - v0;
-    p0p2 = vminus(tr->p2, tr->p0);//Vec3f v0v2 = v2 - v0;
-    // no need to normalize
-    n = vcross(p0p1, p0p2);//Vec3f N = v0v1.crossProduct(v0v2); // N
-    area2 = vlength(n);//float area2 = N.length();
+	double t;
+	double	denominator;
 
     // Step 1: finding P
-
-    // check if ray and plane are parallel ?
-    ndotraydir = vdot(n, ray->dir);//float NdotRayDirection = N.dotProduct(dir);
-    if (fabs(ndotraydir) < 0) // almost 0
-        return (FALSE); // they are parallel so they don't intersect !
-    // compute d parameter using equation 2
-    d = vdot(n, tr->p0);//float d = N.dotProduct(v0);
-
-    // compute t (equation 3)
-    t = (vdot(n, ray->orig) + d) / ndotraydir;//t = (N.dotProduct(orig) + d) / NdotRayDirection;
-    // check if the triangle is in behind the ray
-    if (t < rec->tmin || t > rec->tmax)
+	denominator = vdot(tr->normal, ray->dir);
+	if (fabs(denominator) < 0.000001) // 분모가 거의 0이면! = 평면과 직선은 평행 또는 평면위에 있음.
+		return (FALSE);
+	r0_p0 = vminus(tr->p0, ray->orig);
+	t = vdot(r0_p0, tr->normal) / denominator;
+	if (t < rec->tmin || t > rec->tmax)
 		return (FALSE);
     // compute the intersection point using equation 1
     p = vplus(ray->orig, vmult(ray->dir, t));//Vec3f P = orig + t * dir;
-
     // Step 2: inside-outside test
-    t_vec3 c;//Vec3f C; // vector perpendicular to triangle's plane
-
     // edge 0
-    t_vec3 edge0;
-	edge0 = vminus(tr->p1, tr->p0);//Vec3f edge0 = v1 - v0;
-    t_vec3 vp0;
-	vp0 = vminus(p, tr->p0);//Vec3f vp0 = P - v0;
-    c = vcross(edge0, vp0); //C = edge0.crossProduct(vp0);
-    if (vdot(n,c) < 0)
-		return (FALSE);//if (N.dotProduct(C) < 0) return false; // P is on the right side
-
+	vp = vminus(p, tr->p0);
+	c0 = vcross(tr->p0p1, vp);
     // edge 1
-	t_vec3 edge1;
-	edge1 = vminus(tr->p2, tr->p1);//Vec3f edge1 = v2 - v1;
-   	t_vec3 vp1;
-	vp1 = vminus(p, tr->p1);// Vec3f vp1 = P - v1;
-    c = vcross(edge1, vp1);//C = edge1.crossProduct(vp1);
-   	if (vdot(n, c) < 0)
-		return (FALSE);// if (N.dotProduct(C) < 0)  return false; // P is on the right side
-
+	vp = vminus(p, tr->p1);
+	c1 = vcross(tr->p1p2, vp);
     // edge 2
-    t_vec3 edge2;
-	edge2 = vminus(tr->p0, tr->p2);//Vec3f edge2 = v2 - v1;
-   	t_vec3 vp2;
-	vp2 = vminus(p, tr->p2);// Vec3f vp2 = P - v1;
-    c = vcross(edge2, vp2);//C = edge2.crossProduct(vp1);
-   	if (vdot(n, c) < 0)
-		return (FALSE); // P is on the right side;
+	vp = vminus(p, tr->p2);
+	c2 = vcross(tr->p2p0, vp);
+	if (vdot(c0,c2) < 0 || vdot(c0, c1) < 0 || vdot(c1, c2) < 0)
+		return (FALSE);
 	rec->t = t;
 	rec->p = p;
-	rec->normal = n;
+	rec->normal = vunit(tr->normal);
 	set_face_normal(ray, rec);
 	rec->color = tr->color;
     return (TRUE); // this ray hits the triangle
