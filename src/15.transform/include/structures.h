@@ -15,6 +15,7 @@ typedef struct s_plane t_plane;
 typedef struct s_square t_square;
 typedef struct s_cylinder t_cylinder;
 typedef struct s_triangle t_triangle;
+typedef struct s_matrix44 t_matrix44;
 
 typedef int	t_bool;
 
@@ -88,7 +89,7 @@ struct s_objects
 {
 	t_objects_type	type;
 	void			*element;
-	void			*transform;
+	t_matrix44		*transform;
 	void			*next;
 };
 
@@ -136,6 +137,11 @@ struct s_triangle
 	t_vec3		p2p0;
 	t_vec3		normal;
 	t_color3 	color;
+};
+
+struct s_matrix44
+{
+	double	x[4][4];
 };
 
 #endif

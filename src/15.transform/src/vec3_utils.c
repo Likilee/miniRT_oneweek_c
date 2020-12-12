@@ -1,4 +1,4 @@
-#include "vec3_utils.h"
+#include "math_utils.h"
 
 //벡터3 생성자
 t_vec3	vec3(double x, double y, double z)

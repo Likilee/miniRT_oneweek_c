@@ -7,7 +7,7 @@
 
 장면 구성
 
-![image-20201211152237280](/Users/kihoonlee/Im_korea_best_AI_engineer/42seoul_kilee/miniRT_oneweekend_c/src/15.transform/img/image-20201211152237280.png)
+![image-20201211152237280](memo.assets/image-20201211152237280.png)
 
 - 카메라
 - 조명
@@ -16,9 +16,9 @@
 - 메터리얼
 - (텍스쳐)
 
-![image-20201211152150670](/Users/kihoonlee/Im_korea_best_AI_engineer/42seoul_kilee/miniRT_oneweekend_c/src/15.transform/img/image-20201211152150670.png)
+![image-20201211152150670](memo.assets/image-20201211152150670.png)
 
-![image-20201211152309474](/Users/kihoonlee/Library/Application Support/typora-user-images/image-20201211152309474.png)
+![image-20201211152309474](memo.assets/image-20201211152150670.png)
 
 
 
@@ -92,9 +92,62 @@ cause (중점과 법선 외에 다른 정보가 없음)
 
 
 ## 변환
-[mit.edu>ppt](http://groups.csail.mit.edu/graphics/classes/6.837/F03/lectures/05_transformation_hierarchy.ppt)
 
+행렬 곱에서 교환법칙은 안되지만! 결합, 분배법칙은 가능.
+
+[mit.edu>ppt](http://groups.csail.mit.edu/graphics/classes/6.837/F03/lectures/05_transformation_hierarchy.ppt
+
+
+
+[법선 벡터 변환 행렬](https://tails.tistory.com/entry/%EC%A3%BC%EC%96%B4%EC%A7%84-%EB%85%B8%EB%A9%80%EB%B2%A1%ED%84%B0%EC%97%90-Model%ED%96%89%EB%A0%AC%EC%9D%98-%EC%A0%84%EC%B9%98%EC%97%AD%ED%96%89%EB%A0%AC%EC%9D%84-%EA%B3%B1%ED%95%98%EB%8A%94-%EC%9D%B4%EC%9C%A0)
+
+[법선 벡터의 변환을 위한 법선 행렬](http://www.gisdeveloper.co.kr/?p=2224)
+
+![image-20201212204344955](memo.assets/image-20201212204344955.png)
+
+![image-20201212204328384](memo.assets/image-20201212204328384.png)
+
+[행렬 변환 한글설명](https://metalkim.tistory.com/331)
+
+![image-20201212203223582](memo.assets/image-20201212203223582.png)
+
+![image-20201212203612937](memo.assets/image-20201212203612937.png)
+
+![image-20201212203725329](memo.assets/image-20201212203725329.png)
+
+![image-20201212203759190](memo.assets/image-20201212203759190.png)
+
+![image-20201212203838970](memo.assets/image-20201212203838970.png)
+
+![image-20201212203911418](memo.assets/image-20201212203911418.png)
+
+
+스케일 -> 자전(우리가 다루는 단일 오브젝트 회전) -> 이동;
+변환 행렬 : 이동 + 회전 하나의 행렬로 표현 가능.
+스케일 : 만 따로  다뤄도 될듯.
+
+회전이 x,y,z 축 회전을 모두 적용이 가능한가?
+가능하다면 변환행렬에 곱하는 순서는 어떻게 해야 하는가?
+
+쿼터니언... 이란거를  통해 짐벌락 현상을 막는다고 한다.. ?
+
+[**짐벌락**](https://skmagic.tistory.com/12)
+오일러 앵글을 통해 회전 행렬을 이용한 회전을 할 때 발생하는 문제
+
+[짐벌락2](http://blog.daum.net/aero2k/56)
+
+
+
+짐벌락 좋은 예시 사진
+
+![image-20201213000026687](memo.assets/image-20201213000026687.png)
+
+
+
+이 해결책 1.[쿼터니언](https://showmiso.tistory.com/57)
+2.[오일러 각 회전 순서 바꾸기](https://3dmpengines.tistory.com/802)
 
 ## object/ class /instance
 
 [요기 설명 ](https://ko.wikipedia.org/wiki/%EC%9D%B8%EC%8A%A4%ED%84%B4%EC%8A%A4_(%EC%BB%B4%ED%93%A8%ED%84%B0_%EA%B3%BC%ED%95%99))
+

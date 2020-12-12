@@ -35,7 +35,7 @@ t_bool		hit_obj(t_objects *obj, t_ray *ray, t_hit_record *rec)
 	else if (obj->type == SQ)
 		hit_result = hit_square(obj->element, ray, rec);
 	else if (obj->type == CY)
-		hit_result = hit_cylinder(obj->element, ray, rec);
+		hit_result = hit_cylinder(obj, ray, rec);
 	else if (obj->type == TR)
 		hit_result = hit_triangle(obj->element, ray, rec);
 	return (hit_result);
@@ -232,8 +232,9 @@ static t_vec3	cylinder_normal(t_cylinder *cy, t_hit_record *rec)
 }
 
 // x,y,z 축방향 실린더로 고정해서 풀어보자(https://www.cl.cam.ac.uk/teaching/1999/AGraphHCI/SMAG/node2.html
-t_bool		hit_cylinder(t_cylinder *cy, t_ray *ray, t_hit_record *rec)
+t_bool		hit_cylinder(t_objects *obj, t_ray *ray, t_hit_record *rec)
 {
+	t_cylinder *cy = obj->element;
 	double 	a;
 	double 	half_b;
 	double 	discriminant;
@@ -244,48 +245,34 @@ t_bool		hit_cylinder(t_cylinder *cy, t_ray *ray, t_hit_record *rec)
 	double	hmin;
 	double	hmax;
 	t_point3 p;
-
-	discriminant = cylinder_get_discriminant(cy, ray, &half_b, &a);
+	t_ray ray_trans;
+	ray_trans = *ray;
+	if (obj->transform != NULL)
+		ray_trans.orig = mmult_v(ray_trans.orig, obj->transform);
+	// dprintf(2,"ray->orig:%f,%f,%f\n",ray->orig.x, ray->orig.y, ray->orig.z);
+	// dprintf(2,"trans->orig:%f,%f,%f\n",ray_trans.orig.x, ray_trans.orig.y, ray_trans.orig.z);
+	discriminant = cylinder_get_discriminant(cy, &ray_trans, &half_b, &a);
 	if (discriminant < 0)
 		return (FALSE);
 	sqrtd = sqrt(discriminant);
 	root = (-half_b - sqrtd) / a;
-	p = ray_at(ray, root);
+	p = ray_at(&ray_trans, root);
 	if (!cylinder_root_check(cy, rec, root, p))
 	{
 		root = (-half_b + sqrtd) / a;
-		p = ray_at(ray, root);
+		p = ray_at(&ray_trans, root);
 		if (!cylinder_root_check(cy, rec, root, p))
 			return (FALSE);
 	}
 	rec->t = root;
 	rec->p = p;
 	rec->normal = cylinder_normal(cy, rec);
-	set_face_normal(ray, rec);
+	set_face_normal(&ray_trans, rec);
+	rec->p = ray_at(ray, root);
 	rec->color = cy->color;
 	return (TRUE);
 }
 
-/* 평면 교점
-	double	denominator;
-	t_vec3	r0_p0; // ray origin to plane point p
-	double	root;
-
-	denominator = vdot(pl->normal, ray->dir);
-	if (fabs(denominator) < 0.000001) // 분모가 거의 0이면! = 평면과 직선은 평행 또는 평면위에 있음.
-		return (FALSE);
-	r0_p0 = vminus(pl->p, ray->orig);
-	root = vdot(r0_p0, pl->normal) / denominator;
-	if (root < rec->tmin || root > rec->tmax)
-			return (FALSE);
-	rec->t = root;
-	rec->p = ray_at(ray, root);
-	 // rec의 법선벡터와 광선의 방향벡터를 비교해서 앞면인지 뒷면인지 확인해서 저장.
-	rec->normal = vunit(pl->normal);
-	set_face_normal(ray, rec);
-	rec->color = pl->color;
-	return (TRUE);
-	*/
 //이건 스크래치픽셀스 방식으로https://www.scratchapixel.com/lessons/3d-basic-rendering/ray-tracing-rendering-a-triangle/ray-triangle-intersection-geometric-solution
 t_bool hit_triangle(t_triangle *tr, t_ray *ray, t_hit_record *rec)
 {
@@ -300,9 +287,9 @@ t_bool hit_triangle(t_triangle *tr, t_ray *ray, t_hit_record *rec)
 	double t;
 	double	denominator;
 
-    // Step 1: finding P
+    // Step 1: finding P - 평면과의 교점 찾기
 	denominator = vdot(tr->normal, ray->dir);
-	if (fabs(denominator) < 0.000001) // 분모가 거의 0이면! = 평면과 직선은 평행 또는 평면위에 있음.
+	if (fabs(denominator) < 0.000001) // 분모가 거의 0이면! = 평면과 직선은 평행 또는 평면 위에 있음.
 		return (FALSE);
 	r0_p0 = vminus(tr->p0, ray->orig);
 	t = vdot(r0_p0, tr->normal) / denominator;
