@@ -98,6 +98,9 @@ cause (중점과 법선 외에 다른 정보가 없음)
 [mit.edu>ppt](http://groups.csail.mit.edu/graphics/classes/6.837/F03/lectures/05_transformation_hierarchy.ppt
 
 
+[4*4 역행렬 구하기 공식](https://semath.info/src/inverse-cofactor-ex4.html)
+[4*4 가우스 소거법으로 역행렬 구하기](https://www.intmath.com/matrices-determinants/inverse-matrix-gauss-jordan-elimination.php)
+
 
 [법선 벡터 변환 행렬](https://tails.tistory.com/entry/%EC%A3%BC%EC%96%B4%EC%A7%84-%EB%85%B8%EB%A9%80%EB%B2%A1%ED%84%B0%EC%97%90-Model%ED%96%89%EB%A0%AC%EC%9D%98-%EC%A0%84%EC%B9%98%EC%97%AD%ED%96%89%EB%A0%AC%EC%9D%84-%EA%B3%B1%ED%95%98%EB%8A%94-%EC%9D%B4%EC%9C%A0)
 
@@ -108,6 +111,11 @@ cause (중점과 법선 외에 다른 정보가 없음)
 ![image-20201212204328384](memo.assets/image-20201212204328384.png)
 
 [행렬 변환 한글설명](https://metalkim.tistory.com/331)
+
+[row major 역행렬 ](http://rodolphe-vaillant.fr/?e=7)
+
+[역행렬 구하기 동영상 강의](https://www.youtube.com/watch?app=desktop&v=1VNJfHozgco)
+
 
 ![image-20201212203223582](memo.assets/image-20201212203223582.png)
 
@@ -120,6 +128,9 @@ cause (중점과 법선 외에 다른 정보가 없음)
 ![image-20201212203838970](memo.assets/image-20201212203838970.png)
 
 ![image-20201212203911418](memo.assets/image-20201212203911418.png)
+
+
+
 
 
 스케일 -> 자전(우리가 다루는 단일 오브젝트 회전) -> 이동;
@@ -151,3 +162,25 @@ cause (중점과 법선 외에 다른 정보가 없음)
 
 [요기 설명 ](https://ko.wikipedia.org/wiki/%EC%9D%B8%EC%8A%A4%ED%84%B4%EC%8A%A4_(%EC%BB%B4%ED%93%A8%ED%84%B0_%EA%B3%BC%ED%95%99))
 
+
+
+## [OpenGL basic lighting](http://www.paulsprojects.net/tutorials/simplebump/simplebump.html)
+
+
+Vertex Color = emission + globalAmbient + sum(attenuation * spotlight *
+               [lightAmbient + (max {L.N, 0} * diffuse) + (max {H.N, 0} ^ shininess)*specular])
+
+Where:
+
+emission	is the material's emissive color
+globalAmbient	is the ambient color*global ambient brightness
+attenuation	is a term causing lights to become dimmer with distance
+spotlight	is a term causing spotlight effects
+lightAmbient	is the light's ambient color*brightness
+diffuse	is the light's diffuse color * the material's diffuse color
+shininess	is the specular exponent, which tells us how shiny a surface is
+specular	is the light's specular color * the material's specular color
+L	is the normalised(unit length) vector from the vertex we are lighting to the light
+N	is the unit length normal to our vertex
+H	is the normalised "half angle" vector, which points half way between L and the viewer (V)
+Here is a diagram describing these vectors:

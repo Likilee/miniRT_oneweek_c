@@ -24,6 +24,7 @@ double	vdot(t_vec3 vec, t_vec3 vec2);
 t_vec3	vcross(t_vec3 vec, t_vec3 vec2);
 t_vec3	vunit(t_vec3 vec);
 t_vec3	vmin(t_vec3 vec1, t_vec3 vec2);
+
 // matrix44_utils.c
 t_matrix44	*munit(void);
 t_matrix44 *mmove(t_point3 move);
@@ -31,10 +32,12 @@ t_matrix44 *mrotate_x(double degree);
 t_matrix44 *mrotate_y(double degree);
 t_matrix44 *mrotate_z(double degree);
 t_matrix44 *mscale(t_point3 scale);
-t_vec3	mmult_v(t_vec3 vec,  t_matrix44 *mtx);
+t_vec3	mmult_v(t_vec3 vec, double h, t_matrix44 *mtx);
 void  mmult_m(t_matrix44 *dst, t_matrix44 *src);
-t_matrix44 *transform(t_vec3 scale, t_vec3 rotate, t_vec3 move);
-
+t_matrix44 *transform(t_vec3 rotate, t_vec3 move);
+t_matrix44 *inverse(t_matrix44 a);
+void	transpose(t_matrix44 *orig);
+t_matrix44 *transform_normal(t_matrix44 *transform);
 
 // common_utils.c
 double	deg_to_rad(double degrees);

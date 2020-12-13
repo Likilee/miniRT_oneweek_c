@@ -9,6 +9,7 @@ t_objects	*object(t_objects_type type, void *element, t_matrix44 *trans)
 	new->type = type;
 	new->element = element;
 	new->transform = trans;
+	new->trans_normal = transform_normal(trans);
 	new->next = NULL;
 	return (new);
 }
@@ -47,6 +48,8 @@ void	odelone(t_objects *obj)
 		return ;
 	if (obj->transform != NULL)
 		free(obj->transform);
+	if (obj->trans_normal != NULL)
+		free(obj->trans_normal);
 	free(obj);
 	obj = NULL;
 }

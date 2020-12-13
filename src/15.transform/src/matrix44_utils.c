@@ -88,13 +88,15 @@ t_matrix44 *mscale(t_vec3 scale)
 	return (mtx);
 }
 
-t_vec3	mmult_v(t_vec3 vec, t_matrix44 *mtx)
+t_vec3	mmult_v(t_vec3 vec, double h, t_matrix44 *mtx)
 {
 	t_vec3	new;
 
-	new.x = vec.x * mtx->x[0][0] + vec.y * mtx->x[1][0] + vec.z * mtx->x[2][0] + mtx->x[3][0];
-	new.y = vec.x * mtx->x[0][1] + vec.y * mtx->x[1][1] + vec.z * mtx->x[2][1] + mtx->x[3][1];
-	new.z = vec.x * mtx->x[0][2] + vec.y * mtx->x[1][2] + vec.z * mtx->x[2][2] + mtx->x[3][2];
+	if (mtx == NULL)
+		return (vec);
+	new.x = vec.x * mtx->x[0][0] + vec.y * mtx->x[1][0] + vec.z * mtx->x[2][0] + h * mtx->x[3][0];
+	new.y = vec.x * mtx->x[0][1] + vec.y * mtx->x[1][1] + vec.z * mtx->x[2][1] + h * mtx->x[3][1];
+	new.z = vec.x * mtx->x[0][2] + vec.y * mtx->x[1][2] + vec.z * mtx->x[2][2] + h * mtx->x[3][2];
 	return (new);
 }
 
@@ -120,30 +122,105 @@ void  mmult_m(t_matrix44 *dst, t_matrix44 *src)
 	*dst = new;
 }
 
-t_matrix44 *transform(t_vec3 scale, t_vec3 rotate, t_vec3 move)
+// 이동 + 회전이 합해진 변형 매트릭스로 가자 스케일은 적합하지 않은듯.
+// - 스케일은 각각의 단일 객체의 값자체를 수정하는 방법으로 가는게 더 좋을듯
+t_matrix44 *transform(t_vec3 rotate, t_vec3 move)
 {
 	t_matrix44 *m_trans;
-	t_matrix44 *m_scale;
 	t_matrix44 *m_rotate_x;
 	t_matrix44 *m_rotate_y;
 	t_matrix44 *m_rotate_z;
 	t_matrix44 *m_move;
 
 	m_trans = munit();
-	m_scale = mscale(scale);
 	m_rotate_x = mrotate_x(rotate.x);
+	transpose(m_rotate_x);
 	m_rotate_y = mrotate_y(rotate.y);
+	transpose(m_rotate_y);
 	m_rotate_z = mrotate_z(rotate.z);
+	transpose(m_rotate_z);
 	m_move = mmove(move);
-	mmult_m(m_trans, m_scale);
 	mmult_m(m_trans, m_rotate_x);
 	mmult_m(m_trans, m_rotate_y);
 	mmult_m(m_trans, m_rotate_z);
 	mmult_m(m_trans, m_move);
-	free(m_scale);
 	free(m_rotate_x);
 	free(m_rotate_y);
 	free(m_rotate_z);
 	free(m_move);
 	return (m_trans);
+}
+
+t_matrix44 *inverse(t_matrix44 a)
+{
+	t_matrix44 *inv;
+	int	i;
+	int	j;
+	int	k;
+	double ratio;
+
+	inv = munit();
+
+	// Applying Gauss Jordan Elimination
+	i = -1;
+	while (++i < 4)
+	{
+		if (a.x[i][i] == 0.0)
+		{
+			perror("Matrix Inverse error! transform matirx can't have inverse");
+			exit (1);
+		}
+		j = -1;
+		while (++j < 4)
+		{
+			if (i != j)
+			{
+				ratio = a.x[j][i] / a.x[i][i];
+				k = -1;
+				while (++k < 4)
+				{
+					a.x[j][k] = a.x[j][k] - ratio * a.x[i][k];
+					inv->x[j][k] = inv->x[j][k] - ratio * inv->x[i][k];
+				}
+			}
+		}
+	}
+	// Row Operation to Make Principal Diagonal to 1
+	i = -1;
+	while (++i < 4)
+	{
+		j = -1;
+		while (++j < 4)
+			inv->x[i][j] = inv->x[i][j] / a.x[i][i];
+	}
+	return (inv);
+}
+
+void	transpose(t_matrix44 *orig)
+{
+	t_matrix44 new;
+	int i;
+	int j;
+
+	i = -1;
+	while (++i < 4)
+	{
+		j = -1;
+		while (++j < 4)
+		{
+			new.x[i][j] = orig->x[j][i];
+		}
+	}
+	*orig = new;
+}
+
+t_matrix44 *transform_normal(t_matrix44 *transform)
+{
+	t_matrix44 *t_normal;
+
+	if (transform == NULL)
+		return (NULL);
+	t_normal = inverse(*transform);
+	transpose(t_normal);
+	return (t_normal);
 }

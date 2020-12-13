@@ -90,6 +90,7 @@ struct s_objects
 	t_objects_type	type;
 	void			*element;
 	t_matrix44		*transform;
+	t_matrix44		*trans_normal;
 	void			*next;
 };
 

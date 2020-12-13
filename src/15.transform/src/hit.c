@@ -247,10 +247,14 @@ t_bool		hit_cylinder(t_objects *obj, t_ray *ray, t_hit_record *rec)
 	t_point3 p;
 	t_ray ray_trans;
 	ray_trans = *ray;
+
 	if (obj->transform != NULL)
-		ray_trans.orig = mmult_v(ray_trans.orig, obj->transform);
-	// dprintf(2,"ray->orig:%f,%f,%f\n",ray->orig.x, ray->orig.y, ray->orig.z);
-	// dprintf(2,"trans->orig:%f,%f,%f\n",ray_trans.orig.x, ray_trans.orig.y, ray_trans.orig.z);
+	{
+		ray_trans.orig = mmult_v(ray_trans.orig, 1.0, obj->transform);
+		ray_trans.dir =  mmult_v(ray_trans.dir, 0.0, obj->transform);
+	}
+	// dprintf(2,"ray->dir:%f,%f,%f\n",ray->dir.x, ray->dir.y, ray->dir.z);
+	// dprintf(2,"trans->dir:%f,%f,%f\n",ray_trans.dir.x, ray_trans.dir.y, ray_trans.dir.z);
 	discriminant = cylinder_get_discriminant(cy, &ray_trans, &half_b, &a);
 	if (discriminant < 0)
 		return (FALSE);
@@ -265,9 +269,18 @@ t_bool		hit_cylinder(t_objects *obj, t_ray *ray, t_hit_record *rec)
 			return (FALSE);
 	}
 	rec->t = root;
+	// for(int i = 0; i < 4; ++i)
+	// 	dprintf(2, "obj->transform:%f %f %f %f\n", obj->transform->x[i][0], obj->transform->x[i][1], obj->transform->x[i][2], obj->transform->x[i][3]);
+	// dprintf(2,"\n");
+	// for(int i = 0; i < 4; ++i)
+	// 	dprintf(2, "obj->trans_norm:%f %f %f %f\n", obj->trans_normal->x[i][0], obj->trans_normal->x[i][1], obj->trans_normal->x[i][2], obj->trans_normal->x[i][3]);
+	// dprintf(2,"\n");
 	rec->p = p;
 	rec->normal = cylinder_normal(cy, rec);
-	set_face_normal(&ray_trans, rec);
+	// dprintf(2,"rec->norm,before:%f, %f, %f\n",rec->normal.x, rec->normal.y, rec->normal.z);
+	rec->normal = mmult_v(rec->normal, 1, obj->trans_normal);
+	// dprintf(2,"rec->norm,before:%f, %f, %f\n",rec->normal.x, rec->normal.y, rec->normal.z);
+	set_face_normal(ray, rec);
 	rec->p = ray_at(ray, root);
 	rec->color = cy->color;
 	return (TRUE);
