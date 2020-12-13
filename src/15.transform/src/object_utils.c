@@ -1,6 +1,6 @@
 #include "scene.h"
 
-t_objects	*object(t_objects_type type, void *element, t_matrix44 *trans)
+t_objects	*object(t_objects_type type, void *element, t_matrix44 *rotate)
 {
 	t_objects	*new;
 
@@ -8,8 +8,8 @@ t_objects	*object(t_objects_type type, void *element, t_matrix44 *trans)
 		return (NULL);
 	new->type = type;
 	new->element = element;
-	new->transform = trans;
-	new->trans_normal = transform_normal(trans);
+	new->rotate = rotate;
+	new->rotate_normal = rotate_normal(rotate);
 	new->next = NULL;
 	return (new);
 }
@@ -46,10 +46,10 @@ void	odelone(t_objects *obj)
 {
 	if (obj == NULL)
 		return ;
-	if (obj->transform != NULL)
-		free(obj->transform);
-	if (obj->trans_normal != NULL)
-		free(obj->trans_normal);
+	if (obj->rotate != NULL)
+		free(obj->rotate);
+	if (obj->rotate_normal != NULL)
+		free(obj->rotate_normal);
 	free(obj);
 	obj = NULL;
 }

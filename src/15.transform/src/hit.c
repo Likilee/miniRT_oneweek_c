@@ -33,7 +33,7 @@ t_bool		hit_obj(t_objects *obj, t_ray *ray, t_hit_record *rec)
 	else if (obj->type == PL)
 		hit_result = hit_plane(obj->element, ray, rec);
 	else if (obj->type == SQ)
-		hit_result = hit_square(obj->element, ray, rec);
+		hit_result = hit_square(obj, ray, rec);
 	else if (obj->type == CY)
 		hit_result = hit_cylinder(obj, ray, rec);
 	else if (obj->type == TR)
@@ -70,9 +70,12 @@ t_bool		hit_sphere(t_sphere *sp, t_ray *ray, t_hit_record *rec)
 			return (FALSE);
 	}
 	rec->t = root;
+	// dprintf(2,"ray->dir:%f,%f,%f\n",ray->dir.x, ray->dir.y, ray->dir.z);
 	rec->p = ray_at(ray, root);
+	// dprintf(2,"rec->p:%f,%f,%f\n",rec->p.x, rec->p.y, rec->p.z);
 	rec->normal = vdivide(vminus(rec->p, sp->center), sp->radius); // 정규화된 법선 벡터.
 	set_face_normal(ray, rec); // rec의 법선벡터와 광선의 방향벡터를 비교해서 앞면인지 뒷면인지 확인해서 저장.
+	// dprintf(2,"normal:%f,%f,%f\n",rec->normal.x, rec->normal.y, rec->normal.z);
 	rec->color = sp->color;
 	return (TRUE);
 }
@@ -126,34 +129,65 @@ static t_bool		in_square(t_square *sq, t_point3 *hit_point)
 	return (FALSE);
 }
 
-t_bool		hit_square(t_square *sq, t_ray *ray, t_hit_record *rec)
+t_vec3		world2object_sq(t_matrix44 *rotate, t_square *sq, t_ray *ray)
 {
+	t_vec3	offset;
+
+	offset = sq->center;
+	ray->orig = vminus(ray->orig, offset);
+	sq->center = vminus(sq->center, offset);
+	sq->min =  vminus(sq->min, offset);
+	sq->max = vminus(sq->max, offset);
+	ray->orig = mmult_v(ray->orig, 1.0, rotate);
+	ray->dir =  mmult_v(ray->dir, 0, rotate);
+	return (offset);
+}
+
+t_bool		object2world_sq(t_square *sq, t_vec3 *offset)
+{
+	sq->center = vplus(sq->center, *offset);
+	sq->min =  vplus(sq->min, *offset);
+	sq->max = vplus(sq->max, *offset);
+	return (FALSE);
+}
+
+t_bool		hit_square(t_objects *obj, t_ray *ray, t_hit_record *rec)
+{
+	t_square *sq;
 	double	denominator;
 	t_vec3	r0_p0; // ray origin to plane point p
 	t_point3	hit_point;
 	double	root;
 	t_point3 min;
 	t_point3 max;
+	t_ray ray_w2o;
+	t_vec3 offset;
 
-	denominator = vdot(sq->normal, ray->dir);
+	ray_w2o = *ray;
+	sq = obj->element;
+	offset = vec3(0,0,0);
+	if (obj->rotate != NULL)
+		offset = world2object_sq(obj->rotate, sq, &ray_w2o);
+	denominator = vdot(sq->normal, ray_w2o.dir);
 	if (fabs(denominator) < 0.0001) // 분모가 거의 0이면! = 평면과 직선은 평행
-		return (FALSE);
-	r0_p0 = vminus(sq->center, ray->orig);
+		return (object2world_sq(sq, &offset));
+	r0_p0 = vminus(sq->center, ray_w2o.orig);
 	root = vdot(r0_p0, sq->normal) / denominator;
 	if (root < rec->tmin || root > rec->tmax)
-			return (FALSE);
-	hit_point = ray_at(ray, root);
+			return (object2world_sq(sq, &offset));
+	hit_point = ray_at(&ray_w2o, root);
 	if (in_square(sq, &hit_point))
 	{
 		rec->t = root;
-		rec->p = hit_point;
+		rec->p = ray_at(ray, root);
 		// rec의 법선벡터와 광선의 방향벡터를 비교해서 앞면인지 뒷면인지 확인해서 저장.
-		rec->normal = vunit(sq->normal);
+		rec->normal = mmult_v(sq->normal, 0, obj->rotate_normal);
 		set_face_normal(ray, rec);
 		rec->color = sq->color;
+		object2world_sq(sq, &offset);
 		return (TRUE);
 	}
-	return (FALSE);
+	return (obj->rotate != NULL) ? (object2world_sq(sq, &offset)) : (FALSE);
 }
 
 
@@ -218,71 +252,77 @@ static t_bool	cylinder_root_check(t_cylinder *cy, t_hit_record *rec, double root
 	return (TRUE);
 }
 
-static t_vec3	cylinder_normal(t_cylinder *cy, t_hit_record *rec)
+static t_vec3	cylinder_normal(t_cylinder *cy, t_vec3 *p)
 {
 	t_point3 c0;
 
 	if (cy->axis.x != 0)
-		c0 = point3(rec->p.x, cy->center_bottom.y, cy->center_bottom.z);
+		c0 = point3(p->x, cy->center_bottom.y, cy->center_bottom.z);
 	if (cy->axis.y != 0)
-		c0 = point3(cy->center_bottom.x, rec->p.y, cy->center_bottom.z);
+		c0 = point3(cy->center_bottom.x, p->y, cy->center_bottom.z);
 	if (cy->axis.z != 0)
-		c0 = point3(cy->center_bottom.x, cy->center_bottom.y, rec->p.z);
-	return (vunit(vminus(rec->p, c0)));
+		c0 = point3(cy->center_bottom.x, cy->center_bottom.y, p->z);
+	return (vunit(vminus(*p, c0)));
+}
+
+
+t_vec3		world2object_cy(t_matrix44 *rotate, t_cylinder *cy, t_ray *ray)
+{
+	t_vec3	offset;
+
+	offset = cy->center_bottom;
+	ray->orig = vminus(ray->orig, cy->center_bottom);
+	cy->center_bottom = vminus(cy->center_bottom, offset);
+	cy->center_top = vminus(cy->center_top, offset);
+	ray->orig = mmult_v(ray->orig, 1.0, rotate);
+	ray->dir =  mmult_v(ray->dir, 0, rotate);
+	return (offset);
+}
+
+t_bool		object2world_cy(t_cylinder *cy, t_vec3 *offset)
+{
+	cy->center_bottom = vplus(cy->center_bottom, *offset);
+	cy->center_top = vplus(cy->center_top, *offset);
+	return (FALSE);
 }
 
 // x,y,z 축방향 실린더로 고정해서 풀어보자(https://www.cl.cam.ac.uk/teaching/1999/AGraphHCI/SMAG/node2.html
 t_bool		hit_cylinder(t_objects *obj, t_ray *ray, t_hit_record *rec)
 {
-	t_cylinder *cy = obj->element;
-	double 	a;
-	double 	half_b;
-	double 	discriminant;
-	double	sqrtd;
-	double	root;
-	double	t;
-	double 	h;
-	double	hmin;
-	double	hmax;
-	t_point3 p;
-	t_ray ray_trans;
-	ray_trans = *ray;
+	t_cylinder	*cy = obj->element;
+	double		a;
+	double		half_b;
+	double		discriminant;
+	double		sqrtd;
+	double		root;
+	t_point3 	p;
+	t_vec3 		offset;
+	t_ray		ray_w2o;
 
-	if (obj->transform != NULL)
-	{
-		ray_trans.orig = mmult_v(ray_trans.orig, 1.0, obj->transform);
-		ray_trans.dir =  mmult_v(ray_trans.dir, 0.0, obj->transform);
-	}
-	// dprintf(2,"ray->dir:%f,%f,%f\n",ray->dir.x, ray->dir.y, ray->dir.z);
-	// dprintf(2,"trans->dir:%f,%f,%f\n",ray_trans.dir.x, ray_trans.dir.y, ray_trans.dir.z);
-	discriminant = cylinder_get_discriminant(cy, &ray_trans, &half_b, &a);
+	ray_w2o = *ray;
+	offset = vec3(0,0,0);
+	if (obj->rotate != NULL)
+		offset = world2object_cy(obj->rotate, cy, &ray_w2o);
+	discriminant = cylinder_get_discriminant(cy, &ray_w2o, &half_b, &a);
 	if (discriminant < 0)
-		return (FALSE);
+		return (object2world_cy(cy, &offset));
 	sqrtd = sqrt(discriminant);
 	root = (-half_b - sqrtd) / a;
-	p = ray_at(&ray_trans, root);
+	p = ray_at(&ray_w2o, root);
 	if (!cylinder_root_check(cy, rec, root, p))
 	{
 		root = (-half_b + sqrtd) / a;
-		p = ray_at(&ray_trans, root);
+		p = ray_at(&ray_w2o, root);
 		if (!cylinder_root_check(cy, rec, root, p))
-			return (FALSE);
+			return (object2world_cy(cy, &offset));
 	}
 	rec->t = root;
-	// for(int i = 0; i < 4; ++i)
-	// 	dprintf(2, "obj->transform:%f %f %f %f\n", obj->transform->x[i][0], obj->transform->x[i][1], obj->transform->x[i][2], obj->transform->x[i][3]);
-	// dprintf(2,"\n");
-	// for(int i = 0; i < 4; ++i)
-	// 	dprintf(2, "obj->trans_norm:%f %f %f %f\n", obj->trans_normal->x[i][0], obj->trans_normal->x[i][1], obj->trans_normal->x[i][2], obj->trans_normal->x[i][3]);
-	// dprintf(2,"\n");
-	rec->p = p;
-	rec->normal = cylinder_normal(cy, rec);
-	// dprintf(2,"rec->norm,before:%f, %f, %f\n",rec->normal.x, rec->normal.y, rec->normal.z);
-	rec->normal = mmult_v(rec->normal, 1, obj->trans_normal);
-	// dprintf(2,"rec->norm,before:%f, %f, %f\n",rec->normal.x, rec->normal.y, rec->normal.z);
+	rec->normal = mmult_v(cylinder_normal(cy, &p), 0, obj->rotate_normal);
 	set_face_normal(ray, rec);
 	rec->p = ray_at(ray, root);
 	rec->color = cy->color;
+	// o2w point
+	object2world_cy(cy, &offset);
 	return (TRUE);
 }
 

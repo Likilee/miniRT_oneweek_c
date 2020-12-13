@@ -11,7 +11,7 @@ t_bool		hit(t_objects *obj, t_ray *ray, t_hit_record *rec);
 t_bool		hit_obj(t_objects *obj, t_ray *ray, t_hit_record *rec);
 t_bool		hit_sphere(t_sphere *sp, t_ray *ray, t_hit_record *rec);
 t_bool		hit_plane(t_plane *pl, t_ray *ray, t_hit_record *rec);
-t_bool		hit_square(t_square *sq, t_ray *ray, t_hit_record *rec);
+t_bool		hit_square(t_objects *obj, t_ray *ray, t_hit_record *rec);
 t_bool		hit_cylinder(t_objects *obj, t_ray *ray, t_hit_record *rec);
 t_bool		hit_triangle(t_triangle *tr, t_ray *ray, t_hit_record *rec);
 void		set_face_normal(t_ray *r, t_hit_record *rec);

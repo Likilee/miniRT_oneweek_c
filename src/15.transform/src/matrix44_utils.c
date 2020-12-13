@@ -124,31 +124,20 @@ void  mmult_m(t_matrix44 *dst, t_matrix44 *src)
 
 // 이동 + 회전이 합해진 변형 매트릭스로 가자 스케일은 적합하지 않은듯.
 // - 스케일은 각각의 단일 객체의 값자체를 수정하는 방법으로 가는게 더 좋을듯
-t_matrix44 *transform(t_vec3 rotate, t_vec3 move)
+t_matrix44 *rotate(t_vec3 rotate)
 {
-	t_matrix44 *m_trans;
-	t_matrix44 *m_rotate_x;
+	t_matrix44 *m_rotate;
 	t_matrix44 *m_rotate_y;
 	t_matrix44 *m_rotate_z;
-	t_matrix44 *m_move;
 
-	m_trans = munit();
-	m_rotate_x = mrotate_x(rotate.x);
-	transpose(m_rotate_x);
+	m_rotate = mrotate_x(rotate.x);
 	m_rotate_y = mrotate_y(rotate.y);
-	transpose(m_rotate_y);
 	m_rotate_z = mrotate_z(rotate.z);
-	transpose(m_rotate_z);
-	m_move = mmove(move);
-	mmult_m(m_trans, m_rotate_x);
-	mmult_m(m_trans, m_rotate_y);
-	mmult_m(m_trans, m_rotate_z);
-	mmult_m(m_trans, m_move);
-	free(m_rotate_x);
+	mmult_m(m_rotate, m_rotate_y);
+	mmult_m(m_rotate, m_rotate_z);
 	free(m_rotate_y);
 	free(m_rotate_z);
-	free(m_move);
-	return (m_trans);
+	return (m_rotate);
 }
 
 t_matrix44 *inverse(t_matrix44 a)
@@ -214,13 +203,13 @@ void	transpose(t_matrix44 *orig)
 	*orig = new;
 }
 
-t_matrix44 *transform_normal(t_matrix44 *transform)
+t_matrix44 *rotate_normal(t_matrix44 *rotate)
 {
-	t_matrix44 *t_normal;
+	t_matrix44 *rotate_normal;
 
-	if (transform == NULL)
+	if (rotate == NULL)
 		return (NULL);
-	t_normal = inverse(*transform);
-	transpose(t_normal);
-	return (t_normal);
+	rotate_normal = inverse(*rotate);
+	// transpose(rotate_normal);
+	return (rotate_normal);
 }

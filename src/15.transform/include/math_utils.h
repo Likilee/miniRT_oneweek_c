@@ -34,10 +34,10 @@ t_matrix44 *mrotate_z(double degree);
 t_matrix44 *mscale(t_point3 scale);
 t_vec3	mmult_v(t_vec3 vec, double h, t_matrix44 *mtx);
 void  mmult_m(t_matrix44 *dst, t_matrix44 *src);
-t_matrix44 *transform(t_vec3 rotate, t_vec3 move);
+t_matrix44 *rotate(t_vec3 rotate);
+t_matrix44 *rotate_normal(t_matrix44 *rotate);
 t_matrix44 *inverse(t_matrix44 a);
 void	transpose(t_matrix44 *orig);
-t_matrix44 *transform_normal(t_matrix44 *transform);
 
 // common_utils.c
 double	deg_to_rad(double degrees);
