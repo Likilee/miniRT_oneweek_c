@@ -27,26 +27,26 @@ int	main(void)
 
 	t_matrix44 *rotate_cy;
 	t_matrix44 *rotate_sq;
-	rotate_cy = rotate(vec3(15,0,45));
-	rotate_sq = rotate(vec3(-15,45,0));
-	canv = canvas(1600, 900);
+	rotate_cy = rotate(vec3(0,0,45));
+	rotate_sq = rotate(vec3(0,-45,0));
+	canv = canvas(800, 600);
 	cam = camera(&canv, point3(0, 0, 0), 2.0, 1);
 	objects = NULL;
 	// objects = object(CY, cylinder(point3(0, 0, -2.5), vec3(0, 0, 0.5), 1.0, 2, color3(0.5, 0.1, 0.1)));
 	// oadd(&objects, object(SP, sphere(point3(0, -100.5, -1), 100, color3(0.2, 0.2, 0.2))));
-	// objects = object(LIGHT, light(point3(0, 1, -0.5), color3(30, 30, 30)), NULL);
-	oadd(&objects, object(LIGHT, light(point3(-2, 0, 0), color3(13, 13, 13)), NULL));
-	oadd(&objects, object(SQ, square(point3(0, 0, -5), vec3(0, 0, 1), 5, color3(0.5, 0.5, 0.8)), rotate_sq));
-	oadd(&objects, object(SQ, square(point3(2.5, 0, -2.5), vec3(1, 0, 0), 5, color3(0.5, 0.5, 0.8)), NULL));
-	oadd(&objects, object(SQ, square(point3(-2.5, 0, -2.5), vec3(1, 0, 0), 5, color3(0.5, 0.5, 0.8)), NULL));
+	oadd(&objects, object(SQ, square(point3(0, 0, -5), vec3(0, 0, 1), 5, color3(0.2, 0.7, 0.3)), rotate_sq));
+	oadd(&objects, object(CY, cylinder(point3(-0.0,-0.5,-2),vec3(0,1,0), 1, 1, color3(0.2,0.18,0.3)), rotate_cy));
+	oadd(&objects, object(LIGHT, light(point3(0, 2.45, -3), color3(6, 6, 6)), NULL));
+	oadd(&objects, object(SQ, square(point3(2.5, 0, -2.5), vec3(1, 0, 0), 5, color3(0.2, 0.3, 0.7)), NULL));
+	oadd(&objects, object(SQ, square(point3(-2.5, 0, -2.5), vec3(1, 0, 0), 5, color3(0.7, 0.2, 0.3)), NULL));
 	// oadd(&objects, object(SQ, square(point3(-1, 0, -2.5), vec3(1, 0, 0), 2, color3(0.5, 0.3, 0.2)), NULL));
 	oadd(&objects, object(PL, plane(point3(0, 2.5, 0), vec3(0, -1, 0), color3(0.5, 0.5, 0.8)), NULL));
 	oadd(&objects, object(PL, plane(point3(0, -2.0, 0), vec3(0, 1, 0), color3(0.5, 0.5, 0.8)), NULL));
+	oadd(&objects, object(LIGHT, light(point3(-1.5, 0, 0), color3(13, 13, 13)), NULL));
 	// oadd(&objects, object(TR, triangle(point3(-2, 0.5, -3), point3(-2, -0.5, -3.5), point3(-2, -0.5,-2.5),color3(0.3, 0.5, 0.7))));
 	// oadd(&objects, object(TR, triangle(point3(0, 2.5, -3), point3(-2, -1, -3), point3(2, -1, -3),color3(0.3, 0.5, 0.7))));
 
 	// oadd(&objects, object(SP, sphere(point3(0, 0, 0), 0.5, color3(0.5, 0.3, 0.3)),  rotate_cy));
-	oadd(&objects, object(CY, cylinder(point3(-0.0,-0.5,-2),vec3(0,1,0), 1, 1, color3(0.2,0.18,0.3)), rotate_cy));
 	// oadd(&objects, object(PL, plane(point3(0, -0.5, 0), vec3(0, -1, 0), color3(0.3, 0.3, 0.3))));
 
 
@@ -90,9 +90,9 @@ int	main(void)
 		}
 	--j;
 	}
-	end = clock(); // 시간 측정  끝!;
 	//시간 측정 결과 출력
 	result = (double)(end - start);
+	end = clock(); // 시간 측정  끝!;
 	oclear(&objects);
 	dprintf(2, "프로그램 동작 시간:%f\n", result / CLOCKS_PER_SEC);
 	return (0);
