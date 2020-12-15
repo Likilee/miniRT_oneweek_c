@@ -14,15 +14,29 @@ t_sphere	*sphere(t_point3 center, double radius, t_material *mat, t_texture *tex
 	return (sp);
 }
 
-t_light		*light(t_point3 light_origin, t_color3 light_color, double ka)
+t_light		*light_point(t_point3 light_origin, t_color3 light_color, double ka)
 {
 	t_light	*light;
 
 	if(!(light = (t_light *)malloc(sizeof(t_light))))
 		return (NULL);
+	light->type = POINT;
 	light->p = light_origin;
 	light->light_color = light_color;
 	light->ka = ka;
+	return (light);
+}
+
+t_light		*light_parallel(t_vec3 dir, t_color3 light_color, double ka)
+{
+	t_light	*light;
+
+	if(!(light = (t_light *)malloc(sizeof(t_light))))
+		return (NULL);
+	light->type = PARALLEL;
+	light->dir = vmult(vunit(dir), -1);
+	light->ka = ka;
+	light->light_color = light_color;
 	return (light);
 };
 
@@ -122,6 +136,8 @@ t_material	*material(t_material_type type, double option1)
 	if(!(mat = (t_material *)malloc(sizeof(t_material))))
 		exit(1);
 	mat->type = type;
+	if (type == DIFFUSE)
+		mat->option1 = option1;
 	if (type == METAL)
 	{
 		if (option1 > 1)

@@ -29,7 +29,7 @@ int	main(void)
 	t_texture	*rainbow_normal;
 	t_global	global;
 
-	global.ambient = color3(0.2, 0.2, 0.2);
+	global.ambient = color3(0.05, 0.05, 0.05);
 	//Scene setting;
 
 	canv = canvas(800, 600);
@@ -40,7 +40,7 @@ int	main(void)
 	rotate_cy = rotate(vec3(0,0,0));
 	rotate_sq = rotate(vec3(0,-45,0));
 	objects = NULL;
-	diffuse = material(DIFFUSE, 0);
+	diffuse = material(DIFFUSE, 32); // option1 is ksn;
 	solid = texture(SOLID, color3(0.7,0.5,0.3), color3(0,0,0), 0);
 	checkered = texture(CHECKER, color3(0.5,0.1,0.1), color3(0.1,0.1,0.5), 20);
 	checkered_uv = texture(CHECKER_UV, color3(0.2, 0.5, 0.5), color3(0.8, 0.8, 0.8), 10);
@@ -51,7 +51,8 @@ int	main(void)
 	// oadd(&objects, object(SQ, square(point3(0, 0, -5), vec3(0, 0, 1), 5, diffuse), rotate_sq));
 	oadd(&objects, object(CY, cylinder(point3(0.5, -0.5, -2),vec3(0,1,0), 1, 1, diffuse, rainbow_normal), rotate_cy));
 	// oadd(&objects, object(LIGHT, light(point3(0, 2.45, -3), color3(6, 6, 6), 0.2), NULL));
-	oadd(&objects, object(LIGHT, light(point3(-1, 0, 0), color3(5, 5, 5), 0.1), NULL));
+	// oadd(&objects, object(LIGHT, light_point(point3(-1, 0, 0), color3(5, 5, 5), 0.1), NULL));
+	oadd(&objects, object(LIGHT, light_parallel(vec3(1,-0.5,0), color3(2,2,2), 0.1), NULL));
 	// oadd(&objects, object(LIGHT, light(point3(-1.5, 0, -1), color3(8, 8, 8), 0.1), NULL));
 	// oadd(&objects, object(SQ, square(point3(2.5, 0, -2.5), vec3(1, 0, 0), 5, diffuse), NULL));
 	// oadd(&objects, object(SQ, square(point3(-2.5, 0, -2.5), vec3(1, 0, 0), 5, diffuse), NULL));
@@ -62,7 +63,6 @@ int	main(void)
 	// oadd(&objects, object(TR, triangle(point3(0, 2.5, -3), point3(-2, -1, -3), point3(2, -1, -3),color3(0.3, 0.5, 0.7))));
 
 	// oadd(&objects, object(SP, sphere(point3(0, 0, 0), 0.5, color3(0.5, 0.3, 0.3)),  rotate_cy));
-	// oadd(&objects, object(PL, plane(point3(0, -0.5, 0), vec3(0, -1, 0), color3(0.3, 0.3, 0.3))));
 
 
 	// // matrix test;

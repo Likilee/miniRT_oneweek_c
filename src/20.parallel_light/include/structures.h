@@ -47,6 +47,11 @@ typedef int t_texture_type;
 # define CHECKER_UV 2
 # define RAINBOW 3
 
+typedef int t_light_type;
+
+# define POINT 0
+# define PARALLEL 1
+
 struct s_vec3
 {
 	double x;
@@ -101,18 +106,20 @@ struct s_hit_record
 
 struct s_objects
 {
-	t_objects_type	type;
 	void			*element;
 	t_matrix44		*rotate;
 	t_matrix44		*rotate_normal;
 	void			*next;
+	t_objects_type	type;
 };
 
 struct s_light
 {
-	t_point3	p;
-	t_color3	light_color;
-	double		ka;
+	t_point3		p;
+	t_vec3			dir;
+	t_color3		light_color;
+	double			ka;
+	t_light_type	type;
 };
 
 struct s_plane

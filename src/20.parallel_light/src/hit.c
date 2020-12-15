@@ -93,7 +93,7 @@ t_bool		hit_plane(t_plane *pl, t_ray *ray, t_hit_record *rec)
 	double	root;
 
 	denominator = vdot(pl->normal, ray->dir);
-	if (fabs(denominator) < 0.000001) // 분모가 거의 0이면! = 평면과 직선은 평행 또는 평면위에 있음.
+	if (fabs(denominator) < 0.00001) // 분모가 거의 0이면! = 평면과 직선은 평행 또는 평면위에 있음.
 		return (FALSE);
 	r0_p0 = vminus(pl->p, ray->orig);
 	root = vdot(r0_p0, pl->normal) / denominator;
