@@ -33,7 +33,7 @@ int	main(void)
 	//Scene setting;
 
 	canv = canvas(800, 600);
-	cam = camera(&canv, point3(0,1.5,1),vec3(0,-0.1,-1), 90);
+	cam = camera(&canv, point3(0,5,3),vec3(0,-1,-1), 90);
 
 	t_matrix44 *rotate_cy;
 	t_matrix44 *rotate_sq;
