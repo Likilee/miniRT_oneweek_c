@@ -116,21 +116,21 @@ t_bool		hit_plane(t_plane *pl, t_ray *ray, t_hit_record *rec)
 
 static t_bool		in_square(t_square *sq, t_point3 *hit_point)
 {
-	// dprintf(2,"hit_point:%f,%f,%f\n",hit_point->x, hit_point->y, hit_point->z);
-	// dprintf(2,"sq->min:%f,%f,%f\n",sq->min.x, sq->min.y, sq->min.z);
-	// dprintf(2,"sq->max:%f,%f,%f\n\n",sq->max.x, sq->max.y, sq->max.z);
-	if ((sq->normal.x > 0)
+	if ((fabs(sq->normal.x) > 0)
 		&& (hit_point->y >= sq->min.y && hit_point->y <= sq->max.y)
 		&& (hit_point->z >= sq->min.z && hit_point->z <= sq->max.z))
-			return (TRUE);
-	else if ((sq->normal.y > 0)
+		return (TRUE);
+	else if ((fabs(sq->normal.y) > 0)
 		 	&& (hit_point->x >= sq->min.x && hit_point->x <= sq->max.x)
 			&& (hit_point->z >= sq->min.z && hit_point->z <= sq->max.z))
 				return (TRUE);
-	else if ((sq->normal.z > 0)
+	else if ((fabs(sq->normal.z) > 0)
 			&& (hit_point->x >= sq->min.x && hit_point->x <= sq->max.x)
 			&& (hit_point->y >= sq->min.y && hit_point->y <= sq->max.y))
 				return (TRUE);
+	// dprintf(2,"hit_point:%f,%f,%f\n",hit_point->x, hit_point->y, hit_point->z);
+	// dprintf(2,"sq->min:%f,%f,%f\n",sq->min.x, sq->min.y, sq->min.z);
+	// dprintf(2,"sq->max:%f,%f,%f\n\n",sq->max.x, sq->max.y, sq->max.z);
 	return (FALSE);
 }
 
@@ -179,7 +179,7 @@ t_bool		hit_square(t_objects *obj, t_ray *ray, t_hit_record *rec)
 	r0_p0 = vminus(sq->center, ray_w2o.orig);
 	root = vdot(r0_p0, sq->normal) / denominator;
 	if (root < rec->tmin || root > rec->tmax)
-			return (object2world_sq(sq, &offset));
+		return (object2world_sq(sq, &offset));
 	hit_point = ray_at(&ray_w2o, root);
 	if (in_square(sq, &hit_point))
 	{
@@ -220,6 +220,7 @@ t_bool		object2world_cb(t_cube *cb, t_vec3 *offset)
 {
 	int		i;
 
+	cb->center = vplus(cb->center, *offset);
 	i  = -1;
 	while (++i < 6)
 	{
@@ -239,7 +240,6 @@ t_bool		hit_cb(t_objects *obj, t_ray *ray, t_hit_record *rec)
 	t_ray 			ray_w2o;
 	int				i;
 	t_vec3			offset;
-
 	cb = obj->element;
 	ray_w2o = *ray;
 	container.rotate = NULL;
@@ -253,11 +253,12 @@ t_bool		hit_cb(t_objects *obj, t_ray *ray, t_hit_record *rec)
 	while(++i < 6)
 	{
 		container.element = cb->square[i];
-		if (hit_square(&container, ray, &temp_rec))
+		if (hit_square(&container, &ray_w2o, &temp_rec))
 		{
 			hit_cube = TRUE;
 			temp_rec.tmax = temp_rec.t;
 			*rec = temp_rec;
+
 		}
 	}
 	object2world_cb(cb, &offset);

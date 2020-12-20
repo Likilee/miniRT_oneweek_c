@@ -33,12 +33,12 @@ int	main(void)
 	//Scene setting;
 
 	canv = canvas(800, 600);
-	cam = camera(&canv, point3(0,0,3),vec3(0,0,-1), 70);
+	cam = camera(&canv, point3(0,0,3.5),vec3(0,0,-1), 70);
 
 	t_matrix44 *rotate_cy;
 	t_matrix44 *rotate_sq;
 	rotate_cy = rotate(vec3(0,0,0));
-	rotate_sq = rotate(vec3(0,0,0));
+	rotate_sq = rotate(vec3(45,0,0));
 	objects = NULL;
 	diffuse = material(DIFFUSE, 32); // option1 is ksn;
 	solid = texture(SOLID, color3(0.7,0.5,0.3), color3(0,0,0), 0);
@@ -48,13 +48,12 @@ int	main(void)
 	// objects = object(CY, cylinder(point3(0, 0, -2.5), vec3(0, 0, 0.5), 1.0, 2, color3(0.5, 0.1, 0.1)));
 	// oadd(&objects, object(SP, sphere(point3(0, -100.5, -1), 100, diffuse, checkered), NULL));
 	// oadd(&objects, object(SP, sphere(point3(-0.5, 0, -2), 0.5, diffuse, rainbow_normal), NULL));
-	oadd(&objects, object(CB, cube(point3(-2, 2, -4), 2, diffuse, checkered), rotate_sq));
+	oadd(&objects, object(CB, cube(point3(-2, 1.5, -3), 1, diffuse, checkered), rotate_sq));
 	// oadd(&objects, object(SQ, square(point3(0, 0, -5), vec3(0, 0, 1), 5, diffuse), rotate_sq));
-	oadd(&objects, object(CY, cylinder(point3(0.6, -2, -3),vec3(0,1,0), 1, 2, diffuse, rainbow_normal), rotate_cy));
+	oadd(&objects, object(CY, cylinder(point3(0.6, -2, -3),vec3(0,1,0), 1, 2, diffuse, solid), rotate_cy));
 	oadd(&objects, object(LIGHT, light_point(point3(0, 2.45, -3), color3(6, 6, 6), 0.2), NULL));
-	oadd(&objects, object(LIGHT, light_point(point3(-1, 0, 0), color3(5, 5, 5), 0.1), NULL));
-	oadd(&objects, object(LIGHT, light_parallel(vec3(1,-0.5,0), color3(2,2,2), 0.1), NULL));
-	// oadd(&objects, object(LIGHT, light(point3(-1.5, 0, -1), color3(8, 8, 8), 0.1), NULL));
+	oadd(&objects, object(LIGHT, light_point(point3(-3, 0, 0), color3(15, 15, 15), 0.1), NULL));
+	oadd(&objects, object(LIGHT, light_parallel(vec3(1,-0.5,-0.5), color3(2,2,2), 0.1), NULL));
 	// oadd(&objects, object(SQ, square(point3(2.5, 0, -2.5), vec3(1, 0, 0), 5, diffuse), NULL));
 	// oadd(&objects, object(SQ, square(point3(-2.5, 0, -2.5), vec3(1, 0, 0), 5, diffuse), NULL));
 	// oadd(&objects, object(SQ, square(point3(-1, 0, -2.5), vec3(1, 0, 0), 2, color3(0.5, 0.3, 0.2)), NULL));
@@ -82,7 +81,7 @@ int	main(void)
 			r.orig = cam.orig;
 			// left_bottom + u * horizontal + v * vertical - origin
 			r.dir = vunit(vminus(vplus(vplus(cam.left_bottom, vmult(cam.horizontal, u)), vmult(cam.vertical, v)), cam.orig));
-			// if (i == 720&& j == 445)
+			// if (i == 172&& j == 436)
 			pixel_color = ray_color(&r, objects, &global);
 			pixel_color = vmin(vplus(pixel_color, global.ambient), color3(1,1,1)); // sum global_ambient + ray_color;
 			write_color(pixel_color);
