@@ -1,4 +1,4 @@
-#include "ray.h"
+#include "trace.h"
 
 t_bool		hit(t_objects *obj, t_ray *ray, t_hit_record *rec)
 {

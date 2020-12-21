@@ -211,8 +211,8 @@ PERFECT 란 당연히 완전해야하고, 잘못된 사용과 같은 심한 실�
 >- [x] Color disruption: checkerboard.
 >- [x] Color disruption: rainbow effect using object’s normal.
 >- [x] Parallel light following a precise direction.
->- [ ] Compound element: Cube (6 squares).
->- [ ] Compound element: Pyramid (4 triangles, 1 square).
+>- [x] Compound element: Cube (6 squares).
+>- [x] Compound element: Pyramid (4 triangles, 1 square).
 >- [ ] Putting caps on size-limited cylinders.
 >- [ ] One other 2nd degree object: Cone, Hyperboloid, Paraboloid..
 >- [ ] One color filter: Sepia, R/G/B filters..

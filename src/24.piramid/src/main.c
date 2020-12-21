@@ -2,7 +2,7 @@
 #include <time.h>
 #include "structures.h"
 #include "math_utils.h"
-#include "ray.h"
+#include "trace.h"
 #include "scene.h"
 #include "print.h"
 
