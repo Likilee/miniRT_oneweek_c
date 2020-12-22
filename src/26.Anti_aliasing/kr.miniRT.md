@@ -199,7 +199,6 @@ focus on what is functional, to facilitate the control of the elements to create
 
 분명히 Ray Tracing 기술은 반사, 투명도, 굴절, 더 복잡한 오브젝트, 부드러운 그림자, 화선, 전역 조명, 범프 매핑, .obj 파일 렌더링 등과 같은 더 많은 것을 처리 할 수 ​​있습니다. 그러나 miniRT 프로젝트의 경우에는 첫 번째 레이트 레이서와 CGI의 첫 번째 단계는 간단합니다. 따라서 여기에 구현할 수있는 몇 가지 간단한 보너스 목록이 있습니다. 더 큰 보너스를 원할 경우이 작은 작업이 완료되고 완전히 작동 한 후 나중에 개발자 생활에서 새 광선 추적기를 다시 코딩하는 것이 좋습니다.
 
-
 ```c
 '보너스'는 필수 부분이 'PERFECT' 인 경우에만 평가됩니다.
 PERFECT 란 당연히 완전해야하고, 잘못된 사용과 같은 심한 실수가 있어도 실패 하면 안된다는 것을 의미합니다.
@@ -216,10 +215,10 @@ PERFECT 란 당연히 완전해야하고, 잘못된 사용과 같은 심한 실�
 >- [ ] **Putting caps on size-limited cylinders.**
 >- [ ] **One other 2nd degree object: Cone, Hyperboloid, Paraboloid..**
 >- [ ] One color filter: Sepia, R/G/B filters..
->- [ ] **Anti-aliasing.**
+>- [x] **Anti-aliasing.**
 >- [ ] Simple stereoscopy (like red/green glasses).
 >- [ ] **Multithreaded rendering.**
->- [ ] **Sphere texturing: uv mapping.**
+>- [x] **Sphere texturing: uv mapping.**
 
 >- [ ] **A beautiful skybox.**
 >- [ ] **Keyboard interactivity (translation/rotation) with camera.**

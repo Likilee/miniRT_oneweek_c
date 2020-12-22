@@ -42,5 +42,8 @@ void	transpose(t_matrix44 *orig);
 // common_utils.c
 double	deg_to_rad(double degrees);
 double	saturate(double value);
+double	random_double(void);
+double	random_double_(double min, double max);
+double		random_jitter(int sample_per_pixel, int k);
 
 #endif

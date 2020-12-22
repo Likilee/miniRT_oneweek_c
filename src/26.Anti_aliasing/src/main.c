@@ -14,6 +14,7 @@ int	main(void)
 	start = clock();// 시간 측정 시작
 	int			i;
 	int			j;
+	int			k;
 	double		u;
 	double		v;
 	t_color3	pixel_color;
@@ -29,9 +30,10 @@ int	main(void)
 	t_texture	*rainbow_normal;
 	t_global	global;
 
-	global.ambient = color3(0.05, 0.05, 0.05);
 	//Scene setting;
 
+	global.ambient = color3(0.05, 0.05, 0.05);
+	global.sample_per_pixel = 20;
 	canv = canvas(800, 600);
 	cam = camera(&canv, point3(0,0,3.5),vec3(0,0,-1), 70);
 
@@ -74,18 +76,24 @@ int	main(void)
 	j = canv.height - 1;
 	while (j >= 0)
 	{
-		// dprintf(2, "Printing image :Line remain > %d\n", j);
+		dprintf(2, "Printing image :Line remain > %d\n", j);
 		i = 0;
 		while (i < canv.width)
 		{
-			u = (double)i / (canv.width - 1);
-			v = (double)j / (canv.height - 1);
-			//ray from camera origin to pixel
-			r.orig = cam.orig;
-			// left_bottom + u * horizontal + v * vertical - origin
-			r.dir = vunit(vminus(vplus(vplus(cam.left_bottom, vmult(cam.horizontal, u)), vmult(cam.vertical, v)), cam.orig));
-			// if (i == 464 && j == 311)
-			pixel_color = ray_color(&r, objects, &global);
+			k = 0;
+			pixel_color = color3(0, 0, 0);
+			while (k++ < global.sample_per_pixel)
+			{
+				u = (double)(i + random_jitter(global.sample_per_pixel, k)) / (canv.width - 1);
+				v = (double)(j + random_jitter(global.sample_per_pixel, k)) / (canv.height - 1);
+				//ray from camera origin to pixel
+				r.orig = cam.orig;
+				// left_bottom + u * horizontal + v * vertical - origin
+				r.dir = vunit(vminus(vplus(vplus(cam.left_bottom, vmult(cam.horizontal, u)), vmult(cam.vertical, v)), cam.orig));
+				// if (i == 464 && j == 311)
+				pixel_color = vplus(pixel_color, ray_color(&r, objects, &global));
+			}
+			pixel_color = vdivide(pixel_color, global.sample_per_pixel);
 			pixel_color = vmin(vplus(pixel_color, global.ambient), color3(1,1,1)); // sum global_ambient + ray_color;
 			write_color(pixel_color);
 		++i;

@@ -199,3 +199,11 @@ the second method is to take into account multiple rays for each pixel and then 
 - after rendering, you scale the image to 512x512 (each 4 pixels are avereged into one) and you can notice that the edges are smoother. This way you have effectively used 4 rays for each pixel in the final image of 512x512 size.
 
 > 샘플 펄 픽셀을, 1, 4, 16 이런식으로 증가시키는 방법,  그럼 그냥 가로 2배 세로 2배(sample * 4) 한 뒤 4픽셀씩 묶어서 평균을 내면 된다!.
+> [안티얼라이어싱 종류 및 설명 좋은 자료](https://www.slideshare.net/JinWooLee2/anti-aliasing)
+> 정적인 이미지를  대상으로 하니, 슈퍼 샘플링으로 해볼까?.
+> [Super Sampling](https://ko.wikipedia.org/wiki/%EC%8A%88%ED%8D%BC%EC%83%98%ED%94%8C%EB%A7%81)
+> [Stochastic Sampling](http://www.cs.cmu.edu/afs/cs/academic/class/15462-s15/www/lec_slides/p51-cook.pdf)
+
+## 레이트레이싱 강의 자료
+
+[호오](https://www.cs.cmu.edu/afs/cs/academic/class/15462-s09/www/lec/13/lec13.pdf)

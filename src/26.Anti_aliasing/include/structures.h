@@ -6,7 +6,7 @@
 /*   By: kihoonlee <kihoonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 15:25:54 by kihoonlee         #+#    #+#             */
-/*   Updated: 2020/12/21 15:37:12 by kihoonlee        ###   ########.fr       */
+/*   Updated: 2020/12/21 16:43:40 by kihoonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,8 @@ struct						s_matrix44
 */
 struct						s_global
 {
-	t_color3 ambient;
+	t_color3	ambient;
+	int			sample_per_pixel;
 };
 
 /*
