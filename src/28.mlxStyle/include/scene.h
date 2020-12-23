@@ -11,6 +11,7 @@ t_scene		*scene_init(void);   // init scene;
 t_canvas	canvas(int	width, int height);
 t_camera	*camera_init(t_point3 lookfrom, t_vec3 look_dir, double hfov);
 t_camera	camera(t_canvas *canvas, t_point3 lookfrom, t_vec3 dir, double hfov);
+void		camera_set(t_canvas *canvas, t_camera *cam);
 t_objects	*object(t_objects_type type, void *element);
 
 /*

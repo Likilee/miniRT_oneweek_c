@@ -10,6 +10,8 @@ t_objects	*object(t_objects_type type, void *element)
 	new->element = element;
 	// new->rotate = rotate;
 	// new->rotate_normal = rotate_normal(rotate);
+	new->rotate = NULL;
+	new->rotate_normal = NULL;
 	new->next = NULL;
 	return (new);
 }

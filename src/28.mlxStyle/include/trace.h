@@ -8,7 +8,7 @@
 /*
 ** trace/render
 */
-t_data	render(t_scene *scene);
+void		render(t_scene *scene, t_data *img);
 
 /*
 ** trace/hit

@@ -95,7 +95,6 @@ double		atod(char *str)
 	int		n;
 	double	num;
 
-	printf("str:%s", str);
 	split = ft_split(str, '.');
 	integer = ft_atoi(split[0]);
 	point = 0;
@@ -104,7 +103,7 @@ double		atod(char *str)
 		point = ft_atoi(split[1]);
 		n = ft_intlen(point);
 		point /= pow(10, n);
-		if (integer < 0)
+		if (split[0][0] == '-')
 			point *= -1;
 	}
 	num = integer + point;

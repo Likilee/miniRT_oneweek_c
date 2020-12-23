@@ -1,6 +1,6 @@
 #include "trace.h"
 
-t_data	render(t_scene *scene)
+void	render(t_scene *scene, t_data *img)
 {
 	int	i;
 	int	j;
@@ -8,9 +8,9 @@ t_data	render(t_scene *scene)
 	double u;
 	double v;
 	t_ray	r;
-	t_data	img;
 
 	t_color3	pixel_color;
+	// printf("scene->canv.height %d\n", scene->canv.height);
 	j = scene->canv.height;
 	while (--j >= 0)
 	{
@@ -28,13 +28,13 @@ t_data	render(t_scene *scene)
 				r.orig = scene->cam_onair->orig;
 				// left_bottom + u * horizontal + v * vertical - origin
 				r.dir = vunit(vminus(vplus(vplus(scene->cam_onair->left_bottom, vmult(scene->cam_onair->horizontal, u)), vmult(scene->cam_onair->vertical, v)), scene->cam_onair->orig));
+				// printf("r.orig:%f,%f,%f dir:%f,%f,%f\n",r.orig.x, r.orig.y, r.orig.z, r.dir.x, r.dir.y, r.dir.z);
 				// if (i == 464 && j == 311)
 				pixel_color = vplus(pixel_color, ray_color(&r, scene->world, &scene->global, scene->global.depth));
 			}
 			pixel_color = vdivide(pixel_color, scene->global.sample_per_pixel);
 			pixel_color = vmin(vplus(pixel_color, scene->global.ambient), color3(1,1,1)); // sum global_ambient + ray_color;
-			my_mlx_pixel_put(&img, i, scene->canv.height - j, create_rgb(&pixel_color));
+			my_mlx_pixel_put(img, i, scene->canv.height - j, create_rgb(&pixel_color));
 		}
 	}
-	return (img);
 }
