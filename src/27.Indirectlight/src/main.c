@@ -35,9 +35,9 @@ int	main(void)
 	//Scene setting;
 
 	global.ambient = color3(0.05, 0.05, 0.05);
-	global.sample_per_pixel = 100;
-	global.depth = 10;
-	canv = canvas(400, 300);
+	global.sample_per_pixel = 300;
+	global.depth = 8;
+	canv = canvas(800, 600);
 	cam = camera(&canv, point3(0,0,3.5),vec3(0,0,-1), 70);
 
 	t_matrix44 *rotate_pm;
