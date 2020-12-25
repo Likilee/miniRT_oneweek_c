@@ -1,5 +1,5 @@
-#ifndef VEC3_UTILS_H
-# define VEC3_UTILS_H
+#ifndef utils_H
+# define utils_H
 
 # include <math.h>
 # include <stdlib.h>

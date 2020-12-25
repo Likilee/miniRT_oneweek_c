@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <time.h>
 #include "structures.h"
-#include "vec3_utils.h"
+#include "utils.h"
 #include "ray.h"
 #include "scene.h"
 #include "print.h"

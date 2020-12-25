@@ -2,7 +2,7 @@
 # define RAY_H
 
 # include "structures.h"
-# include "vec3_utils.h"
+# include "utils.h"
 
 t_point3	ray_at(t_ray *ray, double t);
 t_ray		ray(t_point3 orig, t_vec3 dir);

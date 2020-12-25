@@ -1,5 +1,5 @@
 #include "structures.h"
-#include "vec3_utils.h"
+#include "utils.h"
 
 double		hit_sphere(t_sphere *sp, t_ray *ray)
 {

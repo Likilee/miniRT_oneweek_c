@@ -104,21 +104,21 @@ t_bool		hit_plane(t_plane *pl, t_ray *ray, t_hit_record *rec)
 
 static t_bool		in_square(t_square *sq, t_point3 *hit_point)
 {
-	// dprintf(2,"hit_point:%f,%f,%f\n",hit_point->x, hit_point->y, hit_point->z);
-	// dprintf(2,"sq->min:%f,%f,%f\n",sq->min.x, sq->min.y, sq->min.z);
-	// dprintf(2,"sq->max:%f,%f,%f\n\n",sq->max.x, sq->max.y, sq->max.z);
-	if ((sq->normal.x > 0)
+	if ((fabs(sq->normal.x) > 0)
 		&& (hit_point->y >= sq->min.y && hit_point->y <= sq->max.y)
 		&& (hit_point->z >= sq->min.z && hit_point->z <= sq->max.z))
-			return (TRUE);
-	else if ((sq->normal.y > 0)
+		return (TRUE);
+	else if ((fabs(sq->normal.y) > 0)
 		 	&& (hit_point->x >= sq->min.x && hit_point->x <= sq->max.x)
 			&& (hit_point->z >= sq->min.z && hit_point->z <= sq->max.z))
 				return (TRUE);
-	else if ((sq->normal.z > 0)
+	else if ((fabs(sq->normal.z) > 0)
 			&& (hit_point->x >= sq->min.x && hit_point->x <= sq->max.x)
 			&& (hit_point->y >= sq->min.y && hit_point->y <= sq->max.y))
 				return (TRUE);
+	// dprintf(2,"hit_point:%f,%f,%f\n",hit_point->x, hit_point->y, hit_point->z);
+	// dprintf(2,"sq->min:%f,%f,%f\n",sq->min.x, sq->min.y, sq->min.z);
+	// dprintf(2,"sq->max:%f,%f,%f\n\n",sq->max.x, sq->max.y, sq->max.z);
 	return (FALSE);
 }
 

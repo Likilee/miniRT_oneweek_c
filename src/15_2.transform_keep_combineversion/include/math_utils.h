@@ -6,7 +6,7 @@
 # include <stdio.h>
 # include "structures.h"
 
-// vec3_utils.c
+// utils.c
 t_vec3	vec3(double x, double y, double z);
 t_point3 point3(double x, double y, double z);
 t_point3 color3(double r, double g, double b);

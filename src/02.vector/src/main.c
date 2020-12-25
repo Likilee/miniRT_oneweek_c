@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include "structures.h"
-#include "vec3_utils.h"
+#include "utils.h"
 #include "color.h"
 
 int	main(void)
