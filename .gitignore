@@ -1,5 +1,5 @@
 .DS_*
-.bmp
-.ppm
+*.bmp
+*.ppm
 minirt
 minirt.dSYM
