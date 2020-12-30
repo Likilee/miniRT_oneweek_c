@@ -1,6 +1,6 @@
 #include "scene.h"
 
-t_sphere	*sphere(t_point3 center, double radius, t_material *mat, t_texture *texture)
+t_sphere	*sphere(t_point3 center, double radius)
 {
 	t_sphere *sp;
 
@@ -9,8 +9,6 @@ t_sphere	*sphere(t_point3 center, double radius, t_material *mat, t_texture *tex
 	sp->center = center;
 	sp->radius = radius;
 	sp->radius2 = radius * radius;
-	sp->material = mat;
-	sp->texture = texture;
 	return (sp);
 }
 
@@ -42,7 +40,7 @@ t_light		*light_parallel(t_vec3 dir, t_color3 light_color, double ka, double bri
 	return (light);
 };
 
-t_plane		*plane(t_point3 p, t_vec3 normal, t_material *mat, t_texture *texture)
+t_plane		*plane(t_point3 p, t_vec3 normal)
 {
 	t_plane *pl;
 
@@ -50,12 +48,10 @@ t_plane		*plane(t_point3 p, t_vec3 normal, t_material *mat, t_texture *texture)
 		return (NULL);
 	pl->p = p;
 	pl->normal = normal;
-	pl->material = mat;
-	pl->texture = texture;
 	return (pl);
 }
 
-t_square	*square(t_point3 p, t_vec3 normal, double side_len, t_material *mat, t_texture *texture)
+t_square	*square(t_point3 p, t_vec3 normal, double side_len)
 {
 	t_square	*sq;
 	double		half_side;
@@ -65,8 +61,6 @@ t_square	*square(t_point3 p, t_vec3 normal, double side_len, t_material *mat, t_
 	half_side = side_len / 2;
 	sq->center = p;
 	sq->normal = normal;
-	sq->material = mat;
-	sq->texture = texture;
 	sq->side_len = side_len;
 	if (fabs(normal.x) == 1.0)
 	{
@@ -91,7 +85,7 @@ t_square	*square(t_point3 p, t_vec3 normal, double side_len, t_material *mat, t_
 	return (sq);
 }
 
-t_cube	*cube(t_point3 center, double side_len, t_material *mat, t_texture *texture)
+t_cube	*cube(t_point3 center, double side_len)
 {
 	t_cube *cb;
 	double half_side;
@@ -101,18 +95,16 @@ t_cube	*cube(t_point3 center, double side_len, t_material *mat, t_texture *textu
 	half_side = side_len / 2;
 	cb->center = center;
 	cb->side_len = side_len;
-	cb->texture = texture;
-	cb->material = mat;
-	cb->square[0] = square(vplus_(center, 0, half_side, 0), vec3(0,1,0), side_len, mat, texture);
-	cb->square[1] = square(vplus_(center, 0, -half_side, 0), vec3(0,-1,0), side_len, mat, texture);
-	cb->square[2] = square(vplus_(center, -half_side, 0, 0), vec3(-1,0,0), side_len, mat, texture);
-	cb->square[3] = square(vplus_(center, half_side, 0, 0), vec3(1,0,0), side_len, mat, texture);
-	cb->square[4] = square(vplus_(center, 0, 0, half_side), vec3(0,0,1), side_len, mat, texture);
-	cb->square[5] = square(vplus_(center, 0, 0, -half_side), vec3(0,0,-1), side_len, mat, texture);
+	cb->square[0] = square(vplus_(center, 0, half_side, 0), vec3(0,1,0), side_len);
+	cb->square[1] = square(vplus_(center, 0, -half_side, 0), vec3(0,-1,0), side_len);
+	cb->square[2] = square(vplus_(center, -half_side, 0, 0), vec3(-1,0,0), side_len);
+	cb->square[3] = square(vplus_(center, half_side, 0, 0), vec3(1,0,0), side_len);
+	cb->square[4] = square(vplus_(center, 0, 0, half_side), vec3(0,0,1), side_len);
+	cb->square[5] = square(vplus_(center, 0, 0, -half_side), vec3(0,0,-1), side_len);
 	return (cb);
 }
 
-t_pyramid *pyramid(t_point3 center, t_point3 top, double side_len, t_material *mat, t_texture *texture)
+t_pyramid *pyramid(t_point3 center, t_point3 top, double side_len)
 {
 	t_pyramid	*pm;
 	double 		half_side;
@@ -127,21 +119,19 @@ t_pyramid *pyramid(t_point3 center, t_point3 top, double side_len, t_material *m
 	pm->center = center;
 	pm->top = top;
 	pm->side_len = side_len;
-	pm->texture = texture;
-	pm->material = mat;
 	p1 = vplus_(center, -half_side, 0, -half_side);
 	p2 = vplus_(center, -half_side, 0, half_side);
 	p3 = vplus_(center, half_side, 0, half_side);
 	p4 = vplus_(center, half_side, 0, -half_side);
-	pm->bottom = square(center, vec3(0,1,0), side_len, mat, texture);
-	pm->side[0] = triangle(top, p1, p2, mat, texture);
-	pm->side[1] = triangle(top, p2, p3, mat, texture);
-	pm->side[2] = triangle(top, p3, p4, mat, texture);
-	pm->side[3] = triangle(top, p4, p1, mat, texture);
+	pm->bottom = square(center, vec3(0,1,0), side_len);
+	pm->side[0] = triangle(top, p1, p2);
+	pm->side[1] = triangle(top, p2, p3);
+	pm->side[2] = triangle(top, p3, p4);
+	pm->side[3] = triangle(top, p4, p1);
 	return (pm);
 }
 
-t_cylinder	*cylinder(t_point3 center_bottom, t_vec3 axis, double diameter, double height, t_material *mat, t_texture *texture)
+t_cylinder	*cylinder(t_point3 center_bottom, t_vec3 axis, double diameter, double height)
 {
 	t_cylinder	*cy;
 
@@ -158,12 +148,10 @@ t_cylinder	*cylinder(t_point3 center_bottom, t_vec3 axis, double diameter, doubl
 	cy->radius = diameter / 2;
 	cy->radius2 = cy->radius * cy->radius;
 	cy->height = height;
-	cy->material = mat;
-	cy->texture = texture;
 	return (cy);
 }
 
-t_triangle *triangle(t_point3 p0, t_point3 p1, t_point3 p2, t_material *mat, t_texture *texture)
+t_triangle *triangle(t_point3 p0, t_point3 p1, t_point3 p2)
 {
 	t_triangle	*tr;
 
@@ -176,8 +164,6 @@ t_triangle *triangle(t_point3 p0, t_point3 p1, t_point3 p2, t_material *mat, t_t
 	tr->p1p2 = vminus(p2, p1);
 	tr->p2p0 = vminus(p0, p2);
 	tr->normal = vunit(vcross(tr->p0p1, vminus(p2, p0)));
-	tr->material = mat;
-	tr->texture = texture;
 	return (tr);
 }
 

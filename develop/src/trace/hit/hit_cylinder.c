@@ -87,28 +87,31 @@ static t_vec3	world2object_cy(t_matrix44 *rotate, t_cylinder *cy, t_ray *ray)
 	return (offset);
 }
 
-t_bool		hit_cy_rotate_check(t_objects *obj, t_cylinder *cy, t_ray *ray, t_hit_record *rec)
+t_bool		hit_cy_rotate_check(t_objects *obj, t_ray *ray, t_hit_record *rec)
 {
 	t_ray			ray_w2o;
 	t_cylinder 		cy_w2o;
+	t_objects		obj_w2o;
 	t_bool			hit_result;
 	t_vec3			offset;
 
 	if (obj->rotate != NULL)
 	{
-		cy_w2o = *cy;
+		obj_w2o = *obj;
+		cy_w2o = *(t_cylinder *)obj->element;
+		obj_w2o.element = &cy_w2o;
 		ray_w2o = *ray;
 		offset = world2object_cy(obj->rotate, &cy_w2o, &ray_w2o);
-		hit_result = hit_cylinder(&cy_w2o, &ray_w2o, rec);
+		hit_result = hit_cylinder(&obj_w2o, &ray_w2o, rec);
 		object2world_rec(rec, &offset, obj->rotate, obj->rotate_normal);
 	}
 	else
-		hit_result = hit_cylinder(cy, ray, rec);
+		hit_result = hit_cylinder(obj, ray, rec);
 	return (hit_result);
 }
 
 // x,y,z 축방향 실린더로 고정해서 풀어보자(https://www.cl.cam.ac.uk/teaching/1999/AGraphHCI/SMAG/node2.html
-t_bool		hit_cylinder(t_cylinder *cy, t_ray *ray, t_hit_record *rec)
+t_bool		hit_cylinder(t_objects *obj, t_ray *ray, t_hit_record *rec)
 {
 	double 	a;
 	double 	half_b;
@@ -119,8 +122,10 @@ t_bool		hit_cylinder(t_cylinder *cy, t_ray *ray, t_hit_record *rec)
 	double 	h;
 	double	hmin;
 	double	hmax;
+	t_cylinder *cy;
 	t_point3 p;
 
+	cy = obj->element;
 	discriminant = cylinder_get_discriminant(cy, ray, &half_b, &a);
 	if (discriminant < 0)
 		return (FALSE);
@@ -139,7 +144,7 @@ t_bool		hit_cylinder(t_cylinder *cy, t_ray *ray, t_hit_record *rec)
 	rec->normal = cylinder_normal(cy, rec);
 	set_face_normal(ray, rec);
 	get_cylinder_uv(rec, cy);
-	rec->material = cy->material;
-	rec->texture = cy->texture;
+	rec->material = obj->material;
+	rec->texture = obj->texture;
 	return (TRUE);
 }
