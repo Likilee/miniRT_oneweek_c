@@ -14,7 +14,7 @@ t_sphere	*sphere(t_point3 center, double radius, t_material *mat, t_texture *tex
 	return (sp);
 }
 
-t_light		*light_point(t_point3 light_origin, t_color3 light_color, double ka)
+t_light		*light_point(t_point3 light_origin, t_color3 light_color, double ka, double brightness)
 {
 	t_light	*light;
 
@@ -24,10 +24,11 @@ t_light		*light_point(t_point3 light_origin, t_color3 light_color, double ka)
 	light->p = light_origin;
 	light->light_color = light_color;
 	light->ka = ka;
+	light->brightness = brightness;
 	return (light);
 }
 
-t_light		*light_parallel(t_vec3 dir, t_color3 light_color, double ka)
+t_light		*light_parallel(t_vec3 dir, t_color3 light_color, double ka, double brightness)
 {
 	t_light	*light;
 
@@ -37,6 +38,7 @@ t_light		*light_parallel(t_vec3 dir, t_color3 light_color, double ka)
 	light->dir = vmult(vunit(dir), -1);
 	light->ka = ka;
 	light->light_color = light_color;
+	light->brightness = brightness;
 	return (light);
 };
 
@@ -211,19 +213,5 @@ t_texture	*texture(t_texture_type type, t_color3 albedo1, t_color3 albedo2, doub
 	texture->albedo1 = albedo1;
 	texture->albedo2 = albedo2;
 	texture->option1 = option1;
-	return (texture);
-}
-
-t_texture	*texture_img(t_texture_type type, t_data *img)
-{
-	t_texture *texture;
-
-	if(!(texture = (t_texture *)malloc(sizeof(t_texture))))
-		exit(1);
-	texture->type = type;
-	texture->albedo1 = color3(0,0,0);
-	texture->albedo2 = color3(0,0,0);
-	texture->option1 = 0;
-	texture->img = img;
 	return (texture);
 }

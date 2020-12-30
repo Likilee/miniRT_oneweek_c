@@ -10,7 +10,7 @@ t_bool		hit_sphere(t_sphere *sp, t_ray *ray, t_hit_record *rec)
 	double	discriminant;
 	double	sqrtd;
 	double	root;
-
+	
 	oc = vminus(ray->orig, sp->center);
 	a = vlength2(ray->dir);
 	half_b = vdot(oc, ray->dir);

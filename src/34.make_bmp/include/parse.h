@@ -21,6 +21,7 @@ void		parse_error_data_count(char **data, int n, char *line);
 void		parse_data_set_double(char **data, int n, char *line);
 void		parse_data_set_zero_to_one(char **data, int n, char *line);
 void		data_is_double(char *str, char *line);
+void		data_is_integer(char *str, char *line);
 void		data_is_zero_to_one(char *str, char *line);
 void		data_is_in_degree_range(char *str, char *line);
 void		parse_data_set_rgb(char **data, int n, char *line);

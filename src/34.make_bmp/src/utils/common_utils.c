@@ -101,7 +101,10 @@ double		atod(char *str)
 	if (split[1] != NULL)
 	{
 		point = ft_atoi(split[1]);
-		n = ft_intlen(point);
+		n = 0;
+		while (split[1][n] == '0')
+			++n;
+		n += ft_intlen(point);
 		point /= pow(10, n);
 		if (split[0][0] == '-')
 			point *= -1;

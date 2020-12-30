@@ -32,7 +32,8 @@ void	camera_set(t_canvas *canvas, t_camera *cam)
 	half_width = tan(theta / 2);
 	viewport_width = 2.0 * half_width;
 	viewport_height = viewport_width / canvas->aspect_ratio;
-	w = vunit(vminus(cam->orig, lookat));
+	w = vunit(vmult(cam->dir, -1));
+	// w = vunit(vminus(cam->orig, lookat));
 	// if (w.x == 0 && w.z == 0)
 	// 	w.x = 0.001;
 	u = vunit(vcross(vup, w));
@@ -41,7 +42,7 @@ void	camera_set(t_canvas *canvas, t_camera *cam)
 	cam->vertical = vmult(v, viewport_height);
 	// 왼쪽 아래 코너점 좌표, origin - horizontal / 2 - vertical / 2 - vec3(0,0,focal_length)
 	cam->left_bottom = vminus(vminus(vminus(cam->orig, vdivide(cam->horizontal, 2)),
-								vdivide(cam->vertical, 2)), vec3(0, 0, focal_len));
+								vdivide(cam->vertical, 2)), w);
 }
 
 // 요기 포지셔닝 카메라파트 고대로! https://raytracing.github.io/books/RayTracingInOneWeekend.html#positionablecamera

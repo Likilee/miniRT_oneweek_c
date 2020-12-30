@@ -97,7 +97,7 @@ is "–-save".
 >>> ```c
 >>>l -40.0,50.0,0.0 0.6 10,0,255
 >>> ```
->>>· identifier: l 
+>>>· identifier: l
 >>>
 >>>· x,y,z coordinates of the light point: -40.0,50.0,0.0
 >>>
@@ -207,24 +207,24 @@ PERFECT 란 당연히 완전해야하고, 잘못된 사용과 같은 심한 실�
 ```
 
 ##### Bonus list:
->- [ ] **Normal disruption e.g. using sine which gives a wave effect.**
+>- [ ] Normal disruption e.g. using sine which gives a wave effect.
 >- [x] **Color disruption: checkerboard.**
 >- [x] **Color disruption: rainbow effect using object’s normal.**
 >- [x] **Parallel light following a precise direction.**
 >- [x] **Compound element: Cube (6 squares).**
 >- [x] **Compound element: Pyramid (4 triangles, 1 square).**
 >- [ ] **Putting caps on size-limited cylinders.**
->- [ ] **One other 2nd degree object: Cone, Hyperboloid, Paraboloid..**
->- [ ] One color filter: Sepia, R/G/B filters..
+>- [ ] One other 2nd degree object: Cone, Hyperboloid, Paraboloid..
+>- [ ] **One color filter: Sepia, R/G/B filters..**
 >- [x] **Anti-aliasing.**
 >- [ ] Simple stereoscopy (like red/green glasses).
->- [ ] **Multithreaded rendering.**
+>- [x] **Multithreaded rendering.**
 >- [x] **Sphere texturing: uv mapping.**
 
 >- [ ] **A beautiful skybox.**
->- [ ] **Keyboard interactivity (translation/rotation) with camera.**
->- [ ] **Keyboard interactivity (translation/rotation) with objects.**
->- [ ] Changing the camera rotation with the mouse.
+>- [x] **Keyboard interactivity (translation/rotation) with camera.**
+>- [x] **Keyboard interactivity (translation/rotation) with objects.**
+>- [x] **Changing the camera rotation with the mouse.**
 
 ```c
 평가 중에 사용이 정당화되는 한 다른 함수들을 사용하여 보너스 부분을 완료 할 수 있습니다.

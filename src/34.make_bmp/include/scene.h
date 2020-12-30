@@ -22,8 +22,8 @@ int			osize(t_objects **lst);
 void		odelone(t_objects *obj);
 void		oclear(t_objects **lst);
 t_sphere	*sphere(t_point3 center, double radius, t_material *mat, t_texture *s_texture);
-t_light		*light_point(t_point3 light_origin, t_color3 light_color, double ka);
-t_light		*light_parallel(t_vec3 dir, t_color3 light_color, double ka);
+t_light		*light_point(t_point3 light_origin, t_color3 light_color, double ka,  double brightness);
+t_light		*light_parallel(t_vec3 dir, t_color3 light_color, double ka, double brightness) ;
 t_plane		*plane(t_point3 p, t_vec3 normal, t_material *mat, t_texture *s_texture);
 t_square	*square(t_point3 p, t_vec3 normal, double side_len, t_material *mat, t_texture *s_texture);
 t_cylinder	*cylinder(t_point3 center_bottom, t_vec3 axis, double diameter, double height, t_material *mat, t_texture *s_texture);
@@ -32,7 +32,6 @@ t_cube		*cube(t_point3 center, double side_len, t_material *mat, t_texture *text
 t_pyramid	*pyramid(t_point3 center, t_point3 top, double side_len, t_material *mat, t_texture *texture);
 t_material	*material(t_material_type type, double option1);
 t_texture	*texture(t_texture_type type, t_color3 albedo1, t_color3 albedo2, double option1);
-t_texture	*texture_img(t_texture_type type, t_data *img);
 void		free_cube(t_cube *cb);
 void		free_pyramid(t_pyramid *pm);
 

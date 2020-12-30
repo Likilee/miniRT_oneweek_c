@@ -15,6 +15,7 @@ t_bool		hit(t_objects *obj, t_ray *ray, t_hit_record *rec)
 			hit_anything = TRUE;
 			temp_rec.tmax = temp_rec.t;
 			*rec = temp_rec;
+			rec->obj = obj;
 		}
 		obj = obj->next;
 	}

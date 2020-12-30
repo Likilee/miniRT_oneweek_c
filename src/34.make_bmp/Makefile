@@ -20,8 +20,8 @@ fclean : clean
 	$(RM) $(NAME)
 re : fclean all
 
-run : all
-	./$(NAME)
+run : re
+	./$(NAME) scene.rt
 ppm : all
 	./$(NAME) > result.ppm
 open : ppm

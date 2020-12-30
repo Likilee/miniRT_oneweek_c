@@ -53,7 +53,7 @@ t_color3	ray_color(t_ray *r, t_objects *objs, t_global *global, int depth)
 	}
 }
 
-t_color3	ray_color_preview(t_ray *r, t_objects *objs, t_global *global)
+t_color3	ray_color_preview(t_ray *r, t_objects *objs, t_global *global, int light_on)
 {
 	t_vec3			unit_dir;
 	double			t;
@@ -63,8 +63,12 @@ t_color3	ray_color_preview(t_ray *r, t_objects *objs, t_global *global)
 	rec.tmin = 0.0001;
 	rec.tmax = INFINITY;
 	if (hit(objs, r, &rec))
-		// return (direct_lighting(objs, r, &rec));
-		return (rec.texture->albedo1);
+	{
+		if (light_on == 0)
+			return (direct_lighting(objs, r, &rec));
+		else
+			return (rec.texture->albedo1);
+	}
 	else
 	{
 		//구와 교점이 없으면 하늘로

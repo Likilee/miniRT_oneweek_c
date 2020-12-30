@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kilee <kilee@student.42.fr>                +#+  +:+       +#+        */
+/*   By: kihoonlee <kihoonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/13 16:49:10 by kihoonlee         #+#    #+#             */
-/*   Updated: 2020/11/25 13:42:07 by kilee            ###   ########.fr       */
+/*   Updated: 2020/12/28 14:33:43 by kihoonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 ** Define BUFFER_SIZE when doesn't define during compile
 */
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 100
+#  define BUFFER_SIZE 1
 # endif
 
 /*

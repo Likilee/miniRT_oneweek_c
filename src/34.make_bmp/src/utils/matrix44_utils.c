@@ -137,6 +137,7 @@ t_matrix44 *rotate(t_vec3 rotate)
 	mmult_m(m_rotate, m_rotate_z);
 	free(m_rotate_y);
 	free(m_rotate_z);
+	m_rotate->rotate_deg = rotate;
 	return (m_rotate);
 }
 

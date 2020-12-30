@@ -224,19 +224,3 @@ the second method is to take into account multiple rays for each pixel and then 
 [바람직한 멀티스레딩 구조](https://www.youtube.com/watch?v=M1e9nmmD3II)
 
 [멀티쓰레드 예제](https://doorbw.tistory.com/27%E3%85%81)
-
-
-## 비트맵 구조체 만들기
-
-[비트맵 파일 구조](https://dojang.io/mod/page/view.php?id=702)
-
-[구조체 만들기](https://dojang.io/mod/page/view.php?id=703)
-
-[메뉴얼](https://docs.microsoft.com/ko-kr/dotnet/desktop/winforms/advanced/types-of-bitmaps?view=netframeworkdesktop-4.8)
-
-[비트맵파일 가로가 4의 배수여아하는 이유](https://m.blog.naver.com/PostView.nhn?blogId=wlsgh31&logNo=70189645918&proxyReferer=https:%2F%2Fwww.google.com%2F)
-
-## 구조체 정렬 막기
-
-[pragma pack](https://dojang.io/mod/page/view.php?id=432)
-

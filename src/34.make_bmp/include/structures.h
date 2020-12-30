@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structures.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kihoonlee <kihoonlee@student.42.fr>        +#+  +:+       +#+        */
+/*   By: mjeg <mj70@naver.com>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 15:25:54 by kihoonlee         #+#    #+#             */
-/*   Updated: 2020/12/28 19:30:19 by kihoonlee        ###   ########.fr       */
+/*   Updated: 2020/12/27 20:36:46 by 42uym    mjeg          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ typedef int					t_texture_type;
 # define CHECKER 1
 # define CHECKER_UV 2
 # define RAINBOW 3
-# define IMAGE 4
 
 typedef int					t_light_type;
 
@@ -112,6 +111,7 @@ struct						s_hit_record
 {
 	t_point3	p;
 	t_vec3		normal;
+	t_objects	*obj;
 	t_material	*material;
 	t_texture	*texture;
 	double		tmin;
@@ -125,6 +125,7 @@ struct						s_hit_record
 struct						s_matrix44
 {
 	double	x[4][4];
+	t_vec3	rotate_deg;
 };
 
 /*
@@ -175,27 +176,15 @@ struct						s_material
 
 struct						s_texture
 {
+	t_texture_type	type;
 	t_color3		albedo1;
 	t_color3		albedo2;
 	double			option1;
-	t_data			*img;
-	t_texture_type	type;
 };
 
 /*
 ** 0. Mlx structures
 */
-struct						s_data
-{
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-	int		width;
-	int		height;
-};
-
 struct						s_scene
 {
 	t_global	global;
@@ -206,11 +195,24 @@ struct						s_scene
 	t_data		*img;
 };
 
+struct						s_data
+{
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+};
 
 struct						s_cntl
 {
-	void	*mlx;
-	void	*win;
+	void		*mlx;
+	void		*win;
+	t_scene		*scene;
+	t_objects	*selected;
+	t_data		*img;
+	int			mode; // 0:default 1:object transform 2:camera transform
+	int			light_on;
 };
 
 /*
@@ -230,6 +232,7 @@ struct						s_light
 	t_point3		p;
 	t_vec3			dir;
 	t_color3		light_color;
+	double			brightness;
 	double			ka;
 	t_light_type	type;
 };

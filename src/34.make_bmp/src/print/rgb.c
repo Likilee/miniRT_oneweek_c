@@ -19,7 +19,7 @@ int		get_r(int rgb)
 
 int		get_g(int rgb)
 {
-	return (rgb >> 8& 0xFF);
+	return (rgb >> 8 & 0xFF);
 }
 
 int		get_b(int rgb)

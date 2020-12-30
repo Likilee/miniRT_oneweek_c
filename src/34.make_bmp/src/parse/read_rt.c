@@ -135,7 +135,7 @@ void		get_point_light(t_scene *scene, char *line)
 	light_color = color3(ft_atoi(rgb[0]), ft_atoi(rgb[1]), ft_atoi(rgb[2]));
 	light_color = vdivide(light_color, 255);
 	light_color = vmult(light_color, atod(data[1]) * lux);
-	oadd(&scene->world, object(LIGHT, light_point(origin, light_color, 0.1)));
+	oadd(&scene->world, object(LIGHT, light_point(origin, light_color, 0.1, atod(data[1]))));
 	ft_free_arr(data, 3);
 	ft_free_arr(point, 3);
 	ft_free_arr(rgb, 3);
