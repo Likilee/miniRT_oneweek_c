@@ -50,7 +50,7 @@ double	saturate(double value);
 t_bool	near_zero(t_vec3 *v);
 double	random_double(void);
 double	random_double_(double min, double max);
-double	random_jitter(int sample_per_pixel, int k);
+double	random_jitter(int spp, int k);
 t_vec3		random_vec(void);
 t_vec3		random_vec_(double min, double max);
 t_vec3		random_in_unit_sphere(void);

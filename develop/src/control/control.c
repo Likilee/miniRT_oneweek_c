@@ -32,7 +32,7 @@ int		cntl_mouse_click(int button, int x, int y, t_cntl *cntl)
 
 int		my_main_loop(t_cntl *cntl)
 {
-	render_preview(cntl->scene, cntl->img, cntl->light_on);
+	render_preview(cntl);
 	mlx_put_image_to_window(cntl->mlx, cntl->win, cntl->img->img, 0, 0);
 	return (0);
 }

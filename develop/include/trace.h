@@ -10,8 +10,9 @@
 /*
 ** trace/render
 */
-void		render(t_scene *scene, t_data *img);
-void		render_preview(t_scene *scene, t_data *img, int light_on);
+void		render(t_cntl *cntl);
+void		render_preview(t_cntl *cntl);
+
 
 /*
 ** trace/hit
