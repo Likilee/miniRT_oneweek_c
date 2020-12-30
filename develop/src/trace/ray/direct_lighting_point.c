@@ -47,7 +47,7 @@ t_color3		direct_lighting_point(t_objects *objs, t_light *light, t_ray *r, t_hit
 	// dprintf(2,"diffuse:%f, %f, %f\n",diffuse.x, diffuse.y, diffuse.z);
 	// dprintf(2,"specula:%f, %f, %f\n\n",specular.x, specular.y, specular.z);
 	lightintensity = vplus(vplus(ambient, diffuse),specular);
-	AttenuationRadius = 8;
+	AttenuationRadius = 100;
 	lightradiusmask = pow(saturate(1 - pow((pow(light_len,2) / pow(AttenuationRadius,2)), 2)), 2);
 	distanceattenuation = 1 / (pow((light_len),2) + 1);
 	lightattenuation = distanceattenuation * lightradiusmask;

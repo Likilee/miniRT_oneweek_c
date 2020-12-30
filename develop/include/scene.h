@@ -18,6 +18,7 @@ t_objects	*object(t_objects_type type, void *element, t_material *m, t_texture *
 ** src/scene/object
 */
 void		oadd(t_objects **lst, t_objects *new);
+t_objects	*olast(t_objects *lst);
 int			osize(t_objects **lst);
 void		odelone(t_objects *obj);
 void		oclear(t_objects **lst);
@@ -32,7 +33,7 @@ t_cube		*cube(t_point3 center, double side_len);
 t_pyramid	*pyramid(t_point3 center, t_point3 top, double side_len);
 t_material	*material(t_material_type type, double option1);
 t_texture	*texture(t_texture_type type, t_color3 albedo1, t_color3 albedo2, double option1);
-t_texture	*texture_img(t_texture_type type, t_data *img);
+t_texture	*texture_img(t_data *img);
 void		free_cube(t_cube *cb);
 void		free_pyramid(t_pyramid *pm);
 

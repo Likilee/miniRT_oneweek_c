@@ -1,6 +1,6 @@
 #include "parse.h"
 
-t_scene		*read_rt(char *filepath)
+t_scene		*read_rt(char *filepath, void *mlx)
 {
 	t_scene *scene;
 	int		fd;
@@ -9,24 +9,53 @@ t_scene		*read_rt(char *filepath)
 
 	scene = scene_init();
 	fd = open(filepath, O_RDONLY);
+	if (fd < 0)
+	{
+		perror("Error\n.rt file path wrong\n");
+		exit (0);
+	}
 	rd = 1;
 	while (rd)
 	{
 		rd = get_next_line(fd, &line);
-		parse_rt(scene, line);
+		parse_rt(scene, line, mlx);
 		free(line);
 	}
 	return (scene);
 }
+void		parse_rt(t_scene *scene, char *line, void *mlx)
+{
+	if (parse_rt_header(scene, line))
+		return ;
+	else if (parse_rt_bonus(scene, line, mlx))
+		return ;
+	else if (parse_rt_default(scene, line))
+		return ;
+	else
+		parse_error_identifier(line);
+}
 
-// 식별자 2글자인 애들부터 체크!
-void		parse_rt(t_scene *scene, char *line)
+t_bool		parse_rt_header(t_scene *scene, char *line)
 {
 	while (*line == ' ')
 		++line;
 	if (ft_strnstr(line, "R ", 2))
 		get_resolution(scene, line);
-	else if (ft_strnstr(line, "sp ", 3))
+	else if (ft_strnstr(line, "A ", 2))
+		get_ambient(scene, line);
+	else if (ft_strnstr(line, "L ", 2))
+		get_lux(scene, line);
+	else if (*line != '#' && *line != '\0')
+		return (FALSE);
+	return (TRUE);
+}
+
+// 식별자 2글자인 애들부터 체크!
+t_bool		parse_rt_default(t_scene *scene, char *line)
+{
+	while (*line == ' ')
+		++line;
+	if (ft_strnstr(line, "sp ", 3))
 		get_sphere(scene, line);
 	else if (ft_strnstr(line, "pl ", 3))
 		get_plane(scene, line);
@@ -36,16 +65,120 @@ void		parse_rt(t_scene *scene, char *line)
 		get_cylinder(scene, line);
 	else if (ft_strnstr(line, "tr ", 3))
 		get_triangle(scene, line);
-	else if (ft_strnstr(line, "A ", 2))
-		get_ambient(scene, line);
 	else if (ft_strnstr(line, "c ", 2))
 		get_camera(scene, line);
 	else if (ft_strnstr(line, "l ", 2))
 		get_point_light(scene, line);
-	else if (*line == '\0')
-		return ;
 	else
+		return (FALSE);
+	return (TRUE);
+}
+
+t_bool		parse_rt_bonus(t_scene *scene, char *line, void *mlx)
+{
+	while (*line == ' ')
+		++line;
+	if (ft_strnstr(line, "\tm ", 3))      //메테리얼
+		get_material(scene, line);
+	else if (ft_strnstr(line, "\tt ", 3))  //텍스쳐
+		get_texture(scene, line);
+	else if (ft_strnstr(line, "\timg ", 5))  //텍스쳐
+		get_texture_img(scene, line, mlx);
+	else if (ft_strnstr(line, "cb ", 3))  //큐브
+		get_cube(scene, line);
+	else if (ft_strnstr(line, "pm ", 3))  //피라미드
+		get_pyramid(scene, line);
+	else if (ft_strnstr(line, "dl ", 3))
+ 		get_parallel_light(scene, line);
+	else
+		return (FALSE);
+	return (TRUE);
+};
+
+void		get_lux(t_scene *scene, char *line)
+{
+	char			**data;
+
+	data = ft_split(line + 2, ' ');
+	parse_error_data_count(data, 1, line);
+	data_is_integer(data[0], line);
+	scene->global.lux = ft_atoi(data[0]);
+	ft_free_arr(data, 1);
+}
+
+void		get_material(t_scene *scene, char *line)
+{
+	char			**data;
+	t_material		*m;
+	t_material_type	type;
+	t_objects		*target;
+
+	data = ft_split(line + 3, ' ');
+	parse_error_data_count(data, 2, line);
+	data_is_integer(data[0], line);
+	type = ft_atoi(data[0]);
+	if (type < 0 && type > 3)
 		parse_error_identifier(line);
+	data_is_double(data[1], line);
+	m = material(type, atod(data[1]));
+	target = olast(scene->world);
+	free(target->material);
+	target->material = m;
+	ft_free_arr(data, 2);
+}
+
+void		get_texture(t_scene *scene, char *line)
+{
+	char			**data;
+	char			**albedo1;
+	char			**albedo2;
+	t_texture		*t;
+	t_texture_type	type;
+	t_objects		*target;
+
+	if(!(t = (t_texture *)malloc(sizeof(t_texture))))
+		error_malloc();
+	data = ft_split(line + 3, ' ');
+	parse_error_data_count(data, 4, line);
+	data_is_integer(data[0], line);
+	if (type < 0 && type > 4)
+		parse_error_identifier(line);
+	albedo1 = ft_split(data[1], ',');
+	albedo2 = ft_split(data[2], ',');
+	parse_data_set_rgb(albedo1, 3, line);
+	parse_data_set_rgb(albedo2, 3, line);
+	data_is_double(data[3], line);
+	t = texture(ft_atoi(data[0]),
+		vdivide(color3(atod(albedo1[0]),atod(albedo1[1]),atod(albedo1[2])), 255),
+		vdivide(color3(atod(albedo2[0]),atod(albedo2[1]),atod(albedo2[2])), 255),
+		atod(data[3]));
+	target = olast(scene->world);
+	free(target->texture);
+	target->texture = t;
+	ft_free_arr(data, 4);
+	ft_free_arr(albedo1, 3);
+	ft_free_arr(albedo2, 3);
+}
+
+void		get_texture_img(t_scene *scene, char *line, void *mlx)
+{
+	char			**data;
+	t_data			*map;
+	t_objects		*target;
+	t_texture		*t;
+
+	if (!(map = (t_data *)malloc(sizeof(t_data))))
+		error_malloc();
+	data = ft_split(line + 5, ' ');
+	parse_error_data_count(data, 1, line);
+	map->img = mlx_png_file_to_image(mlx, data[0], &map->width, &map->height);
+	map->addr = mlx_get_data_addr(map->img, &map->bits_per_pixel,
+								&map->line_length, &map->endian);
+	t = texture_img(map);
+	target = olast(scene->world);
+	free(target->texture);
+	target->texture = t;
+	ft_free_arr(data, 1);
 }
 
 void		get_resolution(t_scene *scene, char *line)
@@ -120,25 +253,21 @@ void		get_point_light(t_scene *scene, char *line)
 	t_point3	origin;
 	t_color3	light_color;
 	double		lux;
-	double		ka;
 
-	lux = 50;
-	ka = 0.1;
+	lux = scene->global.lux;
 	data = ft_split(line + 2, ' ');
-	point = ft_split(data[0], ',');
-	rgb = ft_split(data[2], ',');
 	parse_error_data_count(data, 3, line);
+	point = ft_split(data[0], ',');
 	parse_data_set_double(point, 3, line);
 	data_is_zero_to_one(data[1], line);
+	rgb = ft_split(data[2], ',');
 	parse_data_set_rgb(rgb, 3, line);
 	origin = point3(atod(point[0]), atod(point[1]), atod(point[2]));
 	light_color = color3(ft_atoi(rgb[0]), ft_atoi(rgb[1]), ft_atoi(rgb[2]));
 	light_color = vdivide(light_color, 255);
 	light_color = vmult(light_color, atod(data[1]) * lux);
 	oadd(&scene->world, object(LIGHT, light_point(origin, light_color, 0.1, atod(data[1])), NULL, NULL));
-	ft_free_arr(data, 3);
-	ft_free_arr(point, 3);
-	ft_free_arr(rgb, 3);
+	parse_free3(data, point, rgb);
 }
 
 void		get_sphere(t_scene *scene, char *line)
@@ -225,7 +354,7 @@ void		get_square(t_scene *scene, char *line)
 	sq_albedo = color3(atod(albedo[0]), atod(albedo[1]), atod(albedo[2]));
 	sq_albedo = vdivide(sq_albedo, 255);
 	solid = texture(SOLID, sq_albedo, sq_albedo, 0);
-	diffuse = material(DIFFUSE, 0);
+	diffuse = material(DIFFUSE, 32);
 	oadd(&scene->world, object(SQ,
 	square(center, normal, atod(data[2])), diffuse, solid));
 	ft_free_arr(data, 3);
@@ -259,7 +388,7 @@ void		get_cylinder(t_scene *scene, char *line)
 	cy_albedo = color3(atod(albedo[0]), atod(albedo[1]), atod(albedo[2]));
 	cy_albedo = vdivide(cy_albedo, 255);
 	solid = texture(SOLID, cy_albedo, cy_albedo, 0);
-	diffuse = material(DIFFUSE, 0);
+	diffuse = material(DIFFUSE, 32);
 	oadd(&scene->world, object(CY,
 	cylinder(center, normal, atod(data[2]), atod(data[3])), diffuse, solid));
 	ft_free_arr(data, 5);
@@ -278,6 +407,7 @@ void		get_triangle(t_scene *scene, char *line)
 	int				i;
 
 	data = ft_split(line + 3, ' ');
+	parse_error_data_count(data, 4, line);
 	i = -1;
 	while (++i < 3)
 	{
@@ -292,10 +422,92 @@ void		get_triangle(t_scene *scene, char *line)
 	tr_albedo = color3(atod(albedo[0]), atod(albedo[1]), atod(albedo[2]));
 	tr_albedo = vdivide(tr_albedo, 255);
 	solid = texture(SOLID, tr_albedo, tr_albedo, 0);
-	diffuse = material(DIFFUSE, 0);
+	diffuse = material(DIFFUSE, 32);
 	oadd(&scene->world, object(TR,
 	triangle(pp[0], pp[1], pp[2]), diffuse, solid));
 	ft_free_arr(data, 4);
 	parse_free3(p[0], p[1], p[2]);
 	ft_free_arr(albedo, 3);
+}
+
+void		get_cube(t_scene *scene, char *line)
+{
+	char			**data;
+	char			**c;
+	char			**a;
+	t_material		*diffuse;
+	t_texture		*solid;
+	t_color3		albedo;
+	int				i;
+
+	data = ft_split(line + 3, ' ');
+	parse_error_data_count(data, 3, line);
+	c = ft_split(data[0], ',');
+	parse_data_set_double(c, 3, line);
+	data_is_double(data[1], line);
+	a = ft_split(data[2], ',');
+	parse_data_set_rgb(a, 3, line);
+	albedo = color3(atod(a[0]), atod(a[1]), atod(a[2]));
+	albedo = vdivide(albedo, 255);
+	solid = texture(SOLID, albedo, albedo, 0);
+	diffuse = material(DIFFUSE, 32);
+	oadd(&scene->world, object(CB,
+		cube(point3(atod(c[0]), atod(c[1]), atod(c[2])), atod(data[1])),
+		diffuse, solid));
+	parse_free3(data, c, a);
+}
+
+void		get_pyramid(t_scene *scene, char *line)
+{
+	char			**data;
+	char			**b;
+	char			**t;
+	char			**a;
+	t_material		*diffuse;
+	t_texture		*solid;
+	t_color3		albedo;
+	int				i;
+
+	data = ft_split(line + 3, ' ');
+	parse_error_data_count(data, 4, line);
+	b = ft_split(data[0], ',');
+	parse_data_set_double(b, 3, line);
+	t = ft_split(data[1], ',');
+	parse_data_set_double(t, 3, line);
+	data_is_double(data[2], line);
+	a = ft_split(data[3], ',');
+	parse_data_set_rgb(a, 3, line);
+	albedo = vdivide(color3(atod(a[0]), atod(a[1]), atod(a[2])), 255);
+	solid = texture(SOLID, albedo, albedo, 0);
+	diffuse = material(DIFFUSE, 32);
+	oadd(&scene->world,
+	object(PM, pyramid(point3(atod(b[0]), atod(b[1]), atod(b[2])),
+				point3(atod(t[0]), atod(t[1]), atod(t[2])),
+				atod(data[2])), diffuse, solid));
+	ft_free_arr(data, 4);
+	parse_free3(b, t, a);
+}
+
+void		get_parallel_light(t_scene *scene, char *line)
+{
+	char		**data;
+	char		**d;
+	char		**rgb;
+	t_vec3		dir;
+	t_color3	light;
+	double		lux;
+
+	data = ft_split(line + 2, ' ');
+	parse_error_data_count(data, 3, line);
+	d = ft_split(data[0], ',');
+	parse_data_set_double(d, 3, line);
+	data_is_zero_to_one(data[1], line);
+	rgb = ft_split(data[2], ',');
+	parse_data_set_rgb(rgb, 3, line);
+	dir = vec3(atod(d[0]), atod(d[1]), atod(d[2]));
+	light = vec3(ft_atoi(rgb[0]), ft_atoi(rgb[1]), ft_atoi(rgb[2]));
+	light = vdivide(light, 255);
+	light = vmult(light, atod(data[1]));
+	oadd(&scene->world, object(LIGHT, light_parallel(dir, light, 0.1, atod(data[1])), NULL, NULL));
+	parse_free3(data, d, rgb);
 }

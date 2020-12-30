@@ -5,11 +5,12 @@ void	cntl_light_on(t_cntl *cntl)
 	t_objects	*temp;
 
 	cntl->mode = LIGM;
+	temp = cntl->scene->world;
 	if (cntl->selected == 0)
 	{
-		while (cntl->scene->world->type != LIGHT)
-			cntl->scene->world = cntl->scene->world->next;
-		cntl->selected = cntl->scene->world;
+		while (temp->type != LIGHT)
+			temp = temp->next;
+		cntl->selected = temp;
 	}
 	printf("< light mode >\n[right arrow] key : next light\n");
 }
@@ -34,7 +35,7 @@ void	cntl_light_select(t_cntl *cntl)
 {
 	t_objects	*temp;
 
-	if (cntl->selected == 0 || cntl->selected->next == 0)
+	if (cntl->selected == 0  || cntl->selected->next == 0)
 		temp = (t_objects *)cntl->scene->world;
 	else
 		temp = (t_objects *)cntl->selected->next;
@@ -67,18 +68,22 @@ void	cntl_light_bright_up(t_cntl *cntl)
 {
 	double		brightness;
 	t_color3	*light_color;
+	t_light		*light;
 
-	brightness = ((t_light *)(cntl->selected->element))->brightness;
-	light_color = &((t_light *)(cntl->selected->element))->light_color;
+	light = ((t_light *)(cntl->selected->element));
+
+	brightness = light->brightness;
+	light_color = &light->light_color;
 	if (cntl->selected->type == LIGHT)
 	{
-		((t_light *)(cntl->selected->element))->brightness += 0.1;
-		if (((t_light *)(cntl->selected->element))->brightness > 1)
-			((t_light *)(cntl->selected->element))->brightness = 1;
+		light->brightness += 0.1;
+		if (light->brightness > 1)
+			light->brightness = 1;
 		*light_color = vdivide(*light_color, brightness);
-		brightness = ((t_light *)(cntl->selected->element))->brightness;
+		brightness = light->brightness;
 		*light_color = vmult(*light_color, brightness);
 	}
+	printf("light_color(%f,%f,%f)", light_color->x, light_color->y, light_color->z);
 	printf("조명증가\n");
 }
 
@@ -98,6 +103,7 @@ void	cntl_light_bright_down(t_cntl *cntl)
 		brightness = ((t_light *)(cntl->selected->element))->brightness;
 		*light_color = vmult(*light_color, brightness);
 	}
+	printf("light_color(%f,%f,%f)", light_color->x, light_color->y, light_color->z);
 	printf("조명감소\n");
 }
 

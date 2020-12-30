@@ -142,3 +142,9 @@ void	parse_data_set_rgb(char **data, int n, char *line)
 	while (++i < n)
 		data_is_in_rgb_range(data[i], line);
 }
+
+void	error_malloc(void)
+{
+	perror("Malloc Failed in somewhere");
+	exit(0);
+}

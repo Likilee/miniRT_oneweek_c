@@ -44,6 +44,15 @@ int		osize(t_objects **lst)
 	return (count);
 }
 
+t_objects	*olast(t_objects *lst)
+{
+	if (lst == NULL)
+		return (NULL);
+	while (lst->next)
+		lst = lst->next;
+	return (lst);
+}
+
 void	odelone(t_objects *obj)
 {
 	if (obj == NULL)
