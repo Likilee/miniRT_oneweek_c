@@ -18,15 +18,35 @@ t_scene		*read_rt(char *filepath)
 	}
 	return (scene);
 }
-
-// 식별자 2글자인 애들부터 체크!
 void		parse_rt(t_scene *scene, char *line)
+{
+	t_bool		result;
+
+	result = parse_rt_header(scene, line);
+	result = parse_rt_default(scene, line);
+	result = parse_rt_bonus(scene, line);
+	if  (result == FALSE)
+		parse_error_identifier(line);
+}
+
+t_bool		parse_rt_header(t_scene *scene, char *line)
 {
 	while (*line == ' ')
 		++line;
 	if (ft_strnstr(line, "R ", 2))
 		get_resolution(scene, line);
-	else if (ft_strnstr(line, "sp ", 3))
+	else if (ft_strnstr(line, "A ", 2))
+		get_ambient(scene, line);
+	else if (*line != '\0')
+		return (FALSE);
+	return (TRUE);
+}
+// 식별자 2글자인 애들부터 체크!
+t_bool		parse_rt_default(t_scene *scene, char *line)
+{
+	while (*line == ' ')
+		++line;
+	if (ft_strnstr(line, "sp ", 3))
 		get_sphere(scene, line);
 	else if (ft_strnstr(line, "pl ", 3))
 		get_plane(scene, line);
@@ -36,18 +56,52 @@ void		parse_rt(t_scene *scene, char *line)
 		get_cylinder(scene, line);
 	else if (ft_strnstr(line, "tr ", 3))
 		get_triangle(scene, line);
-	else if (ft_strnstr(line, "A ", 2))
-		get_ambient(scene, line);
 	else if (ft_strnstr(line, "c ", 2))
 		get_camera(scene, line);
 	else if (ft_strnstr(line, "l ", 2))
 		get_point_light(scene, line);
-	else if (*line == '\0')
-		return ;
 	else
-		parse_error_identifier(line);
+		return (FALSE);
+	return (TRUE);
 }
 
+t_bool		parse_rt_bonus(t_scene *scene, char *line)
+{
+	while (*line == ' ')
+		++line;
+	if (ft_strnstr(line, "\tm ", 3))
+		get_material(scene, line);
+	else if (ft_strnstr(line, "\tt ", 3))
+		get_texture(scene, line);
+	else
+		return (FALSE);
+	return (TRUE);
+};
+
+void		get_material(t_scene *scene, char *line)
+{
+	char			**data;
+	t_material		*m;
+	t_material_type	type;
+	t_objects		*target;
+
+	data = ft_split(line + 3, ' ');
+	parse_error_data_count(data, 2, line);
+	if (ft_strncmp(data[0], "metal", 5) == 0)
+		type = METAL;
+	else if (ft_strncmp(data[0], "lambertian", 10) == 0)
+		type = LAMBERTIAN;
+	else if (ft_strncmp(data[0], "dielectric", 10) == 0)
+		type = DIELECTRIC;
+	else
+		parse_error_identifier(line);
+	data_is_double(data[1], line);
+	m = material(type, atod(data[1]));
+	target = olast(scene->world);
+	free(target->
+}
+void		get_texture(t_scene *scene, char *line)
+{}
 void		get_resolution(t_scene *scene, char *line)
 {
 	char **render_size;
@@ -164,7 +218,7 @@ void		get_sphere(t_scene *scene, char *line)
 	sp_albedo = vdivide(sp_albedo, 255);
 	radius = atod(data[1]) * 0.5;
 	solid = texture(SOLID, sp_albedo, sp_albedo, 0);
-	diffuse = material(DIFFUSE, 0);
+	diffuse = material(DIFFUSE, 32);
 	oadd(&scene->world, object(SP, sphere(sp_center, radius, diffuse, solid)));
 	parse_free3(data, center, albedo);
 }
@@ -225,7 +279,7 @@ void		get_square(t_scene *scene, char *line)
 	sq_albedo = color3(atod(albedo[0]), atod(albedo[1]), atod(albedo[2]));
 	sq_albedo = vdivide(sq_albedo, 255);
 	solid = texture(SOLID, sq_albedo, sq_albedo, 0);
-	diffuse = material(DIFFUSE, 0);
+	diffuse = material(DIFFUSE, 32);
 	oadd(&scene->world, object(SQ,
 	square(center, normal, atod(data[2]), diffuse, solid)));
 	ft_free_arr(data, 3);
@@ -259,7 +313,7 @@ void		get_cylinder(t_scene *scene, char *line)
 	cy_albedo = color3(atod(albedo[0]), atod(albedo[1]), atod(albedo[2]));
 	cy_albedo = vdivide(cy_albedo, 255);
 	solid = texture(SOLID, cy_albedo, cy_albedo, 0);
-	diffuse = material(DIFFUSE, 0);
+	diffuse = material(DIFFUSE, 32);
 	oadd(&scene->world, object(CY,
 	cylinder(center, normal, atod(data[2]), atod(data[3]), diffuse, solid)));
 	ft_free_arr(data, 5);
@@ -292,7 +346,7 @@ void		get_triangle(t_scene *scene, char *line)
 	tr_albedo = color3(atod(albedo[0]), atod(albedo[1]), atod(albedo[2]));
 	tr_albedo = vdivide(tr_albedo, 255);
 	solid = texture(SOLID, tr_albedo, tr_albedo, 0);
-	diffuse = material(DIFFUSE, 0);
+	diffuse = material(DIFFUSE, 32);
 	oadd(&scene->world, object(TR,
 	triangle(pp[0], pp[1], pp[2], diffuse, solid)));
 	ft_free_arr(data, 4);

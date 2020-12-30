@@ -18,6 +18,7 @@ t_objects	*object(t_objects_type type, void *element);
 ** src/scene/object
 */
 void		oadd(t_objects **lst, t_objects *new);
+t_objects	*olast(t_objects *lst);
 int			osize(t_objects **lst);
 void		odelone(t_objects *obj);
 void		oclear(t_objects **lst);
