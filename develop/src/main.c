@@ -18,25 +18,20 @@ int	main(int argc, char **argv)
 
 	if (argc == 2)
 	{
-		scene = read_rt(argv[1]);
+		//global option
+		cntl.mlx = mlx_init();
+		scene = read_rt(argv[1], cntl.mlx);
 		cntl.scene = scene;
 		cntl.selected = NULL;
 		cntl.mode = 0;
 		cntl.light_on = 1;
 		cntl_display_resolution(&cntl);
-		cntl.mlx = mlx_init();
 		cntl.win = mlx_new_window(cntl.mlx, scene->canv.width, scene->canv.height, "Kilee's raytracer");
 		img.img = mlx_new_image(cntl.mlx, scene->canv.width, scene->canv.height);
 		img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
 									&img.endian);
 		cntl.img = &img;
 		scene->img = &img;
-		//global option
-		scene->global.spp = 1;
-		//first renderRender
-
-		// oadd(&scene->world, object(CB, cube(point3(0,0,0), 1.5), material(DIFFUSE, 32), texture(CHECKER, color3(0.5,0.5,0.5), color3(0.8,0.8, 0.8), 10)));
-		oadd(&scene->world, object(PM, pyramid(point3(0,0,0), point3(0,2,0), 2), material(DIFFUSE, 32), texture(CHECKER, color3(0.5,0.5,0.5), color3(0.8,0.8, 0.8), 10)));
 
 		scene->cam_onair = scene->cam_list->element;
 		camera_set(&scene->canv, scene->cam_onair);

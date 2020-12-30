@@ -96,7 +96,7 @@ typedef int					t_light_type;
 /*
 ** pthread thread count
 */
-# define COUNT 20
+# define COUNT 100
 
 /*
 ** 1. Common  structures
@@ -150,6 +150,7 @@ struct						s_global
 	t_color3	ambient;
 	int			spp;
 	int			depth;
+	int			lux;
 };
 
 /*

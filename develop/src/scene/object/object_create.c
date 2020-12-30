@@ -34,6 +34,7 @@ t_light		*light_parallel(t_vec3 dir, t_color3 light_color, double ka, double bri
 		return (NULL);
 	light->type = PARALLEL;
 	light->dir = vmult(vunit(dir), -1);
+	light->p = point3(0,0,0);
 	light->ka = ka;
 	light->light_color = light_color;
 	light->brightness = brightness;
@@ -202,13 +203,13 @@ t_texture	*texture(t_texture_type type, t_color3 albedo1, t_color3 albedo2, doub
 	return (texture);
 }
 
-t_texture	*texture_img(t_texture_type type, t_data *img)
+t_texture	*texture_img(t_data *img)
 {
 	t_texture *texture;
 
 	if(!(texture = (t_texture *)malloc(sizeof(t_texture))))
 		exit(1);
-	texture->type = type;
+	texture->type = IMAGE;
 	texture->albedo1 = color3(0,0,0);
 	texture->albedo2 = color3(0,0,0);
 	texture->option1 = 0;

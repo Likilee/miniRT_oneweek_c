@@ -33,7 +33,7 @@ t_cube		*cube(t_point3 center, double side_len);
 t_pyramid	*pyramid(t_point3 center, t_point3 top, double side_len);
 t_material	*material(t_material_type type, double option1);
 t_texture	*texture(t_texture_type type, t_color3 albedo1, t_color3 albedo2, double option1);
-t_texture	*texture_img(t_texture_type type, t_data *img);
+t_texture	*texture_img(t_data *img);
 void		free_cube(t_cube *cb);
 void		free_pyramid(t_pyramid *pm);
 
