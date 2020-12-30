@@ -1,6 +1,6 @@
 #include "scene.h"
 
-t_objects	*object(t_objects_type type, void *element)
+t_objects	*object(t_objects_type type, void *element, t_material *m, t_texture *t)
 {
 	t_objects	*new;
 
@@ -8,11 +8,11 @@ t_objects	*object(t_objects_type type, void *element)
 		return (NULL);
 	new->type = type;
 	new->element = element;
-	// new->rotate = rotate;
-	// new->rotate_normal = rotate_normal(rotate);
 	new->rotate = NULL;
 	new->rotate_normal = NULL;
 	new->next = NULL;
+	new->material = m;
+	new->texture = t;
 	return (new);
 }
 

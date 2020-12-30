@@ -1,16 +1,17 @@
 #include "trace.h"
 
-t_bool		hit_sphere(t_sphere *sp, t_ray *ray, t_hit_record *rec)
+t_bool		hit_sphere(t_objects *obj, t_ray *ray, t_hit_record *rec)
 {
-	t_vec3	oc;
-	double	a;
-	double	half_b;
-	double	c;
-	//판별식
-	double	discriminant;
-	double	sqrtd;
-	double	root;
-	
+	t_sphere	*sp;
+	t_vec3		oc;
+	double		a;
+	double		half_b;
+	double		c;
+	double		discriminant;
+	double		sqrtd;
+	double		root;
+
+	sp = (t_sphere *)obj->element;
 	oc = vminus(ray->orig, sp->center);
 	a = vlength2(ray->dir);
 	half_b = vdot(oc, ray->dir);
@@ -29,14 +30,11 @@ t_bool		hit_sphere(t_sphere *sp, t_ray *ray, t_hit_record *rec)
 			return (FALSE);
 	}
 	rec->t = root;
-	// dprintf(2,"ray->dir:%f,%f,%f\n",ray->dir.x, ray->dir.y, ray->dir.z);
 	rec->p = ray_at(ray, root);
-	// dprintf(2,"rec->p:%f,%f,%f\n",rec->p.x, rec->p.y, rec->p.z);
 	rec->normal = vdivide(vminus(rec->p, sp->center), sp->radius); // 정규화된 법선 벡터.
 	get_sphere_uv(rec);
 	set_face_normal(ray, rec); // rec의 법선벡터와 광선의 방향벡터를 비교해서 앞면인지 뒷면인지 확인해서 저장.
-	// dprintf(2,"normal:%f,%f,%f\n",rec->normal.x, rec->normal.y, rec->normal.z);
-	rec->material = sp->material;
-	rec->texture = sp->texture;
+	rec->material = obj->material;
+	rec->texture = obj->texture;
 	return (TRUE);
 }

@@ -1,19 +1,20 @@
 #include "trace.h"
 
 //이건 스크래치픽셀스 방식으로https://www.scratchapixel.com/lessons/3d-basic-rendering/ray-tracing-rendering-a-triangle/ray-triangle-intersection-geometric-solution
-t_bool hit_triangle(t_triangle *tr, t_ray *ray, t_hit_record *rec)
+t_bool hit_triangle(t_objects *obj, t_ray *ray, t_hit_record *rec)
 {
     // compute plane's normal
-	t_vec3 p;
-	t_vec3 c0;
-	t_vec3 c1;
-	t_vec3 c2; // vector perpendicular to triangle's plane
-	t_vec3 vp;
-	t_vec3 r0_p0; // ray origin to plane point p
+	t_vec3		p;
+	t_vec3		c0;
+	t_vec3		c1;
+	t_vec3		c2; // vector perpendicular to triangle's plane
+	t_vec3		vp;
+	t_vec3		r0_p0; // ray origin to plane point p
+	t_triangle	*tr;
+	double		t;
+	double		denominator;
 
-	double t;
-	double	denominator;
-
+	tr = obj->element;
     // Step 1: finding P - 평면과의 교점 찾기
 	denominator = vdot(tr->normal, ray->dir);
 	if (fabs(denominator) < 0.000001) // 분모가 거의 0이면! = 평면과 직선은 평행 또는 평면 위에 있음.
@@ -40,7 +41,7 @@ t_bool hit_triangle(t_triangle *tr, t_ray *ray, t_hit_record *rec)
 	rec->p = p;
 	rec->normal = vunit(tr->normal);
 	set_face_normal(ray, rec);
-	rec->material = tr->material;
-	rec->texture = tr->texture;
+	rec->material = obj->material;
+	rec->texture = obj->texture;
     return (TRUE); // this ray hits the triangle
 }

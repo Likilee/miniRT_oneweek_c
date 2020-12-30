@@ -13,24 +13,23 @@
 void		render(t_cntl *cntl);
 void		render_preview(t_cntl *cntl);
 
-
 /*
 ** trace/hit
 */
 t_bool		hit(t_objects *obj, t_ray *ray, t_hit_record *rec);
 t_bool		hit_obj(t_objects *obj, t_ray *ray, t_hit_record *rec);
-t_bool		hit_sphere(t_sphere *sp, t_ray *ray, t_hit_record *rec);
-t_bool		hit_pl_rotate_check(t_objects *obj, t_plane *pl, t_ray *ray, t_hit_record *rec);
-t_bool		hit_plane(t_plane *pl, t_ray *ray, t_hit_record *rec);
-t_bool		hit_sq_rotate_check(t_objects *obj, t_square *sq, t_ray *ray, t_hit_record *rec);
-t_bool		hit_square(t_square *sq, t_ray *ray, t_hit_record *rec);
-t_bool		hit_cy_rotate_check(t_objects *obj, t_cylinder *cy, t_ray *ray, t_hit_record *rec);
-t_bool		hit_cylinder(t_cylinder *cy, t_ray *ray, t_hit_record *rec);
-t_bool		hit_triangle(t_triangle *tr, t_ray *ray, t_hit_record *rec);
-t_bool		hit_cb_rotate_check(t_objects *obj, t_cube *cb, t_ray *ray, t_hit_record *rec);
-t_bool		hit_cube(t_cube *cb, t_ray *ray, t_hit_record *rec);
-t_bool		hit_pm_rotate_check(t_objects *obj, t_pyramid *pm, t_ray *ray, t_hit_record *rec);
-t_bool		hit_pyramid(t_pyramid *pm, t_ray *ray, t_hit_record *rec);
+t_bool		hit_sphere(t_objects *obj, t_ray *ray, t_hit_record *rec);
+t_bool		hit_pl_rotate_check(t_objects *obj, t_ray *ray, t_hit_record *rec);
+t_bool		hit_plane(t_objects *obj, t_ray *ray, t_hit_record *rec);
+t_bool		hit_sq_rotate_check(t_objects *obj, t_ray *ray, t_hit_record *rec);
+t_bool		hit_square(t_objects *obj, t_ray *ray, t_hit_record *rec);
+t_bool		hit_cy_rotate_check(t_objects *obj, t_ray *ray, t_hit_record *rec);
+t_bool		hit_cylinder(t_objects *obj, t_ray *ray, t_hit_record *rec);
+t_bool		hit_triangle(t_objects *obj, t_ray *ray, t_hit_record *rec);
+t_bool		hit_cb_rotate_check(t_objects *obj, t_ray *ray, t_hit_record *rec);
+t_bool		hit_cube(t_objects *obj, t_ray *ray, t_hit_record *rec);
+t_bool		hit_pm_rotate_check(t_objects *obj, t_ray *ray, t_hit_record *rec);
+t_bool		hit_pyramid(t_objects *obj, t_ray *ray, t_hit_record *rec);
 void		set_face_normal(t_ray *r, t_hit_record *rec);
 void		object2world_rec(t_hit_record *rec, t_vec3 *offset, t_matrix44 *r, t_matrix44 *r_n);
 

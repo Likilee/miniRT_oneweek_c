@@ -28,21 +28,21 @@ t_bool		hit_obj(t_objects *obj, t_ray *ray, t_hit_record *rec)
 
 	hit_result = FALSE;
 	if (obj->type == SP)
-		hit_result = hit_sphere(obj->element, ray, rec);
+		hit_result = hit_sphere(obj, ray, rec);
 	else if (obj->type == LIGHT)
 		hit_result = (FALSE);
 	else if (obj->type == PL)
-		hit_result = hit_pl_rotate_check(obj, obj->element, ray, rec);
+		hit_result = hit_pl_rotate_check(obj, ray, rec);
 	else if (obj->type == SQ)
-		hit_result = hit_sq_rotate_check(obj, obj->element, ray, rec);
+		hit_result = hit_sq_rotate_check(obj, ray, rec);
 	else if (obj->type == CY)
-		hit_result = hit_cy_rotate_check(obj, obj->element, ray, rec);
+		hit_result = hit_cy_rotate_check(obj, ray, rec);
 	else if (obj->type == TR)
 		hit_result = hit_triangle(obj->element, ray, rec);
 	else if (obj->type == CB)
-		hit_result = hit_cb_rotate_check(obj, obj->element, ray, rec);
+		hit_result = hit_cb_rotate_check(obj, ray, rec);
 	else if (obj->type == PM)
-		hit_result = hit_pm_rotate_check(obj, obj->element, ray, rec);
+		hit_result = hit_pm_rotate_check(obj, ray, rec);
 	return (hit_result);
 }
 
