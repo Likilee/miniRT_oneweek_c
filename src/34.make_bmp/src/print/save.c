@@ -49,40 +49,7 @@ void	bmp_save(t_scene *scene)
 			write(fd, &image->addr[i * 4], 4);
 			++i;
 	}
-	// int y;
-	// int j;
-	// int padding = scene->img->line_length % 4;
-	// j = scene->canv.height;
-	// while (--j >= 0)
-	// {
-	// 	y = scene->canv.height - j - 1;
-	// 	write(fd, &image->addr[y * image->line_length], bmph.info_h.width * 4);
-	// 	y = -1;
-	// 	while (++y < padding)
-	// 		write(fd, "\x00", 1);
-	// }
-	// int padding = scene->canv.width - bmph.info_h.width;
-	// while (i < -bmph.info_h.height)
-	// {
-	// 	write(fd, image->addr + i * image->line_length, bmph.info_h.width * 4);
-	// 	write(fd, "00000000000000000000000000000000000000000000000000", padding * 4);
-	// 	++i;
-	// }
-
 	ft_printf("[%s] : file has been saved\n", file_name);
 	free(file_name);
 	close(fd);
 }
-
-/*
-	while (--i >= 0)
-	{
-		j = -1;
-		while (++j < game->img->width)
-			write(fd, &game->data[i * game->img->width + j], 3);
-		j = -1;
-		while (++j < padding)
-			write(fd, "\x00", 1);
-	}
-}
-*/
