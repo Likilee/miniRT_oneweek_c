@@ -26,13 +26,13 @@ int	main(int argc, char **argv)
 		cntl_display_resolution(&cntl);
 		cntl.mlx = mlx_init();
 		cntl.win = mlx_new_window(cntl.mlx, scene->canv.width, scene->canv.height, "Kilee's raytracer");
-		img.img = mlx_new_image(cntl.mlx, scene->canv.width, scene->canv.width);
+		img.img = mlx_new_image(cntl.mlx, scene->canv.width, scene->canv.height);
 		img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
 									&img.endian);
 		cntl.img = &img;
 		scene->img = &img;
 		//global option
-		scene->global.sample_per_pixel = 1;
+		scene->global.spp = 1;
 		//first renderRender
 		scene->cam_onair = scene->cam_list->element;
 		camera_set(&scene->canv, scene->cam_onair);
@@ -40,7 +40,7 @@ int	main(int argc, char **argv)
 		// start = clock();// 시간 측정 시작
 		// render_preview(cntl.scene, cntl.img);
 		// //시간 측정 결과 출력
-		render_preview(cntl.scene, cntl.img, cntl.light_on);
+		render_preview(&cntl);
 		mlx_put_image_to_window(cntl.mlx, cntl.win, cntl.img->img, 0, 0);
 		//시간 측정 결과 출력
 		my_mlx_control(&cntl); // while

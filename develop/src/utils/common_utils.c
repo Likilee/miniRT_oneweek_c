@@ -34,9 +34,9 @@ double		random_double_(double min, double max)
 	return (min + (max - min) * random_double());
 }
 
-double		random_jitter(int sample_per_pixel, int k)
+double		random_jitter(int spp, int k)
 {
-	if (sample_per_pixel == 1)
+	if (spp == 1)
 		return (0);
 	else
 		return (random_double() / (k % 4 + 1));

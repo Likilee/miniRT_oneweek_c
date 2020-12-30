@@ -12,7 +12,7 @@ void		cntl_object(int keycode, t_cntl *cntl)
 		cntl_object_deselect(cntl);
 	else if (keycode == 15) // key R
 		cntl_object_rotate(cntl);
-	render_preview(cntl->scene, cntl->img, cntl->light_on);
+	render_preview(cntl);
 	mlx_put_image_to_window(cntl->mlx, cntl->win, cntl->img->img, 0, 0);
 }
 

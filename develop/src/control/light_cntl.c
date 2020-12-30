@@ -26,7 +26,7 @@ void	cntl_light_on_and_off(t_cntl *cntl)
 		cntl->light_on = LIGHT_OFF;
 		printf("light off(if you press spacebar, light on)\n");
 	}
-	render_preview(cntl->scene, cntl->img, cntl->light_on);
+	render_preview(cntl);
 	mlx_put_image_to_window(cntl->mlx, cntl->win, cntl->img->img, 0, 0);
 }
 
@@ -34,7 +34,7 @@ void	cntl_light_select(t_cntl *cntl)
 {
 	t_objects	*temp;
 
-	if (cntl->selected == 0 || cntl->selected->next == 0)  
+	if (cntl->selected == 0 || cntl->selected->next == 0)
 		temp = (t_objects *)cntl->scene->world;
 	else
 		temp = (t_objects *)cntl->selected->next;
@@ -129,6 +129,6 @@ void	cntl_light(t_cntl *cntl, int keycode)
 		cntl_light_bright_up(cntl);
 	else if (keycode == 27) // 밝기 어둡게 -
 		cntl_light_bright_down(cntl);
-	render_preview(cntl->scene, cntl->img, cntl->light_on);
+	render_preview(cntl);
 	mlx_put_image_to_window(cntl->mlx, cntl->win, cntl->img->img, 0, 0);
 }

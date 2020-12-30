@@ -60,7 +60,7 @@ void	cntl_camera(t_cntl *cntl, int keycode)
 		cntl_camera_translate(keycode, cntl);
 	printf("now mode : %d\n", cntl->mode);
 	camera_set(&cntl->scene->canv, cntl->scene->cam_onair);
-	render_preview(cntl->scene, cntl->img, cntl->light_on);
+	render_preview(cntl);
 	mlx_put_image_to_window(cntl->mlx, cntl->win, cntl->img->img, 0, 0);
 }
 
@@ -105,6 +105,6 @@ void	cntl_cam_rotate(int button, t_cntl *cntl)
 	cam->dir = mmult_v(cam->dir, 0, cam_rotate);
 	free(cam_rotate);
 	camera_set(&cntl->scene->canv, cntl->scene->cam_onair);
-	render_preview(cntl->scene, cntl->img, cntl->light_on);
+	render_preview(cntl);
 	mlx_put_image_to_window(cntl->mlx, cntl->win, cntl->img->img, 0, 0);
 }

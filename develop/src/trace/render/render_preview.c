@@ -1,10 +1,10 @@
 #include "trace.h"
 
-static void	*render_thread(void *thread_data)
+static void	*render_preview_thread(void *thread_data)
 {
 	t_pth_data		t;
 	t_scene			*s;
-	int				i[3];
+	int				i[2];
 	double			uv[2];
 	t_ray			r;
 	t_color3		pixel_color;
@@ -18,16 +18,11 @@ static void	*render_thread(void *thread_data)
 		while (++i[1] < s->canv.width)
 		{
 			pixel_color = color3(0, 0, 0);
-			i[2]= -1;
-			while (++i[2] < s->global.spp)
-			{
-				uv[0] = (double)(i[0] + random_jitter(s->global.spp, i[2])) / (s->canv.height - 1);
-				uv[1] = (double)(i[1] + random_jitter(s->global.spp, i[2])) / (s->canv.width - 1);
-				r.orig = s->cam_onair->orig;
-				r.dir = vunit(vminus(vplus(vplus(s->cam_onair->left_bottom, vmult(s->cam_onair->horizontal, uv[1])), vmult(s->cam_onair->vertical, uv[0])), s->cam_onair->orig));
-				pixel_color = vplus(pixel_color, ray_color(&r, s->world, &s->global, s->global.depth));
-			}
-			pixel_color = vdivide(pixel_color, s->global.spp);
+			uv[0] = (double)i[0] / (s->canv.height - 1);
+			uv[1] = (double)i[1] / (s->canv.width - 1);
+			r.orig = s->cam_onair->orig;
+			r.dir = vunit(vminus(vplus(vplus(s->cam_onair->left_bottom, vmult(s->cam_onair->horizontal, uv[1])), vmult(s->cam_onair->vertical, uv[0])), s->cam_onair->orig));
+			pixel_color = vplus(pixel_color, ray_color_preview(&r, s->world, &s->global, t.c->light_on));
 			pixel_color = vmin(vplus(pixel_color, s->global.ambient), color3(1,1,1)); // sum global_ambient + ray_color;
 			my_mlx_pixel_put(s->img, i[1] , s->canv.height - i[0] - 1, create_rgb(&pixel_color));
 		}
@@ -36,12 +31,11 @@ static void	*render_thread(void *thread_data)
 	return (NULL);
 }
 
-void	render(t_cntl *cntl)
+void	render_preview(t_cntl *cntl)
 {
 	pthread_t		p_thread[COUNT];
 	t_pth_data		data[COUNT];
 	int				i;
-	double			result;
 
 	i = -1;
 	while (++i < COUNT)
@@ -53,7 +47,7 @@ void	render(t_cntl *cntl)
 	while (++i < COUNT)
 	{
 		data[i].lane = i;
-		if(pthread_create(&p_thread[i], NULL, render_thread, (void *)&data[i]) < 0)
+		if(pthread_create(&p_thread[i], NULL, render_preview_thread, (void *)&data[i]) < 0)
 		{
 			perror("thread create error : ");
 			exit(0);

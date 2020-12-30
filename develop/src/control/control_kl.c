@@ -8,13 +8,13 @@ void		cntl_render_start(t_cntl *cntl)
 	ft_printf("** Type 'Sample per pixel' **\n:");
 	get_next_line(0, &line);
 	data_is_integer(line, line);
-	cntl->scene->global.sample_per_pixel = ft_atoi(line);
+	cntl->scene->global.spp = ft_atoi(line);
 	ft_printf("** Type 'Scatter depth' **\n:");
 	get_next_line(0, &line);
 	data_is_integer(line, line);
 	cntl->scene->global.depth = ft_atoi(line);
 	ft_printf("< Start render >\n");
-	render(cntl->scene, cntl->img);
+	render(cntl);
 	mlx_put_image_to_window(cntl->mlx, cntl->win, cntl->img->img, 0, 0);
 	ft_printf("< Finish render >\n");
 }

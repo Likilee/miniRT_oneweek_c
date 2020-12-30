@@ -29,6 +29,7 @@ typedef struct s_vec3		t_color3;
 typedef struct s_ray		t_ray;
 typedef struct s_hit_record	t_hit_record;
 typedef struct s_matrix44	t_matrix44;
+typedef struct s_pth_data	t_pth_data;
 
 /*
 ** 2. scene structures
@@ -93,6 +94,11 @@ typedef int					t_light_type;
 # define PARALLEL 1
 
 /*
+** pthread thread count
+*/
+# define COUNT 20
+
+/*
 ** 1. Common  structures
 */
 struct						s_vec3
@@ -129,13 +135,20 @@ struct						s_matrix44
 	t_vec3	rotate_deg;
 };
 
+struct	s_pth_data
+{
+	int			lane;
+	int			count;
+	t_cntl		*c;
+};
+
 /*
 ** 2. Scene structures
 */
 struct						s_global
 {
 	t_color3	ambient;
-	int			sample_per_pixel;
+	int			spp;
 	int			depth;
 };
 
