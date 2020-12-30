@@ -240,6 +240,8 @@ struct						s_objects
 	void			*element;
 	t_matrix44		*rotate;
 	t_matrix44		*rotate_normal;
+	t_material		*material;
+	t_texture		*texture;
 	void			*next;
 	t_objects_type	type;
 };
@@ -259,17 +261,12 @@ struct						s_sphere
 	t_point3	center;
 	double		radius;
 	double		radius2;
-	t_material	*material;
-	t_texture	*texture;
 };
 
 struct						s_plane
 {
 	t_point3	p;
 	t_vec3		normal;
-	t_material	*material;
-	t_texture	*texture;
-
 };
 
 struct						s_square
@@ -279,8 +276,6 @@ struct						s_square
 	double		side_len;
 	t_point3	min;
 	t_point3	max;
-	t_material	*material;
-	t_texture	*texture;
 
 };
 
@@ -292,8 +287,6 @@ struct						s_cylinder
 	double		radius;
 	double		radius2;
 	double		height;
-	t_material	*material;
-	t_texture	*texture;
 
 };
 
@@ -306,8 +299,6 @@ struct						s_triangle
 	t_vec3		p1p2;
 	t_vec3		p2p0;
 	t_vec3		normal;
-	t_material	*material;
-	t_texture	*texture;
 };
 
 /*
@@ -318,8 +309,6 @@ struct						s_cube
 	t_point3	center;
 	double		side_len;
 	t_square	*square[6];
-	t_material	*material;
-	t_texture	*texture;
 };
 
 struct						s_pyramid
@@ -329,8 +318,6 @@ struct						s_pyramid
 	double		side_len;
 	t_square	*bottom;
 	t_triangle	*side[4];
-	t_material	*material;
-	t_texture	*texture;
 };
 
 #endif

@@ -162,7 +162,7 @@ void		get_camera(t_scene *scene, char *line)
 	data_is_in_degree_range(data[2], line);
 	hfov = atod(data[2]);
 	cam = camera_init(look_from, look_dir, hfov);
-	oadd(&scene->cam_list, object(CAM, cam));
+	oadd(&scene->cam_list, object(CAM, cam, NULL, NULL));
 	parse_free3(data, lookfrom, lookdir);
 }
 
@@ -189,7 +189,7 @@ void		get_point_light(t_scene *scene, char *line)
 	light_color = color3(ft_atoi(rgb[0]), ft_atoi(rgb[1]), ft_atoi(rgb[2]));
 	light_color = vdivide(light_color, 255);
 	light_color = vmult(light_color, atod(data[1]) * lux);
-	oadd(&scene->world, object(LIGHT, light_point(origin, light_color, 0.1, atod(data[1]))));
+	oadd(&scene->world, object(LIGHT, light_point(origin, light_color, 0.1, atod(data[1])), NULL, NULL));
 	ft_free_arr(data, 3);
 	ft_free_arr(point, 3);
 	ft_free_arr(rgb, 3);
@@ -218,8 +218,8 @@ void		get_sphere(t_scene *scene, char *line)
 	sp_albedo = vdivide(sp_albedo, 255);
 	radius = atod(data[1]) * 0.5;
 	solid = texture(SOLID, sp_albedo, sp_albedo, 0);
-	diffuse = material(DIFFUSE, 32);
-	oadd(&scene->world, object(SP, sphere(sp_center, radius, diffuse, solid)));
+	diffuse = material(DIFFUSE, 0);
+	oadd(&scene->world, object(SP, sphere(sp_center, radius), diffuse, solid));
 	parse_free3(data, center, albedo);
 }
 
@@ -248,7 +248,7 @@ void		get_plane(t_scene *scene, char *line)
 	pl_albedo = vdivide(color3(atod(al[0]), atod(al[1]), atod(al[2])), 255);
 	solid = texture(SOLID, pl_albedo, pl_albedo, 0);
 	diffuse = material(DIFFUSE, 32);
-	oadd(&scene->world, object(PL, plane(point, normal, diffuse, solid)));
+	oadd(&scene->world, object(PL, plane(point, normal), diffuse, solid));
 	ft_free_arr(data, 3);
 	parse_free3(p, n, al);
 }
@@ -281,7 +281,7 @@ void		get_square(t_scene *scene, char *line)
 	solid = texture(SOLID, sq_albedo, sq_albedo, 0);
 	diffuse = material(DIFFUSE, 32);
 	oadd(&scene->world, object(SQ,
-	square(center, normal, atod(data[2]), diffuse, solid)));
+	square(center, normal, atod(data[2])), diffuse, solid));
 	ft_free_arr(data, 3);
 	parse_free3(c, n, albedo);
 }
@@ -315,7 +315,7 @@ void		get_cylinder(t_scene *scene, char *line)
 	solid = texture(SOLID, cy_albedo, cy_albedo, 0);
 	diffuse = material(DIFFUSE, 32);
 	oadd(&scene->world, object(CY,
-	cylinder(center, normal, atod(data[2]), atod(data[3]), diffuse, solid)));
+	cylinder(center, normal, atod(data[2]), atod(data[3])), diffuse, solid));
 	ft_free_arr(data, 5);
 	parse_free3(c, n, albedo);
 }
@@ -348,7 +348,7 @@ void		get_triangle(t_scene *scene, char *line)
 	solid = texture(SOLID, tr_albedo, tr_albedo, 0);
 	diffuse = material(DIFFUSE, 32);
 	oadd(&scene->world, object(TR,
-	triangle(pp[0], pp[1], pp[2], diffuse, solid)));
+	triangle(pp[0], pp[1], pp[2]), diffuse, solid));
 	ft_free_arr(data, 4);
 	parse_free3(p[0], p[1], p[2]);
 	ft_free_arr(albedo, 3);

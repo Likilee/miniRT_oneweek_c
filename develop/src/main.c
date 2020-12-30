@@ -34,6 +34,10 @@ int	main(int argc, char **argv)
 		//global option
 		scene->global.spp = 1;
 		//first renderRender
+
+		// oadd(&scene->world, object(CB, cube(point3(0,0,0), 1.5), material(DIFFUSE, 32), texture(CHECKER, color3(0.5,0.5,0.5), color3(0.8,0.8, 0.8), 10)));
+		oadd(&scene->world, object(PM, pyramid(point3(0,0,0), point3(0,2,0), 2), material(DIFFUSE, 32), texture(CHECKER, color3(0.5,0.5,0.5), color3(0.8,0.8, 0.8), 10)));
+
 		scene->cam_onair = scene->cam_list->element;
 		camera_set(&scene->canv, scene->cam_onair);
 		// render(scene, &img);
