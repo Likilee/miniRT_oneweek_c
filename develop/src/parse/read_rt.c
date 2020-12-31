@@ -23,6 +23,7 @@ t_scene		*read_rt(char *filepath, void *mlx)
 	}
 	return (scene);
 }
+
 void		parse_rt(t_scene *scene, char *line, void *mlx)
 {
 	if (parse_rt_header(scene, line))
@@ -348,7 +349,7 @@ void		get_square(t_scene *scene, char *line)
 	parse_data_set_double(c, 3, line);
 	parse_data_set_zero_to_one(n, 3, line);
 	data_is_double(data[2], line);
-	parse_data_set_rgb(albedo, 3, line);
+	// parse_data_set_rgb(albedo, 3, line);
 	center = point3(atod(c[0]), atod(c[1]), atod(c[2]));
 	normal = vec3(atod(n[0]), atod(n[1]), atod(n[2]));
 	sq_albedo = color3(atod(albedo[0]), atod(albedo[1]), atod(albedo[2]));

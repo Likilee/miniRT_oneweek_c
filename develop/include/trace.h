@@ -10,8 +10,9 @@
 /*
 ** trace/render
 */
-void		render(t_cntl *cntl);
 void		render_preview(t_cntl *cntl);
+void		render_phong(t_cntl *cntl);
+void		render_path_trace(t_cntl *cntl);
 
 /*
 ** trace/hit
@@ -38,8 +39,9 @@ void		object2world_rec(t_hit_record *rec, t_vec3 *offset, t_matrix44 *r, t_matri
 */
 t_point3	ray_at(t_ray *ray, double t);
 t_ray		ray(t_point3 orig, t_vec3 dir);
-t_color3	ray_color(t_ray *r, t_objects *objs, t_global *global, int depth);
 t_color3	ray_color_preview(t_ray *r, t_objects *objs, t_global *global, int light_on);
+t_color3	ray_color_phong(t_ray *r, t_objects *objs, t_global *global, int depth);
+t_color3	ray_color_path_trace(t_ray *r, t_objects *objs, t_global *global, int depth);
 t_bool		in_shadow(t_objects *objs, t_ray light_ray, double light_len);
 t_color3	direct_lighting(t_objects *objs, t_ray *r, t_hit_record *rec);
 t_color3	direct_lighting_get(t_objects *objs, t_light *light, t_ray *r, t_hit_record *rec);

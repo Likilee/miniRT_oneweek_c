@@ -32,11 +32,11 @@ LIGHT_OFF 1		: light 렌더링모드에서 나올시
 ## 카메라 조작
 ### cntl_camera
 - 카메라에 관련된 모든 함수를 모아둔 함수
-### cntl_camera_on
+### cntl_camera_mode_on
 - 카메라 모드로 진입
-### cntl_camera_off
+### cntl_camera_mode_off
 - 카메라 모드에서 나오기
-### cntl_select_camera
+### cntl_camera_select
 - 카메라 선택
 ### cntl_cam_rotate
 - 카메라 회전
