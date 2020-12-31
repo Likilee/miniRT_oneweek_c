@@ -19,10 +19,10 @@ t_bool		hit_cb_rotate_check(t_objects *obj, t_ray *ray, t_hit_record *rec)
 	if (obj->rotate != NULL)
 	{
 		obj_w2o = *obj;
-		cb = (t_cube *)obj->element;
-		cb_w2o = cube(point3(0,0,0), cb->side_len);
+		cb = obj->element;
 		offset = cb->center;
-		obj_w2o.element = &cb_w2o;
+		cb_w2o = cube(point3(0,0,0), cb->side_len);
+		obj_w2o.element = cb_w2o;
 		ray_w2o = *ray;
 		world2object_cb(obj->rotate, &offset, &ray_w2o);
 		hit_result = hit_cube(&obj_w2o, &ray_w2o, rec);

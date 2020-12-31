@@ -25,6 +25,7 @@ int	main(int argc, char **argv)
 		cntl.selected = NULL;
 		cntl.mode = 0;
 		cntl.light_on = 1;
+		cntl.rotate_on = 0;
 		cntl_display_resolution(&cntl);
 		cntl.win = mlx_new_window(cntl.mlx, scene->canv.width, scene->canv.height, "Kilee's raytracer");
 		img.img = mlx_new_image(cntl.mlx, scene->canv.width, scene->canv.height);
@@ -35,11 +36,11 @@ int	main(int argc, char **argv)
 
 		scene->cam_onair = scene->cam_list->element;
 		camera_set(&scene->canv, scene->cam_onair);
-		// render(scene, &img);
+		// render_phong(scene, &img);
 		// start = clock();// 시간 측정 시작
 		// render_preview(cntl.scene, cntl.img);
 		// //시간 측정 결과 출력
-		render_preview(&cntl);
+		my_mlx_welcome(&cntl);
 		mlx_put_image_to_window(cntl.mlx, cntl.win, cntl.img->img, 0, 0);
 		//시간 측정 결과 출력
 		my_mlx_control(&cntl); // while

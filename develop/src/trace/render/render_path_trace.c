@@ -1,6 +1,6 @@
 #include "trace.h"
 
-static void	*render_thread(void *thread_data)
+static void	*render_thread_path(void *thread_data)
 {
 	t_pth_data		t;
 	t_scene			*s;
@@ -25,7 +25,7 @@ static void	*render_thread(void *thread_data)
 				uv[1] = (double)(i[1] + random_jitter(s->global.spp, i[2])) / (s->canv.width - 1);
 				r.orig = s->cam_onair->orig;
 				r.dir = vunit(vminus(vplus(vplus(s->cam_onair->left_bottom, vmult(s->cam_onair->horizontal, uv[1])), vmult(s->cam_onair->vertical, uv[0])), s->cam_onair->orig));
-				pixel_color = vplus(pixel_color, ray_color(&r, s->world, &s->global, s->global.depth));
+				pixel_color = vplus(pixel_color, ray_color_path_trace(&r, s->world, &s->global, s->global.depth));
 			}
 			pixel_color = vdivide(pixel_color, s->global.spp);
 			pixel_color = vmin(vplus(pixel_color, s->global.ambient), color3(1,1,1)); // sum global_ambient + ray_color;
@@ -36,7 +36,7 @@ static void	*render_thread(void *thread_data)
 	return (NULL);
 }
 
-void	render(t_cntl *cntl)
+void	render_path_trace(t_cntl *cntl)
 {
 	pthread_t		p_thread[COUNT];
 	t_pth_data		data[COUNT];
@@ -53,7 +53,7 @@ void	render(t_cntl *cntl)
 	while (++i < COUNT)
 	{
 		data[i].lane = i;
-		if(pthread_create(&p_thread[i], NULL, render_thread, (void *)&data[i]) < 0)
+		if(pthread_create(&p_thread[i], NULL, render_thread_path, (void *)&data[i]) < 0)
 		{
 			perror("thread create error : ");
 			exit(0);

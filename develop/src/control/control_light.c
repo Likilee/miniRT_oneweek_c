@@ -1,6 +1,26 @@
 #include "control.h"
 
-void	cntl_light_on(t_cntl *cntl)
+void	cntl_light(t_cntl *cntl, int keycode)
+{
+	if (keycode == KEY_TAB) // 광원 바꾸기. 오른쪽 방향키
+		cntl_light_select(cntl);
+	else if (keycode == KEY_Q || keycode == KEY_A || keycode == KEY_E
+			|| keycode == KEY_W || keycode == KEY_S || keycode == KEY_D)
+		cntl_light_translate(cntl, keycode);
+	else if (keycode == KEY_ESC) // 선택 종료 esc
+	{
+		cntl->selected = NULL;
+		cntl_default_mode_on(cntl);
+	}
+	else if (keycode == KEY_AR_U) // 밝기 밝게 =
+		cntl_light_bright_up(cntl);
+	else if (keycode == KEY_AR_D) // 밝기 어둡게 -
+		cntl_light_bright_down(cntl);
+	render_preview(cntl);
+	mlx_put_image_to_window(cntl->mlx, cntl->win, cntl->img->img, 0, 0);
+}
+
+void	cntl_light_mode_on(t_cntl *cntl)
 {
 	t_objects	*temp;
 
@@ -12,7 +32,7 @@ void	cntl_light_on(t_cntl *cntl)
 			temp = temp->next;
 		cntl->selected = temp;
 	}
-	printf("< light mode >\n[right arrow] key : next light\n");
+	console_msg_light_mode();
 }
 
 void	cntl_light_on_and_off(t_cntl *cntl)
@@ -20,12 +40,12 @@ void	cntl_light_on_and_off(t_cntl *cntl)
 	if (cntl->light_on == LIGHT_OFF)
 	{
 		cntl->light_on = LIGHT_ON;
-		printf("light on(if you press spacebar, light off)\n");
+		ft_printf(">> Light ON\n");
 	}
 	else
 	{
 		cntl->light_on = LIGHT_OFF;
-		printf("light off(if you press spacebar, light on)\n");
+		ft_printf(">> Light OFF\n");
 	}
 	render_preview(cntl);
 	mlx_put_image_to_window(cntl->mlx, cntl->win, cntl->img->img, 0, 0);
@@ -35,33 +55,25 @@ void	cntl_light_select(t_cntl *cntl)
 {
 	t_objects	*temp;
 
-	if (cntl->selected == 0  || cntl->selected->next == 0)
+	if (cntl->selected == NULL  || cntl->selected->next == NULL)
 		temp = (t_objects *)cntl->scene->world;
 	else
 		temp = (t_objects *)cntl->selected->next;
 	while (temp && temp->type != LIGHT)
 		temp = temp->next;
-	if (temp == 0)
+	if (temp == NULL)
 	{
 		temp = (t_objects *)cntl->scene->world;
 		while (temp && temp->type != LIGHT)
 			temp = temp->next;
 		cntl->selected = temp;
-		printf("마지막 조명입니다.\n");
+		printf(">> Last light\n");
 	}
 	else
 	{
 		cntl->selected = temp;
-		printf("다음 조명입니다.\n");
+		printf(">> Next light\n");
 	}
-	// printf("%f %f %f\n", ((t_light *)(cntl->selected->element))->p.x, ((t_light *)(cntl->selected->element))->p.y, ((t_light *)(cntl->selected->element))->p.z);
-}
-
-void	cntl_light_deselect(t_cntl *cntl)
-{
-	printf("light deselect\n");
-	cntl->selected = NULL;
-	cntl->mode = DEFM;
 }
 
 void	cntl_light_bright_up(t_cntl *cntl)
@@ -83,8 +95,7 @@ void	cntl_light_bright_up(t_cntl *cntl)
 		brightness = light->brightness;
 		*light_color = vmult(*light_color, brightness);
 	}
-	printf("light_color(%f,%f,%f)", light_color->x, light_color->y, light_color->z);
-	printf("조명증가\n");
+	printf(">> Increased brightness : (%f,%f,%f)\n", light_color->x, light_color->y, light_color->z);
 }
 
 void	cntl_light_bright_down(t_cntl *cntl)
@@ -103,38 +114,26 @@ void	cntl_light_bright_down(t_cntl *cntl)
 		brightness = ((t_light *)(cntl->selected->element))->brightness;
 		*light_color = vmult(*light_color, brightness);
 	}
-	printf("light_color(%f,%f,%f)", light_color->x, light_color->y, light_color->z);
-	printf("조명감소\n");
+	printf(">> Decreased brightness : (%f,%f,%f)\n", light_color->x, light_color->y, light_color->z);
 }
 
-void	cntl_light_translate_x_pos(t_cntl *cntl)
+void		cntl_light_translate(t_cntl *cntl, int keycode)
 {
-	if (cntl->selected->type == LIGHT)
-		((t_light *)(cntl->selected->element))->p.x += 0.3;
-	printf("라이트 x이동\n");
-}
+	t_vec3	move;
+	t_light *l;
 
-void	cntl_light_translate_y_pos(t_cntl *cntl)
-{
-	if (cntl->selected->type == LIGHT)
-		((t_light *)(cntl->selected->element))->p.y += 0.3;
-	printf("라이트 y이동\n");
-}
-
-void	cntl_light(t_cntl *cntl, int keycode)
-{
-	if (keycode == 124) // 광원 바꾸기. 오른쪽 방향키
-		cntl_light_select(cntl);
-	else if (keycode == 7) // 광원 이동 x
-		cntl_light_translate_x_pos(cntl);
-	else if (keycode == 9) // 광원 이동 v
-		cntl_light_translate_y_pos(cntl);
-	else if (keycode == 53) // 선택 종료 esc
-		cntl_light_deselect(cntl);
-	else if (keycode == 24) // 밝기 밝게 =
-		cntl_light_bright_up(cntl);
-	else if (keycode == 27) // 밝기 어둡게 -
-		cntl_light_bright_down(cntl);
-	render_preview(cntl);
-	mlx_put_image_to_window(cntl->mlx, cntl->win, cntl->img->img, 0, 0);
+	l = cntl->selected->element;
+	if (keycode == KEY_Q)
+		move = vec3(1, 0, 0);
+	else if (keycode == KEY_A)
+		move = vec3(-1, 0, 0);
+	else if (keycode == KEY_W)
+		move = vec3(0, 1, 0);
+	else if (keycode == KEY_S)
+		move = vec3(0, -1, 0);
+	else if (keycode == KEY_E)
+		move = vec3(0, 0, 1);
+	else
+		move = vec3(0, 0, -1);
+	l->p = vplus(l->p, move);
 }

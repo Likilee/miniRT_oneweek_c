@@ -96,7 +96,7 @@ typedef int					t_light_type;
 /*
 ** pthread thread count
 */
-# define COUNT 100
+# define COUNT 20
 
 /*
 ** 1. Common  structures
@@ -231,6 +231,7 @@ struct						s_cntl
 	t_data		*img;
 	int			mode; // 0:default 1:object transform 2:camera transform
 	int			light_on;
+	t_bool		rotate_on;
 };
 
 /*
