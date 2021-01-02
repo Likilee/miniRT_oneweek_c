@@ -51,9 +51,9 @@ t_color3	albedo_rainbow_normal(t_hit_record *rec)
 
 t_color3	albedo_image_uv(t_hit_record *rec)
 {
-	int		i;
-	int		j;
-	int		j_inv;
+	int		w;
+	int		h;
+	int		h_inv;
 	char	*pixel;
 	int		color;
 	double	c_scale;
@@ -62,21 +62,35 @@ t_color3	albedo_image_uv(t_hit_record *rec)
 	data = rec->texture->img;
 	rec->u = saturate(rec->u);
 	rec->v = saturate(rec->v);
-	i = (int)(rec->u * data->width);
-	j = (int)(rec->v * data->height);
+	w = (int)(rec->u * data->width);
+	h = (int)(rec->v * data->height);
 	c_scale = 1.0 / 255.0;
-	if (i >= data->width)
-		i = data->width - 1;
-	if (j >= data->height)
-		j = data->height - 1;
-	j_inv = data->height - j;
-	pixel = data->addr + (j_inv * data->line_length + i * (data->bits_per_pixel / 8));
+	if (w >= data->width)
+		w = data->width - 1;
+	if (h >= data->height)
+		h = data->height;
+	h_inv = data->height - h - 1;
+	pixel = data->addr + (h_inv * data->line_length + w * (data->bits_per_pixel / 8));
 	color = *(int *)pixel;
 	t_color3 color33 = color3(c_scale * get_r(color), c_scale * get_g(color), c_scale * get_b(color));
-
 	return (color33);
 }
 
+t_color3	color_background(t_ray *r, t_scene *s, t_hit_record *rec)
+{
+	double			t;
+
+	if (s->background == NULL)
+	{
+		t = 0.5 * (r->dir.y + 1);
+		return (vplus(vmult(color3(1, 1, 1), 1.0 - t),
+				vmult(color3(0.5, 0.7, 1.0), t)));
+	}
+	else if (hit_cube(s->background, r, rec))
+		return (albedo_skybox(rec, s->background->element));
+	else
+		return (color3(0.2,0.3,0.4));
+}
 /* 참고용
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {

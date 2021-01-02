@@ -26,7 +26,7 @@ t_scene		*read_rt(char *filepath, void *mlx)
 
 void		parse_rt(t_scene *scene, char *line, void *mlx)
 {
-	if (parse_rt_header(scene, line))
+	if (parse_rt_header(scene, line, mlx))
 		return ;
 	else if (parse_rt_bonus(scene, line, mlx))
 		return ;
@@ -36,7 +36,7 @@ void		parse_rt(t_scene *scene, char *line, void *mlx)
 		parse_error_identifier(line);
 }
 
-t_bool		parse_rt_header(t_scene *scene, char *line)
+t_bool		parse_rt_header(t_scene *scene, char *line, void *mlx)
 {
 	while (*line == ' ')
 		++line;
@@ -46,6 +46,8 @@ t_bool		parse_rt_header(t_scene *scene, char *line)
 		get_ambient(scene, line);
 	else if (ft_strnstr(line, "L ", 2))
 		get_lux(scene, line);
+	else if (ft_strnstr(line, "BG ", 3))
+		get_background(scene, line, mlx);
 	else if (*line != '#' && *line != '\0')
 		return (FALSE);
 	return (TRUE);
@@ -96,6 +98,61 @@ t_bool		parse_rt_bonus(t_scene *scene, char *line, void *mlx)
 	return (TRUE);
 };
 
+// void		get_background(t_scene *scene, char *line, void *mlx)
+// {
+// 	char			**data;
+// 	char			*r;
+// 	t_data			*bg;
+// 	t_sphere		*target;
+// 	t_texture		*t;
+// 	t_material		*m;
+// 	double			radius;
+
+// 	if (!(bg = (t_data *)malloc(sizeof(t_data))))
+// 		error_malloc();
+// 	data = ft_split(line + 5, ' ');
+// 	parse_error_data_count(data, 2, line);
+// 	bg->img = mlx_png_file_to_image(mlx, data[0], &bg->width, &bg->height);
+// 	parse_error_img_filepath(bg->img, line);
+// 	data_is_double(data[1], line);
+// 	radius = atod(data[1]);
+// 	bg->addr = mlx_get_data_addr(bg->img, &bg->bits_per_pixel,
+// 								&bg->line_length, &bg->endian);
+// 	t = texture_img(bg);
+// 	m = material(DIFFUSE, 0);
+// 	target = sphere(point3(0,0,0), radius);
+// 	scene->background = object(SP, target, m, t);
+// 	ft_free_arr(data, 2);
+// }
+
+void		get_background(t_scene *scene, char *line, void *mlx)
+{
+	char			**data;
+	char			*r;
+	t_data			*bg;
+	t_cube			*target;
+	t_texture		*t;
+	t_material		*m;
+	double			sidelen;
+
+	if (!(bg = (t_data *)malloc(sizeof(t_data))))
+		error_malloc();
+	data = ft_split(line + 5, ' ');
+	parse_error_data_count(data, 2, line);
+	bg->img = mlx_png_file_to_image(mlx, data[0], &bg->width, &bg->height);
+	parse_error_img_filepath(bg->img, line);
+	data_is_double(data[1], line);
+	sidelen = atod(data[1]);
+	bg->addr = mlx_get_data_addr(bg->img, &bg->bits_per_pixel,
+								&bg->line_length, &bg->endian);
+	t = texture_img(bg);
+	m = material(DIFFUSE, 0);
+	target = cube(point3(0,0,0), sidelen);
+	scene->background = object(CB, target, m, t);
+	ft_free_arr(data, 2);
+}
+
+
 void		get_lux(t_scene *scene, char *line)
 {
 	char			**data;
@@ -145,8 +202,8 @@ void		get_texture(t_scene *scene, char *line)
 	if (type < 0 && type > 4)
 		parse_error_identifier(line);
 	albedo1 = ft_split(data[1], ',');
-	albedo2 = ft_split(data[2], ',');
 	parse_data_set_rgb(albedo1, 3, line);
+	albedo2 = ft_split(data[2], ',');
 	parse_data_set_rgb(albedo2, 3, line);
 	data_is_double(data[3], line);
 	t = texture(ft_atoi(data[0]),
@@ -173,6 +230,7 @@ void		get_texture_img(t_scene *scene, char *line, void *mlx)
 	data = ft_split(line + 5, ' ');
 	parse_error_data_count(data, 1, line);
 	map->img = mlx_png_file_to_image(mlx, data[0], &map->width, &map->height);
+	parse_error_img_filepath(map->img, line);
 	map->addr = mlx_get_data_addr(map->img, &map->bits_per_pixel,
 								&map->line_length, &map->endian);
 	t = texture_img(map);
@@ -312,12 +370,12 @@ void		get_plane(t_scene *scene, char *line)
 	t_texture	*solid;
 
 	data = ft_split(line + 3, ' ');
-	p = ft_split(data[0], ',');
-	n = ft_split(data[1], ',');
-	al = ft_split(data[2], ',');
 	parse_error_data_count(data, 3, line);
+	p = ft_split(data[0], ',');
 	parse_data_set_double(p, 3, line);
+	n = ft_split(data[1], ',');
 	parse_data_set_zero_to_one(n, 3, line);
+	al = ft_split(data[2], ',');
 	parse_data_set_rgb(al, 3, line);
 	point = point3(atod(p[0]), atod(p[1]), atod(p[2]));
 	normal = vec3(atod(n[0]), atod(n[1]), atod(n[2]));
@@ -342,12 +400,12 @@ void		get_square(t_scene *scene, char *line)
 	t_texture		*solid;
 
 	data = ft_split(line + 3, ' ');
-	c = ft_split(data[0], ',');
-	n = ft_split(data[1], ',');
-	albedo = ft_split(data[3], ',');
 	parse_error_data_count(data, 4, line);
+	c = ft_split(data[0], ',');
 	parse_data_set_double(c, 3, line);
+	n = ft_split(data[1], ',');
 	parse_data_set_zero_to_one(n, 3, line);
+	albedo = ft_split(data[3], ',');
 	data_is_double(data[2], line);
 	// parse_data_set_rgb(albedo, 3, line);
 	center = point3(atod(c[0]), atod(c[1]), atod(c[2]));
@@ -358,7 +416,7 @@ void		get_square(t_scene *scene, char *line)
 	diffuse = material(DIFFUSE, 32);
 	oadd(&scene->world, object(SQ,
 	square(center, normal, atod(data[2])), diffuse, solid));
-	ft_free_arr(data, 3);
+	ft_free_arr(data, 4);
 	parse_free3(c, n, albedo);
 }
 
@@ -375,14 +433,14 @@ void		get_cylinder(t_scene *scene, char *line)
 	t_texture		*solid;
 
 	data = ft_split(line + 3, ' ');
-	c = ft_split(data[0], ',');
-	n = ft_split(data[1], ',');
-	albedo = ft_split(data[4], ',');
 	parse_error_data_count(data, 5, line);
+	c = ft_split(data[0], ',');
 	parse_data_set_double(c, 3, line);
+	n = ft_split(data[1], ',');
 	parse_data_set_zero_to_one(n, 3, line);
 	data_is_double(data[2], line);
 	data_is_double(data[3], line);
+	albedo = ft_split(data[4], ',');
 	parse_data_set_rgb(albedo, 3, line);
 	center = point3(atod(c[0]), atod(c[1]), atod(c[2]));
 	normal = vec3(atod(n[0]), atod(n[1]), atod(n[2]));

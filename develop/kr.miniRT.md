@@ -221,7 +221,7 @@ PERFECT 란 당연히 완전해야하고, 잘못된 사용과 같은 심한 실�
 >- [x] **Multithreaded rendering.**
 >- [x] **Sphere texturing: uv mapping.**
 
->- [ ] **A beautiful skybox.**
+>- [x] **A beautiful skybox.**
 >- [x] **Keyboard interactivity (translation/rotation) with camera.**
 >- [x] **Keyboard interactivity (translation/rotation) with objects.**
 >- [x] **Changing the camera rotation with the mouse.**

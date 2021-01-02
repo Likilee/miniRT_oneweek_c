@@ -22,7 +22,7 @@ static void	*render_preview_thread(void *thread_data)
 			uv[1] = (double)i[1] / (s->canv.width - 1);
 			r.orig = s->cam_onair->orig;
 			r.dir = vunit(vminus(vplus(vplus(s->cam_onair->left_bottom, vmult(s->cam_onair->horizontal, uv[1])), vmult(s->cam_onair->vertical, uv[0])), s->cam_onair->orig));
-			pixel_color = vplus(pixel_color, ray_color_preview(&r, s->world, &s->global, t.c->light_on));
+			pixel_color = vplus(pixel_color, ray_color_preview(&r, s, t.c->light_on));
 			pixel_color = vmin(vplus(pixel_color, s->global.ambient), color3(1,1,1)); // sum global_ambient + ray_color;
 			my_mlx_pixel_put(s->img, i[1] , s->canv.height - i[0] - 1, create_rgb(&pixel_color));
 		}

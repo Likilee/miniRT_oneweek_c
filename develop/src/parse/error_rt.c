@@ -15,7 +15,7 @@ void	parse_error_identifier(char *line)
 	ft_printf("** SCENE FILE ERROR **\n");
 	ft_printf("** Scene file(intput '.rt' file) has wrong identifier line **\n");
 	ft_printf("** this line: \"%s\" **", line);
-	exit(EXIT_FAILURE);
+	exit(EXIT_SUCCESS);
 }
 
 void	parse_error_data_count(char **data, int n, char *line)
@@ -31,7 +31,19 @@ void	parse_error_data_count(char **data, int n, char *line)
 		ft_printf("** SCENE FILE ERROR **\n");
 		ft_printf("** Wrong number of data\n");
 		ft_printf("** this line: \"%s\" **", line);
-		exit(EXIT_FAILURE);
+		exit(EXIT_SUCCESS);
+	}
+}
+
+void	parse_error_img_filepath(void *img, char *line)
+{
+	if (img == NULL)
+	{
+		perror("Error\n");
+		ft_printf("** SCENE FILE ERROR **\n");
+		ft_printf("** Wrong img path \n");
+		ft_printf("** this line: \"%s\" **", line);
+		exit(EXIT_SUCCESS);
 	}
 }
 
@@ -56,7 +68,7 @@ void	data_is_double(char *str, char *line)
 	ft_printf("** Wrong type of data : IS NOT DOUBLE\n");
 	ft_printf("** this line: \"%s\" **\n", line);
 	ft_printf("** this data: \"%s\" **\n", start_point);
-	exit(EXIT_FAILURE);
+	exit(EXIT_SUCCESS);
 }
 
 void	data_is_integer(char *str, char *line)
@@ -72,7 +84,7 @@ void	data_is_integer(char *str, char *line)
 	ft_printf("** Wrong type of data : IS NOT INTEGER\n");
 	ft_printf("** this line: \"%s\" **\n", line);
 	ft_printf("** this data: \"%s\" **\n", str);
-	exit(EXIT_FAILURE);
+	exit(EXIT_SUCCESS);
 }
 void	parse_data_set_double(char **data, int n, char *line)
 {
@@ -95,7 +107,7 @@ void	data_is_zero_to_one(char *str, char *line)
 	ft_printf("** Wrong type of data : IS NOT FEET IN [0, 1]\n");
 	ft_printf("** this line: \"%s\" **\n", line);
 	ft_printf("** this data: \"%s\" **\n", str);
-	exit(EXIT_FAILURE);
+	exit(EXIT_SUCCESS);
 }
 
 void	parse_data_set_zero_to_one(char **data, int n, char *line)
@@ -118,7 +130,7 @@ void	data_is_in_rgb_range(char *str, char *line)
 	ft_printf("** Wrong type of data : IS NOT FEET IN RGB RANGE[0, 255] **\n");
 	ft_printf("** this line: \"%s\" **\n", line);
 	ft_printf("** this data: \"%s\" **\n", str);
-	exit(EXIT_FAILURE);
+	exit(EXIT_SUCCESS);
 }
 
 void	data_is_in_degree_range(char *str, char *line)
@@ -131,7 +143,7 @@ void	data_is_in_degree_range(char *str, char *line)
 	ft_printf("** Wrong type of data : IS NOT FEET IN DEGREE RANGE[0, 180] **\n");
 	ft_printf("** this line: \"%s\" **\n", line);
 	ft_printf("** this data: \"%s\" **\n", str);
-	exit(EXIT_FAILURE);
+	exit(EXIT_SUCCESS);
 }
 void	parse_data_set_rgb(char **data, int n, char *line)
 {

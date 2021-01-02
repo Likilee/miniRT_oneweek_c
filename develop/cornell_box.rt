@@ -6,9 +6,10 @@
 #	! Material / Texture must be wrote in next line to target object
 
 ### DEFAULT OPTION
-#	resolution	: R	width(int)			height(int)
-#	ambient		: A	range(double[0,1])	rgb(int[0,255],3)
-#	+lux		: L lux(int[10,~))
+#	resolution	: R		width(int)			height(int)
+#	ambient		: A		range(double[0,1])	rgb(int[0,255],3)
+#	+lux		: L 	lux(int[10,~))
+#	+background : BG	imagepath
 
 ###	OBJECT
 #	sphere		: sp	enter(double,3)		diameter(double)	rgb
