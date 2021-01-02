@@ -224,3 +224,8 @@ the second method is to take into account multiple rays for each pixel and then 
 [바람직한 멀티스레딩 구조](https://www.youtube.com/watch?v=M1e9nmmD3II)
 
 [멀티쓰레드 예제](https://doorbw.tistory.com/27%E3%85%81)
+
+
+## 스카이 박스.
+
+[여기가 성지다](http://www.humus.name/index.php?page=Textures&start=72)

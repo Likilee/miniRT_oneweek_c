@@ -208,6 +208,7 @@ struct						s_scene
 	t_camera	*cam_onair;
 	t_objects	*cam_list;
 	t_objects	*world;
+	t_objects	*background;
 	t_data		*img;
 };
 

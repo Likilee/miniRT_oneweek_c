@@ -19,3 +19,25 @@ void	get_cylinder_uv(t_hit_record *rec, t_cylinder *cy)
 	rec->u = phi / (2 * M_PI);
 	rec->v = cy->height / (rec->p.y - cy->center_bottom.y) / M_PI;
 }
+
+void	get_square_uv(t_hit_record *rec, t_square *sq)
+{
+	double	inv_len;
+
+	inv_len = 1 / sq->side_len;
+	if (sq->normal.x != 0)
+	{
+		rec->u = (rec->p.z - sq->min.z) * inv_len;
+		rec->v = (rec->p.y - sq->min.y) * inv_len;
+	}
+	else if (sq->normal.y != 0)
+	{
+		rec->u = (rec->p.x - sq->min.x) * inv_len;
+		rec->v = (rec->p.z - sq->min.z) * inv_len;
+	}
+	else if (sq->normal.z != 0)
+	{
+		rec->u = (rec->p.x - sq->min.x) * inv_len;
+		rec->v = (rec->p.y - sq->min.y) * inv_len;
+	}
+}

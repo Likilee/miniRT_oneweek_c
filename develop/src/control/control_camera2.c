@@ -26,13 +26,13 @@ void	cntl_cam_rotate(int button, t_cntl *cntl)
 
 	cam = cntl->scene->cam_onair;
 	if (button == M_CLK_L || button == M_SCR_L) // -> 좌클릭
-		cam_rotate = rotate(vec3(0,5,0));
+		cam_rotate = rotate(vec3(0,15,0));
 	else if (button == M_CLK_R || button == M_SCR_R) // -> 방향키 왼쪽
-		cam_rotate = rotate(vec3(0,-5,0));
+		cam_rotate = rotate(vec3(0,-15,0));
 	else if (button == M_SCR_U) // up
-		cam_rotate = rotate(vec3(+5,0,0));
+		cam_rotate = rotate(vec3(+15,0,0));
 	else if (button == M_SCR_D) // down
-		cam_rotate = rotate(vec3(-5,0,0));
+		cam_rotate = rotate(vec3(-15,0,0));
 	else
 	{
 		printf("you click button : %d\n", button);

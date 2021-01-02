@@ -83,6 +83,7 @@ t_bool		hit_square(t_objects *obj, t_ray *ray, t_hit_record *rec)
 		set_face_normal(ray, rec);
 		rec->material = obj->material;
 		rec->texture = obj->texture;
+		get_square_uv(rec, sq);
 		return (TRUE);
 	}
 	return (FALSE);

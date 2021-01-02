@@ -33,7 +33,6 @@ int	main(int argc, char **argv)
 									&img.endian);
 		cntl.img = &img;
 		scene->img = &img;
-
 		scene->cam_onair = scene->cam_list->element;
 		camera_set(&scene->canv, scene->cam_onair);
 		// render_phong(scene, &img);
