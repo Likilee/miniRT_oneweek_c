@@ -125,7 +125,7 @@ void		get_background(t_scene *scene, char *line, void *mlx)
 	data_is_double(data[1], line);
 	sidelen = atod(data[1]);
 	bg->addr = mlx_get_data_addr(bg->img, &bg->bits_per_pixel,
-								&bg->line_length, &bg->endian);
+								&bg->size_line, &bg->endian);
 	t = texture_img(bg);
 	m = material(DIFFUSE, 0);
 	target = cube(point3(0,0,0), sidelen);
@@ -210,7 +210,7 @@ void		get_texture_img(t_scene *scene, char *line, void *mlx)
 	map->img = mlx_png_file_to_image(mlx, data[0], &map->width, &map->height);
 	parse_error_img_filepath(map->img, line);
 	map->addr = mlx_get_data_addr(map->img, &map->bits_per_pixel,
-								&map->line_length, &map->endian);
+								&map->size_line, &map->endian);
 	t = texture_img(map);
 	target = olast(scene->world);
 	free(target->texture);
