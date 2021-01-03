@@ -14,6 +14,8 @@ int			cntl_key_press(int keycode, t_cntl *cntl)
 		cntl_save(cntl, keycode);
 	else if (keycode == KEY_SP)
 		cntl_light_on_and_off(cntl);
+	else if (keycode == KEY_F)
+		cntl_render_filter_change(cntl);
 	else if (keycode == KEY_O && cntl->mode != OBJM)
 		cntl_object_mode_on(cntl);
 	else if (keycode == KEY_C && cntl->mode != CAMM) // 카메라 모드로 들어감. 'c'키

@@ -11,6 +11,8 @@ void		console_msg_welcome(void)
 	printf("*                                   *\n");
 	printf("* = * = * LIGHT ON / OFF * = * = * =*\n");
 	printf("=          [ SPACE BAR ]            =\n");
+	printf("* = * = * FILTER CHANGE  * = * = * =*\n");
+	printf("=          [   F key   ]            =\n");
 	printf("* = * = * = * = * = * = * = * = * = *\n");
 	printf("***   MODE SWITCH by key press    ***\n");
 	printf("* = * = * = * = * = * = * = * = * = *\n");
@@ -28,6 +30,8 @@ void		console_msg_render_mode(void)
 	printf("=  [ESC] [O]bject [L]ight [C]amera [T]race  =\n");
 	printf("* = * = * =  LIGHT ON / OFF * = * = * = * = *\n");
 	printf("=             [ SPACE BAR ]                 =\n");
+	printf("* = * = * = * FILTER CHANGE  * = * = * = * =*\n");
+	printf("=             [   F key   ]                 =\n");
 	printf("* = * = * = * = * = * = * = * = * = * = * = *\n");
 	printf("=              RENDER MODE                  =\n");
 	printf("* = * = * = * = * = * = * = * = * = * = * = *\n");
@@ -57,6 +61,8 @@ void		console_msg_object_mode(void)
 	printf("=  [ESC] [O]bject [L]ight [C]amera [T]race  =\n");
 	printf("* = * = * =  LIGHT ON / OFF * = * = * = * = *\n");
 	printf("=             [ SPACE BAR ]                 =\n");
+	printf("* = * = * = * FILTER CHANGE  * = * = * = * =*\n");
+	printf("=             [   F key   ]                 =\n");
 	printf("* = * = * = * = * = * = * = * = * = * = * = *\n");
 	printf("=            OBJECT MODE                    =\n");
 	printf("* = * = * = * = * = * = * = * = * = * = * = *\n");
@@ -92,6 +98,8 @@ void		console_msg_camera_mode(void)
 	printf("=  [ESC] [O]bject [L]ight [C]amera [T]race  =\n");
 	printf("* = * = * =  LIGHT ON / OFF * = * = * = * = *\n");
 	printf("=             [ SPACE BAR ]                 =\n");
+	printf("* = * = * = * FILTER CHANGE  * = * = * = * =*\n");
+	printf("=             [   F key   ]                 =\n");
 	printf("* = * = * = * = * = * = * = * = * = * = * = *\n");
 	printf("=            CAMERA MODE                    =\n");
 	printf("* = * = * = * = * = * = * = * = * = * = * = *\n");
@@ -124,6 +132,8 @@ void		console_msg_light_mode(void)
 	printf("=  [ESC] [O]bject [L]ight [C]amera [T]race  =\n");
 	printf("* = * = * =  LIGHT ON / OFF * = * = * = * = *\n");
 	printf("=              [ SPACE BAR ]                =\n");
+	printf("* = * = * = * FILTER CHANGE  * = * = * = * =*\n");
+	printf("=             [   F key   ]                 =\n");
 	printf("* = * = * = * = * = * = * = * = * = * = * = *\n");
 	printf("=               LIGHT MODE                  =\n");
 	printf("* = * = * = * = * = * = * = * = * = * = * = *\n");

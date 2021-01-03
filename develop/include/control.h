@@ -78,6 +78,7 @@ void		cntl_render_start(t_cntl *cntl);
 void		cntl_render(t_cntl *cntl, int keycode);
 void		cntl_render_phong(t_cntl *cntl);
 void		cntl_render_path_trace(t_cntl *cntl);
+void		cntl_render_filter_change(t_cntl *cntl);
 
 // console message
 void		console_msg_welcome(void);

@@ -58,3 +58,26 @@ void		cntl_render_path_trace(t_cntl *cntl)
 	printf(">> Do you want to save RENDERED img? \n>> (presss y or n)\n");
 	cntl->mode = SAVM;
 }
+
+void	cntl_render_filter_change(t_cntl *cntl)
+{
+	t_filter	*filter;
+
+	filter = &cntl->scene->global.f_type;
+	*filter += 1;
+	if (*filter > FILT_B)
+		*filter = FILT_D;
+	ft_printf(">> Filter changed\n");
+	if (*filter == FILT_D)
+		ft_printf(">> : default\n");
+	else if (*filter == FILT_S)
+		ft_printf(">> : sepia\n");
+	else if (*filter == FILT_R)
+		ft_printf(">> : red\n");
+	else if (*filter == FILT_G)
+		ft_printf(">> : green\n");
+	else
+		ft_printf(">> : blue\n");
+	render_preview(cntl);
+	mlx_put_image_to_window(cntl->mlx, cntl->win, cntl->img->img, 0, 0);
+}
