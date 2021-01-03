@@ -17,6 +17,7 @@ int	main(int argc, char **argv)
 	if (argc == 2)
 	{
 		cntl_init(&cntl, argv[1]);
+		my_mlx_welcome(&cntl);
 		my_mlx_control(&cntl);
 		return (0);
 	}
@@ -28,6 +29,7 @@ int	main(int argc, char **argv)
 			exit(0);
 		}
 		cntl_init(&cntl, argv[1]);
+		console_msg_welcome_save();
 		bmp_save_direct(&cntl);
 		printf(">> Close Ray TRACER, Bye Bye~~\n\n");
 	}

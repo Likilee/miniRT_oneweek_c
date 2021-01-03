@@ -87,6 +87,7 @@ void		cntl_render_filter_change(t_cntl *cntl);
 
 // console message
 void		console_msg_welcome(void);
+void		console_msg_welcome_save(void);
 void		console_msg_camera_mode(void);
 void		console_msg_light_mode(void);
 void		console_msg_object_mode(void);

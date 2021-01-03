@@ -148,6 +148,7 @@ struct	s_pth_data
 {
 	int			lane;
 	int			count;
+	int			progress;
 	t_cntl		*c;
 };
 

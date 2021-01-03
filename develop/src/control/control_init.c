@@ -4,6 +4,7 @@ void		my_mlx_welcome(t_cntl *cntl)
 {
 	render_preview(cntl);
 	console_msg_welcome();
+	mlx_put_image_to_window(cntl->mlx, cntl->win, cntl->img->img, 0, 0);
 }
 
 void		cntl_display_resolution(t_cntl *cntl)
@@ -38,6 +39,4 @@ void  cntl_init(t_cntl *cntl, char *filepath)
 	cntl->scene->img = image;
 	cntl->scene->cam_onair = cntl->scene->cam_list->element;
 	camera_set(&cntl->scene->canv, cntl->scene->cam_onair);
-	my_mlx_welcome(cntl);
-	mlx_put_image_to_window(cntl->mlx, cntl->win, cntl->img->img, 0, 0);
 }
