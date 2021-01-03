@@ -28,7 +28,8 @@ static void	*render_thread_path(void *thread_data)
 				pixel_color = vplus(pixel_color, ray_color_path_trace(&r, s, s->global.depth));
 			}
 			pixel_color = vdivide(pixel_color, s->global.spp);
-			pixel_color = vmin(vplus(pixel_color, s->global.ambient), color3(1,1,1)); // sum global_ambient + ray_color;
+			pixel_color = vplus(pixel_color, s->global.ambient); //sum global_ambient + ray_color;
+			filter(&pixel_color, &s->global);
 			my_mlx_pixel_put(s->img, i[1] , s->canv.height - i[0] - 1, create_rgb(&pixel_color));
 		}
 		i[0] -= t.count;

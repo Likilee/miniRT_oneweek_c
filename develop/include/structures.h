@@ -94,6 +94,14 @@ typedef int					t_light_type;
 # define POINT 0
 # define PARALLEL 1
 
+typedef int					t_filter;
+
+# define FILT_D 0
+# define FILT_S 1
+# define FILT_R 2
+# define FILT_G 3
+# define FILT_B 4
+
 /*
 ** pthread thread count
 */
@@ -152,6 +160,7 @@ struct						s_global
 	int			spp;
 	int			depth;
 	int			lux;
+	t_filter	f_type;
 };
 
 /*

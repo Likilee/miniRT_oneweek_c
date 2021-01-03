@@ -207,7 +207,7 @@ PERFECT 란 당연히 완전해야하고, 잘못된 사용과 같은 심한 실�
 ```
 
 ##### Bonus list:
->- [ ] Normal disruption e.g. using sine which gives a wave effect.
+>- [x] **Normal disruption e.g. using sine which gives a wave effect.**
 >- [x] **Color disruption: checkerboard.**
 >- [x] **Color disruption: rainbow effect using object’s normal.**
 >- [x] **Parallel light following a precise direction.**
@@ -218,6 +218,7 @@ PERFECT 란 당연히 완전해야하고, 잘못된 사용과 같은 심한 실�
 >- [ ] **One color filter: Sepia, R/G/B filters..**
 >- [x] **Anti-aliasing.**
 >- [ ] Simple stereoscopy (like red/green glasses).
+>- [ ] Bump mapping
 >- [x] **Multithreaded rendering.**
 >- [x] **Sphere texturing: uv mapping.**
 

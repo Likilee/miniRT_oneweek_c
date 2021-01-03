@@ -35,7 +35,7 @@ void	cntl_cam_rotate(int button, t_cntl *cntl)
 		cam_rotate = rotate(vec3(-15,0,0));
 	else
 	{
-		printf("you click button : %d\n", button);
+		printf(">> Wrong input : button %d\n", button);
 		return ;
 	}
 	cam->dir = mmult_v(cam->dir, 0, cam_rotate);

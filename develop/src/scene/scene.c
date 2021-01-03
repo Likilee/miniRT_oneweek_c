@@ -14,5 +14,6 @@ t_scene	*scene_init(void)
 	scene->global.spp = 1;
 	scene->global.depth = 1;
 	scene->global.lux = 300;
+	scene->global.f_type = 0;
 	return (scene);
 }

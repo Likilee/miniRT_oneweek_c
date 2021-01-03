@@ -33,12 +33,10 @@ void	cntl_camera_select(t_cntl *cntl)
 	while (cntl->scene->cam_onair != (t_camera *)temp->element)
 		temp = temp->next;
 	if (temp->next == 0)
-	{
-		printf(">> Last Camera\n");
 		cntl->scene->cam_onair = (t_camera *)cntl->scene->cam_list->element;
-	}
 	else
 		cntl->scene->cam_onair = ((t_objects *)temp->next)->element;
+	printf(">> Camera switched\n");
 }
 
 void	cntl_camera_translate(int keycode, t_cntl *cntl)
@@ -47,12 +45,12 @@ void	cntl_camera_translate(int keycode, t_cntl *cntl)
 
 	c = cntl->scene->cam_onair;
 	if (keycode == KEY_W)
-		c->orig = vplus(c->orig, vmult(c->dir, 1));
+		c->orig = vplus(c->orig, vmult(c->dir, 5));
 	else if (keycode == KEY_S)
-		c->orig = vplus(c->orig, vmult(c->dir, -1));
+		c->orig = vplus(c->orig, vmult(c->dir, -5));
 	else if (keycode == KEY_A)
-		c->orig = vplus(c->orig, vcross(vmult(c->dir, -1), c->vertical));
+		c->orig = vplus(c->orig, vcross(vmult(c->dir, -5), c->vertical));
 	else if (keycode == KEY_D)
-		c->orig = vplus(c->orig, vcross(vmult(c->dir, +1), c->vertical));
+		c->orig = vplus(c->orig, vcross(vmult(c->dir, +5), c->vertical));
 }
 

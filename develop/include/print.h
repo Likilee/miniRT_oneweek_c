@@ -12,5 +12,6 @@ int		create_rgb(t_color3 *color);
 int		get_r(int rgb);
 int		get_g(int rgb);
 int		get_b(int rgb);
+void	filter(t_color3 *pixel_color, t_global *global);
 
 #endif
