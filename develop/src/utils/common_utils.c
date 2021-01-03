@@ -110,9 +110,6 @@ double		atod(char *str)
 			point *= -1;
 	}
 	num = integer + point;
-	if (split[1] != NULL)
-		ft_free_arr(split, 2);
-	else
-		ft_free_arr(split, 1);
+	ft_free_arr(split);
 	return (num);
 }

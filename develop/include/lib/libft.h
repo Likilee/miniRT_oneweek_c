@@ -6,7 +6,7 @@
 /*   By: kihoonlee <kihoonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/05 19:32:39 by kilee             #+#    #+#             */
-/*   Updated: 2020/12/23 15:26:34 by kihoonlee        ###   ########.fr       */
+/*   Updated: 2021/01/03 14:08:47 by kihoonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 int					ft_lstsize(t_list *lst);
 int					ft_toupper(int c);
 char				*ft_strndup(const char *s, size_t n);
-void				ft_free_arr(char **s, int i);
+void				ft_free_arr(char **s);
 char				**ft_split(char const *s, char c);
 void				ft_lstadd_front(t_list **lst, t_list *new);
 char				*ft_strrchr(const char *s, int c);
