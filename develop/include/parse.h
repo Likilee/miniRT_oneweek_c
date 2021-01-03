@@ -14,6 +14,7 @@ void		parse_rt(t_scene *scene, char *line, void *mlx);
 t_bool		parse_rt_header(t_scene *scene, char *line, void *mlx);
 t_bool		parse_rt_default(t_scene *scene, char *line);
 t_bool		parse_rt_bonus(t_scene *scene, char *line, void *mlx);
+void		parse_free4(char **a, char **b, char **c, char **d);
 void		get_material(t_scene *scene, char *line);
 void		get_texture(t_scene *scene, char *line);
 void		get_texture_img(t_scene *scene, char *line, void *mlx);

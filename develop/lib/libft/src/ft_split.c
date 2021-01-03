@@ -6,7 +6,7 @@
 /*   By: kihoonlee <kihoonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/03 06:51:00 by kihoonlee         #+#    #+#             */
-/*   Updated: 2021/01/01 00:07:52 by kihoonlee        ###   ########.fr       */
+/*   Updated: 2021/01/03 14:12:12 by kihoonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,14 @@ char			*ft_strndup(const char *s, size_t n)
 	return (result);
 }
 
-void		ft_free_arr(char **s, int i)
+void		ft_free_arr(char **s)
 {
-	while (i--)
+	int	i;
+
+	if (s == NULL)
+		return ;
+	i = -1;
+	while (s[++i])
 		free(s[i]);
 	free(s);
 }
@@ -87,7 +92,7 @@ char			**ft_split(char const *s, char c)
 		wordlen = ft_word_size(s, c);
 		if (!(result[i] = ft_strndup(s, wordlen)))
 		{
-			ft_free_arr(result, i - 1);
+			ft_free_arr(result);
 			return (0);
 		}
 		s += wordlen;

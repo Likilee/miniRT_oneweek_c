@@ -98,32 +98,13 @@ t_bool		parse_rt_bonus(t_scene *scene, char *line, void *mlx)
 	return (TRUE);
 };
 
-// void		get_background(t_scene *scene, char *line, void *mlx)
-// {
-// 	char			**data;
-// 	char			*r;
-// 	t_data			*bg;
-// 	t_sphere		*target;
-// 	t_texture		*t;
-// 	t_material		*m;
-// 	double			radius;
-
-// 	if (!(bg = (t_data *)malloc(sizeof(t_data))))
-// 		error_malloc();
-// 	data = ft_split(line + 5, ' ');
-// 	parse_error_data_count(data, 2, line);
-// 	bg->img = mlx_png_file_to_image(mlx, data[0], &bg->width, &bg->height);
-// 	parse_error_img_filepath(bg->img, line);
-// 	data_is_double(data[1], line);
-// 	radius = atod(data[1]);
-// 	bg->addr = mlx_get_data_addr(bg->img, &bg->bits_per_pixel,
-// 								&bg->line_length, &bg->endian);
-// 	t = texture_img(bg);
-// 	m = material(DIFFUSE, 0);
-// 	target = sphere(point3(0,0,0), radius);
-// 	scene->background = object(SP, target, m, t);
-// 	ft_free_arr(data, 2);
-// }
+void		parse_free4(char **a, char **b, char **c, char **d)
+{
+	ft_free_arr(a);
+	ft_free_arr(b);
+	ft_free_arr(c);
+	ft_free_arr(d);
+}
 
 void		get_background(t_scene *scene, char *line, void *mlx)
 {
@@ -149,9 +130,8 @@ void		get_background(t_scene *scene, char *line, void *mlx)
 	m = material(DIFFUSE, 0);
 	target = cube(point3(0,0,0), sidelen);
 	scene->background = object(CB, target, m, t);
-	ft_free_arr(data, 2);
+	ft_free_arr(data);
 }
-
 
 void		get_lux(t_scene *scene, char *line)
 {
@@ -161,7 +141,7 @@ void		get_lux(t_scene *scene, char *line)
 	parse_error_data_count(data, 1, line);
 	data_is_integer(data[0], line);
 	scene->global.lux = ft_atoi(data[0]);
-	ft_free_arr(data, 1);
+	ft_free_arr(data);
 }
 
 void		get_material(t_scene *scene, char *line)
@@ -182,7 +162,7 @@ void		get_material(t_scene *scene, char *line)
 	target = olast(scene->world);
 	free(target->material);
 	target->material = m;
-	ft_free_arr(data, 2);
+	ft_free_arr(data);
 }
 
 void		get_texture(t_scene *scene, char *line)
@@ -213,9 +193,7 @@ void		get_texture(t_scene *scene, char *line)
 	target = olast(scene->world);
 	free(target->texture);
 	target->texture = t;
-	ft_free_arr(data, 4);
-	ft_free_arr(albedo1, 3);
-	ft_free_arr(albedo2, 3);
+	parse_free4(data, albedo1, albedo2, NULL);
 }
 
 void		get_texture_img(t_scene *scene, char *line, void *mlx)
@@ -237,17 +215,17 @@ void		get_texture_img(t_scene *scene, char *line, void *mlx)
 	target = olast(scene->world);
 	free(target->texture);
 	target->texture = t;
-	ft_free_arr(data, 1);
+	ft_free_arr(data);
 }
 
 void		get_resolution(t_scene *scene, char *line)
 {
-	char **render_size;
+	char	**render_size;
 
 	render_size = ft_split(line + 2, ' ');
 	parse_data_set_double(render_size, 2, line);
 	scene->canv = canvas(ft_atoi(render_size[0]), ft_atoi(render_size[1]));
-	ft_free_arr(render_size, 2);
+	ft_free_arr(render_size);
 }
 
 void		get_ambient(t_scene *scene, char *line)
@@ -269,16 +247,9 @@ void		get_ambient(t_scene *scene, char *line)
 	ambient = vdivide(ambient, 255.0);
 	ambient = vmult(ambient, ratio);
 	scene->global.ambient = ambient;
-	ft_free_arr(rgb, 3);
-	ft_free_arr(data, 2);
+	parse_free4(data, rgb, NULL, NULL);
 }
 
-static void		parse_free3(char **a, char **b, char **c)
-{
-	ft_free_arr(a, 3);
-	ft_free_arr(b, 3);
-	ft_free_arr(c, 3);
-}
 void		get_camera(t_scene *scene, char *line)
 {
 	char 		**data;
@@ -301,7 +272,7 @@ void		get_camera(t_scene *scene, char *line)
 	hfov = atod(data[2]);
 	cam = camera_init(look_from, look_dir, hfov);
 	oadd(&scene->cam_list, object(CAM, cam, NULL, NULL));
-	parse_free3(data, lookfrom, lookdir);
+	parse_free4(data, lookfrom, lookdir, NULL);
 }
 
 void		get_point_light(t_scene *scene, char *line)
@@ -326,7 +297,7 @@ void		get_point_light(t_scene *scene, char *line)
 	light_color = vdivide(light_color, 255);
 	light_color = vmult(light_color, atod(data[1]) * lux);
 	oadd(&scene->world, object(LIGHT, light_point(origin, light_color, 0.1, atod(data[1])), NULL, NULL));
-	parse_free3(data, point, rgb);
+	parse_free4(data, point, rgb, NULL);
 }
 
 void		get_sphere(t_scene *scene, char *line)
@@ -354,7 +325,7 @@ void		get_sphere(t_scene *scene, char *line)
 	solid = texture(SOLID, sp_albedo, sp_albedo, 0);
 	diffuse = material(DIFFUSE, 0);
 	oadd(&scene->world, object(SP, sphere(sp_center, radius), diffuse, solid));
-	parse_free3(data, center, albedo);
+	parse_free4(data, center, albedo, NULL);
 }
 
 void		get_plane(t_scene *scene, char *line)
@@ -383,8 +354,7 @@ void		get_plane(t_scene *scene, char *line)
 	solid = texture(SOLID, pl_albedo, pl_albedo, 0);
 	diffuse = material(DIFFUSE, 32);
 	oadd(&scene->world, object(PL, plane(point, normal), diffuse, solid));
-	ft_free_arr(data, 3);
-	parse_free3(p, n, al);
+	parse_free4(data, p, n, al);
 }
 
 void		get_square(t_scene *scene, char *line)
@@ -416,8 +386,7 @@ void		get_square(t_scene *scene, char *line)
 	diffuse = material(DIFFUSE, 32);
 	oadd(&scene->world, object(SQ,
 	square(center, normal, atod(data[2])), diffuse, solid));
-	ft_free_arr(data, 4);
-	parse_free3(c, n, albedo);
+	parse_free4(data, c, n, albedo);
 }
 
 void		get_cylinder(t_scene *scene, char *line)
@@ -450,8 +419,7 @@ void		get_cylinder(t_scene *scene, char *line)
 	diffuse = material(DIFFUSE, 32);
 	oadd(&scene->world, object(CY,
 	cylinder(center, normal, atod(data[2]), atod(data[3])), diffuse, solid));
-	ft_free_arr(data, 5);
-	parse_free3(c, n, albedo);
+	parse_free4(data, c, n, albedo);
 }
 
 void		get_triangle(t_scene *scene, char *line)
@@ -484,9 +452,8 @@ void		get_triangle(t_scene *scene, char *line)
 	diffuse = material(DIFFUSE, 32);
 	oadd(&scene->world, object(TR,
 	triangle(pp[0], pp[1], pp[2]), diffuse, solid));
-	ft_free_arr(data, 4);
-	parse_free3(p[0], p[1], p[2]);
-	ft_free_arr(albedo, 3);
+	ft_free_arr(data);
+	parse_free4(p[0], p[1], p[2], albedo);
 }
 
 void		get_cube(t_scene *scene, char *line)
@@ -513,7 +480,7 @@ void		get_cube(t_scene *scene, char *line)
 	oadd(&scene->world, object(CB,
 		cube(point3(atod(c[0]), atod(c[1]), atod(c[2])), atod(data[1])),
 		diffuse, solid));
-	parse_free3(data, c, a);
+	parse_free4(data, c, a, NULL);
 }
 
 void		get_pyramid(t_scene *scene, char *line)
@@ -543,8 +510,7 @@ void		get_pyramid(t_scene *scene, char *line)
 	object(PM, pyramid(point3(atod(b[0]), atod(b[1]), atod(b[2])),
 				point3(atod(t[0]), atod(t[1]), atod(t[2])),
 				atod(data[2])), diffuse, solid));
-	ft_free_arr(data, 4);
-	parse_free3(b, t, a);
+	parse_free4(data, b, t, a);
 }
 
 void		get_parallel_light(t_scene *scene, char *line)
@@ -568,5 +534,5 @@ void		get_parallel_light(t_scene *scene, char *line)
 	light = vdivide(light, 255);
 	light = vmult(light, atod(data[1]));
 	oadd(&scene->world, object(LIGHT, light_parallel(dir, light, 0.1, atod(data[1])), NULL, NULL));
-	parse_free3(data, d, rgb);
+	parse_free4(data, d, rgb, NULL);
 }
