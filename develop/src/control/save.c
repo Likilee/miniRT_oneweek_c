@@ -62,7 +62,7 @@ void	bmp_save_direct(t_cntl *cntl)
 	t_data	*image;
 	int		fd;
 
-	ft_printf(">> Type rendering mode\n>>: 1 : Phong, 2 : Path trace\n");
+	ft_printf(">> Type rendering mode\n>>: 1 : Phong, 2 : Path trace\n:");
 	get_next_line(0, &line);
 	if (*line == '1')
 		render_phong = TRUE;

@@ -28,10 +28,12 @@ static void	*render_thread_path(void *thread_data)
 				pixel_color = vplus(pixel_color, ray_color_path_trace(&r, s, s->global.depth));
 			}
 			pixel_color = vdivide(pixel_color, s->global.spp);
-			pixel_color = vplus(pixel_color, s->global.ambient); //sum global_ambient + ray_color;
+			pixel_color = vplus(pixel_color, s->global.ambient);
 			filter(&pixel_color, &s->global);
 			my_mlx_pixel_put(s->img, i[1] , s->canv.height - i[0] - 1, create_rgb(&pixel_color));
 		}
+		if (i[0] % t.progress == 0)
+			write(1, "#", 1);
 		i[0] -= t.count;
 	}
 	return (NULL);
@@ -44,11 +46,13 @@ void	render_path_trace(t_cntl *cntl)
 	int				i;
 	double			result;
 
+	ft_printf(">> GOAL    ####################[GOAL]\n>> Current ");
 	i = -1;
 	while (++i < COUNT)
 	{
 		data[i].count = COUNT;
 		data[i].c = cntl;
+		data[i].progress = cntl->scene->canv.height / 20;
 	}
 	i = -1;
 	while (++i < COUNT)
@@ -56,11 +60,12 @@ void	render_path_trace(t_cntl *cntl)
 		data[i].lane = i;
 		if(pthread_create(&p_thread[i], NULL, render_thread_path, (void *)&data[i]) < 0)
 		{
-			perror("thread create error : ");
+			perror("Error\n: ");
 			exit(0);
 		}
 	}
 	i = -1;
 	while (++i < COUNT)
 		pthread_join(p_thread[i], NULL);
+	ft_printf("\n");
 }

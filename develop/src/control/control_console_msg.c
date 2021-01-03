@@ -23,6 +23,18 @@ void		console_msg_welcome(void)
 	printf("* = * = * = * = * = * = * = * = * = *\n");
 }
 
+void		console_msg_welcome_save(void)
+{
+	system("clear");
+	printf("* = * = * = * = * = * = * = * = * = *\n");
+	printf("*                                   *\n");
+	printf("*            WELCOME TO             *\n");
+	printf("*             KILEE's               *\n");
+	printf("*            Raytracer              *\n");
+	printf("*                                   *\n");
+	printf("* = * = * = * SAVE MODE = * = * = * =\n");
+}
+
 void		console_msg_render_mode(void)
 {
 	system("clear");
@@ -47,8 +59,8 @@ void		console_msg_render_mode(void)
 	printf("*                                           *\n");
 	printf("= 2 : PATH_TRACE render                     =\n");
 	printf("=                                           =\n");
-	printf("* - Treat all object as phong diffuse model *\n");
-	printf("= - Only primary ray and Shadow ray         =\n");
+	printf("= - Treat material                          =\n");
+	printf("=   (Lambertain, Metal, Dielectric)         =\n");
 	printf("= - Sample per pixel(Antialiasing)          =\n");
 	printf("= - Scatter Depth                           =\n");
 	printf("* = * = * = * = * = * = * = * = * = * = * = *\n");
