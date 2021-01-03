@@ -3,6 +3,7 @@
 
 # include "structures.h"
 # include "utils.h"
+# include "parse.h"
 
 /*
 ** src/scene
@@ -12,7 +13,7 @@ t_canvas	canvas(int	width, int height);
 t_camera	*camera_init(t_point3 lookfrom, t_vec3 look_dir, double hfov);
 t_camera	camera(t_canvas *canvas, t_point3 lookfrom, t_vec3 dir, double hfov);
 void		camera_set(t_canvas *canvas, t_camera *cam);
-t_objects	*object(t_objects_type type, void *element, t_material *m, t_texture *t);
+t_objects	*object(t_obj_type type, void *element, t_material *m, t_texture *t);
 
 /*
 ** src/scene/object
@@ -32,7 +33,7 @@ t_triangle	*triangle(t_point3 p0, t_point3 p1, t_point3 p2);
 t_cube		*cube(t_point3 center, double side_len);
 t_pyramid	*pyramid(t_point3 center, t_point3 top, double side_len);
 t_material	*material(t_material_type type, double option1);
-t_texture	*texture(t_texture_type type, t_color3 albedo1, t_color3 albedo2, double option1);
+t_texture	*texture(t_tex_type type, t_color3 albedo1, t_color3 albedo2, double option1);
 t_texture	*texture_img(t_data *img);
 void		free_cube(t_cube *cb);
 void		free_pyramid(t_pyramid *pm);

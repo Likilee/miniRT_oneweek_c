@@ -2,7 +2,7 @@
 
 t_bool			in_shadow(t_objects *objs, t_ray light_ray, double light_len)
 {
-	t_hit_record rec;
+	t_hit_rec rec;
 
 	rec.tmin = 0;
 	rec.tmax = light_len;

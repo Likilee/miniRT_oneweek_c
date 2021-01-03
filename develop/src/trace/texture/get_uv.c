@@ -1,6 +1,6 @@
 #include "trace.h"
 
-void	get_sphere_uv(t_hit_record *rec)
+void	get_sphere_uv(t_hit_rec *rec)
 {
 	double	theta;
 	double	phi;
@@ -11,7 +11,7 @@ void	get_sphere_uv(t_hit_record *rec)
 	rec->v = theta / M_PI;
 }
 
-void		get_disk_uv(t_hit_record *rec, t_cylinder *cy)
+void		get_disk_uv(t_hit_rec *rec, t_cylinder *cy)
 {
 	if (cy->axis.x == 1)
 	{
@@ -30,7 +30,7 @@ void		get_disk_uv(t_hit_record *rec, t_cylinder *cy)
 	}
 }
 
-void	get_cylinder_uv(t_hit_record *rec, t_cylinder *cy)
+void	get_cylinder_uv(t_hit_rec *rec, t_cylinder *cy)
 {
 	double	phi;
 
@@ -39,7 +39,7 @@ void	get_cylinder_uv(t_hit_record *rec, t_cylinder *cy)
 	rec->v = cy->height / (rec->p.y - cy->center_bottom.y) / M_PI;
 }
 
-void	get_square_uv(t_hit_record *rec, t_square *sq)
+void	get_square_uv(t_hit_rec *rec, t_square *sq)
 {
 	double	inv_len;
 

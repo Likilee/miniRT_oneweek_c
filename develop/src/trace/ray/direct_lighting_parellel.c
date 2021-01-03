@@ -1,6 +1,6 @@
 #include "trace.h"
 
-t_color3		direct_lighting_parallel(t_objects *objs, t_light *light, t_ray *r, t_hit_record *rec)
+t_color3		direct_lighting_parallel(t_objects *objs, t_light *light, t_ray *r, t_hit_rec *rec)
 {
 	t_color3	ambient;
 	t_color3	diffuse;

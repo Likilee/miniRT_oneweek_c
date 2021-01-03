@@ -27,7 +27,7 @@ typedef struct s_vec3		t_vec3;
 typedef struct s_vec3		t_point3;
 typedef struct s_vec3		t_color3;
 typedef struct s_ray		t_ray;
-typedef struct s_hit_record	t_hit_record;
+typedef struct s_hit_record	t_hit_rec;
 typedef struct s_matrix44	t_matrix44;
 typedef struct s_pth_data	t_pth_data;
 
@@ -36,6 +36,7 @@ typedef struct s_pth_data	t_pth_data;
 */
 typedef struct s_global		t_global;
 typedef struct s_camera		t_camera;
+typedef struct s_cam_set	t_cam_set;
 typedef struct s_canvas		t_canvas;
 typedef struct s_material	t_material;
 typedef struct s_texture	t_texture;
@@ -61,7 +62,7 @@ typedef int					t_bool;
 # define FALSE 0
 # define TRUE 1
 
-typedef int					t_objects_type;
+typedef int					t_obj_type;
 
 # define SP 0
 # define LIGHT 1
@@ -80,7 +81,7 @@ typedef int					t_material_type;
 # define DIELECTRIC 2
 # define LAMBERTIAN 3
 
-typedef int					t_texture_type;
+typedef int					t_tex_type;
 
 # define SOLID 0
 # define CHECKER 1
@@ -182,6 +183,19 @@ struct						s_camera
 	t_point3	left_bottom;
 };
 
+struct 						s_cam_set
+{
+	double 		theta;
+	double 		half_width;
+	double 		viewport_height;
+	double 		viewport_width;
+	t_vec3		w;
+	t_vec3		u;
+	t_vec3		v;
+	t_vec3		vup;
+	t_vec3		lookat;
+};
+
 /*
 ** canvas member
 ** - width = canvas width;
@@ -206,7 +220,7 @@ struct						s_texture
 	t_color3		albedo2;
 	double			option1;
 	t_data			*img;
-	t_texture_type	type;
+	t_tex_type	type;
 };
 
 /*
@@ -257,7 +271,7 @@ struct						s_objects
 	t_material		*material;
 	t_texture		*texture;
 	void			*next;
-	t_objects_type	type;
+	t_obj_type	type;
 };
 
 struct						s_light
@@ -277,6 +291,16 @@ struct						s_sphere
 	double		radius2;
 };
 
+typedef struct				s_sp_set
+{
+	t_vec3		oc;
+	double		a;
+	double		half_b;
+	double		c;
+	double		discriminant;
+	double		sqrtd;
+	double		root;
+}							t_sp_set;
 struct						s_plane
 {
 	t_point3	p;

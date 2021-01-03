@@ -1,6 +1,6 @@
 #include "trace.h"
 
-t_color3		direct_lighting(t_objects *objs, t_ray *r, t_hit_record *rec)
+t_color3		direct_lighting(t_objects *objs, t_ray *r, t_hit_rec *rec)
 {
 	t_color3	light_color;
 	t_objects	*objs_first;
@@ -17,7 +17,7 @@ t_color3		direct_lighting(t_objects *objs, t_ray *r, t_hit_record *rec)
 	return (vmin(vmult_(light_color, albedo(rec)), color3(1, 1, 1)));
 }
 
-t_color3		direct_lighting_get(t_objects *objs, t_light *light, t_ray *r, t_hit_record *rec)
+t_color3		direct_lighting_get(t_objects *objs, t_light *light, t_ray *r, t_hit_rec *rec)
 {
 	if (light->type == POINT)
 		return (direct_lighting_point(objs, light, r, rec));

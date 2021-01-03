@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   object_utils.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kihoonlee <kihoonlee@student.42.fr>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/04 02:26:14 by kihoonlee         #+#    #+#             */
+/*   Updated: 2021/01/04 02:26:49 by kihoonlee        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "scene.h"
 
-t_objects	*object(t_objects_type type, void *element, t_material *m, t_texture *t)
+t_objects	*object(t_obj_type type, void *element, t_material *m, t_texture *t)
 {
 	t_objects	*new;
 
@@ -16,7 +28,7 @@ t_objects	*object(t_objects_type type, void *element, t_material *m, t_texture *
 	return (new);
 }
 
-void	oadd(t_objects **lst, t_objects *new)
+void		oadd(t_objects **lst, t_objects *new)
 {
 	t_objects	*cur;
 
@@ -31,7 +43,7 @@ void	oadd(t_objects **lst, t_objects *new)
 	cur->next = new;
 }
 
-int		osize(t_objects **lst)
+int			osize(t_objects **lst)
 {
 	int		count;
 
@@ -51,36 +63,4 @@ t_objects	*olast(t_objects *lst)
 	while (lst->next)
 		lst = lst->next;
 	return (lst);
-}
-
-void	odelone(t_objects *obj)
-{
-	if (obj == NULL)
-		return ;
-	if (obj->rotate != NULL)
-	{
-		free(obj->rotate);
-		obj->rotate = NULL;
-	}
-	if (obj->rotate_normal != NULL)
-	{
-		free(obj->rotate_normal);
-		obj->rotate = NULL;
-	}
-	free(obj);
-	obj = NULL;
-}
-
-void	oclear(t_objects **lst)
-{
-	t_objects	*temp;
-
-	if (!lst)
-		return ;
-	while (*lst)
-	{
-		temp = (*lst)->next;
-		odelone(*lst);
-		(*lst) = temp;
-	}
 }

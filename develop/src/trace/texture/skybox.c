@@ -1,7 +1,7 @@
 #include "trace.h"
 
 
-t_color3	albedo_skybox(t_hit_record *rec)
+t_color3	albedo_skybox(t_hit_rec *rec)
 {
 	int			w;
 	int			h;
@@ -65,7 +65,7 @@ t_color3	albedo_skybox(t_hit_record *rec)
 }
 
 
-// t_color3	albedo_skybox(t_hit_record *rec, t_cube *skybox)
+// t_color3	albedo_skybox(t_hit_rec *rec, t_cube *skybox)
 // {
 // 	int		w;
 // 	int		h;

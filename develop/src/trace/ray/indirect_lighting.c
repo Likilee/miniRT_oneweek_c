@@ -1,6 +1,6 @@
 #include "trace.h"
 
-t_bool	scatter(t_ray *r_in, t_hit_record *rec, t_color3 *attenuation, t_ray * scattered)
+t_bool	scatter(t_ray *r_in, t_hit_rec *rec, t_color3 *attenuation, t_ray * scattered)
 {
 	t_bool	result;
 
@@ -14,7 +14,7 @@ t_bool	scatter(t_ray *r_in, t_hit_record *rec, t_color3 *attenuation, t_ray * sc
 	return (result);
 }
 
-t_bool	scatter_lambertian(t_hit_record *rec, t_color3 *attenuation, t_ray * scattered)
+t_bool	scatter_lambertian(t_hit_rec *rec, t_color3 *attenuation, t_ray * scattered)
 {
 	t_vec3 scatter_dir;
 
@@ -26,7 +26,7 @@ t_bool	scatter_lambertian(t_hit_record *rec, t_color3 *attenuation, t_ray * scat
 	return (TRUE);
 }
 
-t_bool	scatter_metal(t_ray *r_in, t_hit_record *rec, t_color3 *attenuation, t_ray * scattered)
+t_bool	scatter_metal(t_ray *r_in, t_hit_rec *rec, t_color3 *attenuation, t_ray * scattered)
 {
 	t_vec3	reflected;
 
@@ -47,7 +47,7 @@ static double	reflectance(double cosine, double ref_idx)
 	return (r0 + (1 - r0) * pow((1 - cosine), 5));
 }
 
-t_bool	scatter_dielectric(t_ray *r_in, t_hit_record *rec, t_color3 *attenuation, t_ray * scattered)
+t_bool	scatter_dielectric(t_ray *r_in, t_hit_rec *rec, t_color3 *attenuation, t_ray * scattered)
 {
 	double	refraction_ratio;
 	t_vec3	unit_dir;

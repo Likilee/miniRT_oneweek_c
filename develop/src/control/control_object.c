@@ -6,7 +6,7 @@
 /*   By: kihoonlee <kihoonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/03 19:08:00 by kihoonlee         #+#    #+#             */
-/*   Updated: 2021/01/03 22:20:33 by kihoonlee        ###   ########.fr       */
+/*   Updated: 2021/01/04 03:04:38 by kihoonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static void	cntl_object_select_set_ray(t_ray *r, t_scene *scene, int x, int y)
 void		cntl_object_select(int button, int x, int y, t_cntl *cntl)
 {
 	t_ray			r;
-	t_hit_record	rec;
+	t_hit_rec	rec;
 
 	if (button != M_CLK_L)
 		ft_printf("!! To select object, do left click!\n");

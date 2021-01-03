@@ -1,6 +1,6 @@
 #include "trace.h"
 
-t_color3	albedo(t_hit_record *rec)
+t_color3	albedo(t_hit_rec *rec)
 {
 	if (rec->texture->type == SOLID)
 		return (rec->texture->albedo1);
@@ -17,7 +17,7 @@ t_color3	albedo(t_hit_record *rec)
 	return (color3(0,0,0));
 }
 
-t_color3	albedo_checker(t_hit_record *rec)
+t_color3	albedo_checker(t_hit_rec *rec)
 {
 	double sines;
 	double density;
@@ -30,7 +30,7 @@ t_color3	albedo_checker(t_hit_record *rec)
 		return (rec->texture->albedo2);
 }
 
-t_color3	albedo_checker_uv(t_hit_record *rec)
+t_color3	albedo_checker_uv(t_hit_rec *rec)
 {
 	double sines;
 	double density;
@@ -43,7 +43,7 @@ t_color3	albedo_checker_uv(t_hit_record *rec)
 		return (rec->texture->albedo2);
 }
 
-t_color3	albedo_wave(t_hit_record *rec)
+t_color3	albedo_wave(t_hit_rec *rec)
 {
 	t_color3	wave;
 	double		disrupt;
@@ -60,7 +60,7 @@ t_color3	albedo_wave(t_hit_record *rec)
 	return (wave);
 }
 
-t_color3	albedo_rainbow_normal(t_hit_record *rec)
+t_color3	albedo_rainbow_normal(t_hit_rec *rec)
 {
 	t_color3 rainbow;
 
@@ -68,7 +68,7 @@ t_color3	albedo_rainbow_normal(t_hit_record *rec)
 	return (vmult(rainbow, 0.5));
 }
 
-t_color3	albedo_image_uv(t_hit_record *rec)
+t_color3	albedo_image_uv(t_hit_rec *rec)
 {
 	int		w;
 	int		h;
@@ -95,7 +95,7 @@ t_color3	albedo_image_uv(t_hit_record *rec)
 	return (color33);
 }
 
-t_color3	color_background(t_ray *r, t_scene *s, t_hit_record *rec)
+t_color3	color_background(t_ray *r, t_scene *s, t_hit_rec *rec)
 {
 	double			t;
 
