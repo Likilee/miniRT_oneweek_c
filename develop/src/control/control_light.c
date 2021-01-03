@@ -67,12 +67,12 @@ void	cntl_light_select(t_cntl *cntl)
 		while (temp && temp->type != LIGHT)
 			temp = temp->next;
 		cntl->selected = temp;
-		printf(">> Last light\n");
+		ft_printf(">> Last light\n");
 	}
 	else
 	{
 		cntl->selected = temp;
-		printf(">> Next light\n");
+		ft_printf(">> Next light\n");
 	}
 }
 
@@ -95,7 +95,7 @@ void	cntl_light_bright_up(t_cntl *cntl)
 		brightness = light->brightness;
 		*light_color = vmult(*light_color, brightness);
 	}
-	printf(">> Increased brightness : (%f,%f,%f)\n", light_color->x, light_color->y, light_color->z);
+	ft_printf(">> Increased brightness : (%f,%f,%f)\n", light_color->x, light_color->y, light_color->z);
 }
 
 void	cntl_light_bright_down(t_cntl *cntl)
@@ -114,7 +114,7 @@ void	cntl_light_bright_down(t_cntl *cntl)
 		brightness = ((t_light *)(cntl->selected->element))->brightness;
 		*light_color = vmult(*light_color, brightness);
 	}
-	printf(">> Decreased brightness : (%f,%f,%f)\n", light_color->x, light_color->y, light_color->z);
+	ft_printf(">> Decreased brightness : (%f,%f,%f)\n", light_color->x, light_color->y, light_color->z);
 }
 
 void		cntl_light_translate(t_cntl *cntl, int keycode)

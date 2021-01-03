@@ -36,7 +36,7 @@ void	cntl_camera_select(t_cntl *cntl)
 		cntl->scene->cam_onair = (t_camera *)cntl->scene->cam_list->element;
 	else
 		cntl->scene->cam_onair = ((t_objects *)temp->next)->element;
-	printf(">> Camera switched\n");
+	ft_printf(">> Camera switched\n");
 }
 
 void	cntl_camera_translate(int keycode, t_cntl *cntl)
