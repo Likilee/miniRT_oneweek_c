@@ -229,3 +229,10 @@ the second method is to take into account multiple rays for each pixel and then 
 ## 스카이 박스.
 
 [여기가 성지다](http://www.humus.name/index.php?page=Textures&start=72)
+
+
+## 필터
+
+## 범프매핑
+
+[이거 정독하면 할 수 있을 듯](http://web.cse.ohio-state.edu/~shen.94/781/Site/Slides_files/bump.pdf)

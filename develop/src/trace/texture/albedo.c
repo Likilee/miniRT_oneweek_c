@@ -12,6 +12,8 @@ t_color3	albedo(t_hit_record *rec)
 		return (albedo_rainbow_normal(rec));
 	else if (rec->texture->type == IMAGE)
 		return (albedo_image_uv(rec));
+	else if (rec->texture->type == WAVE)
+		return (albedo_wave(rec));
 	return (color3(0,0,0));
 }
 
@@ -39,6 +41,23 @@ t_color3	albedo_checker_uv(t_hit_record *rec)
 		return (rec->texture->albedo1);
 	else
 		return (rec->texture->albedo2);
+}
+
+t_color3	albedo_wave(t_hit_record *rec)
+{
+	t_color3	wave;
+	double		disrupt;
+	double		interval;
+
+	interval = rec->texture->option1;
+	wave = rec->texture->albedo1;
+	disrupt = (sin(rec->p.x * interval) + 1) * 0.5;
+	wave.x = wave.x * disrupt;
+	disrupt = (sin(rec->p.y * interval) + 1) * 0.5;
+	wave.y = wave.y * disrupt;
+	disrupt = (sin(rec->p.z * interval) + 1) * 0.5;
+	wave.z = wave.z * disrupt;
+	return (wave);
 }
 
 t_color3	albedo_rainbow_normal(t_hit_record *rec)

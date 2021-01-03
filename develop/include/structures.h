@@ -87,6 +87,7 @@ typedef int					t_texture_type;
 # define CHECKER_UV 2
 # define RAINBOW 3
 # define IMAGE 4
+# define WAVE 5
 
 typedef int					t_light_type;
 

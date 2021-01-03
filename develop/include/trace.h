@@ -67,5 +67,6 @@ t_color3	albedo_rainbow_normal(t_hit_record *rec);
 t_color3	albedo_image_uv(t_hit_record *rec);
 t_color3	albedo_skybox(t_hit_record *rec, t_cube *skybox);
 t_color3	color_background(t_ray *r, t_scene *s, t_hit_record *rec);
+t_color3	albedo_wave(t_hit_record *rec);
 
 #endif
