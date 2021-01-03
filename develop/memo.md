@@ -233,6 +233,13 @@ the second method is to take into account multiple rays for each pixel and then 
 
 ## 필터
 
+[세피아 필터](https://stackoverflow.com/questions/1061093/how-is-a-sepia-tone-created)
+
 ## 범프매핑
 
 [이거 정독하면 할 수 있을 듯](http://web.cse.ohio-state.edu/~shen.94/781/Site/Slides_files/bump.pdf)
+
+
+## 실린더
+
+[교재](https://mrl.cs.nyu.edu/~dzorin/rend05/lecture2.pdf)

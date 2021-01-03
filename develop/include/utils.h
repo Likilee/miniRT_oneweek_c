@@ -57,5 +57,6 @@ t_vec3		random_in_unit_sphere(void);
 t_vec3		random_unit_vector(void);
 t_vec3 		random_in_hemisphere(t_vec3 *normal);
 double		atod(char *str);
+double		dmin3(double a, double b, double c);
 
 #endif

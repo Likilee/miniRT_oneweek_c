@@ -113,3 +113,15 @@ double		atod(char *str)
 	ft_free_arr(split);
 	return (num);
 }
+
+double		dmin3(double a, double b, double c)
+{
+	double min;
+
+	min = a;
+	if (b < min)
+		min = b;
+	if (c < min)
+		min = c;
+	return (min);
+}
