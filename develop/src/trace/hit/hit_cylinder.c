@@ -110,6 +110,54 @@ t_bool		hit_cy_rotate_check(t_objects *obj, t_ray *ray, t_hit_record *rec)
 	return (hit_result);
 }
 
+double		hit_disk(t_cylinder *cy, t_ray *ray, t_hit_record *rec, t_bool is_top)
+{
+	t_point3	p;
+	double		denominator;
+	t_vec3		r0_p0; // ray origin to plane point p
+	double		t;
+
+	if (is_top == TRUE)
+		p = cy->center_top;
+	else
+		p = cy->center_bottom;
+	denominator = vdot(cy->axis, ray->dir);
+	if (fabs(denominator) < 0.00001) // 분모가 거의 0이면! = 평면과 직선은 평행 또는 평면위에 있음.
+		return (INFINITY);
+	r0_p0 = vminus(cy->center_top, ray->orig);
+	t = vdot(r0_p0, cy->axis) / denominator;
+	if ((t < rec->tmin || t > rec->tmax))
+		return (INFINITY);
+	p = ray_at(ray, t);
+	if (vlength2(vminus(p, cy->center_top)) > cy->radius2)
+		return (INFINITY);
+	return (t);
+}
+
+double		hit_finite_cylinder(t_cylinder *cy, t_ray *ray, t_hit_record *rec)
+{
+	double 		a;
+	double 		half_b;
+	double 		discriminant;
+	double		sqrtd;
+	double		t;
+	t_point3	p;
+
+	discriminant = cylinder_get_discriminant(cy, ray, &half_b, &a);
+	if (discriminant < 0)
+		return (INFINITY);
+	sqrtd = sqrt(discriminant);
+	t = (-half_b - sqrtd) / a;
+	p = ray_at(ray, t);
+	if (!cylinder_root_check(cy, rec, t, p))
+	{
+		t = (-half_b + sqrtd) / a;
+		p = ray_at(ray, t);
+		if (!cylinder_root_check(cy, rec, t, p))
+			return (INFINITY);
+	}
+	return (t);
+}
 // x,y,z 축방향 실린더로 고정해서 풀어보자(https://www.cl.cam.ac.uk/teaching/1999/AGraphHCI/SMAG/node2.html
 t_bool		hit_cylinder(t_objects *obj, t_ray *ray, t_hit_record *rec)
 {
@@ -117,34 +165,46 @@ t_bool		hit_cylinder(t_objects *obj, t_ray *ray, t_hit_record *rec)
 	double 	half_b;
 	double 	discriminant;
 	double	sqrtd;
-	double	root;
 	double	t;
-	double 	h;
-	double	hmin;
-	double	hmax;
+	double	t_disk_top;
+	double	t_disk_bot;
 	t_cylinder *cy;
 	t_point3 p;
 
 	cy = obj->element;
-	discriminant = cylinder_get_discriminant(cy, ray, &half_b, &a);
-	if (discriminant < 0)
+	t = hit_finite_cylinder(cy, ray, rec);
+	t_disk_top = hit_disk(cy, ray, rec, TRUE);
+	t_disk_bot = hit_disk(cy, ray, rec, FALSE);
+	if (t == INFINITY && t_disk_top == INFINITY && t_disk_bot == INFINITY)
 		return (FALSE);
-	sqrtd = sqrt(discriminant);
-	root = (-half_b - sqrtd) / a;
-	p = ray_at(ray, root);
-	if (!cylinder_root_check(cy, rec, root, p))
+	if (t == dmin3(t, t_disk_top, t_disk_bot))
+		record_cylinder(cy, ray, rec, t);
+	else if (t_disk_top < t_disk_bot)
+		record_disk(cy, ray, rec, t_disk_top);
+	else
 	{
-		root = (-half_b + sqrtd) / a;
-		p = ray_at(ray, root);
-		if (!cylinder_root_check(cy, rec, root, p))
-			return (FALSE);
+		record_disk(cy, ray, rec, t_disk_bot);
+		rec->front_face = (rec->front_face == TRUE) ? FALSE : TRUE;
 	}
-	rec->t = root;
-	rec->p = p;
-	rec->normal = cylinder_normal(cy, rec);
-	set_face_normal(ray, rec);
-	get_cylinder_uv(rec, cy);
 	rec->material = obj->material;
 	rec->texture = obj->texture;
 	return (TRUE);
+}
+
+void		record_disk(t_cylinder *cy, t_ray *ray, t_hit_record *rec, double t)
+{
+	rec->t = t;
+	rec->p = ray_at(ray, t);
+	rec->normal = cy->axis;
+	set_face_normal(ray, rec);
+	get_disk_uv(rec, cy);
+}
+
+void		record_cylinder(t_cylinder *cy, t_ray *ray, t_hit_record *rec, double t)
+{
+	rec->t = t;
+	rec->p = ray_at(ray, t);
+	rec->normal = cylinder_normal(cy, rec);
+	set_face_normal(ray, rec);
+	get_cylinder_uv(rec, cy);
 }

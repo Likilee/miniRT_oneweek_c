@@ -26,6 +26,10 @@ t_bool		hit_sq_rotate_check(t_objects *obj, t_ray *ray, t_hit_record *rec);
 t_bool		hit_square(t_objects *obj, t_ray *ray, t_hit_record *rec);
 t_bool		hit_cy_rotate_check(t_objects *obj, t_ray *ray, t_hit_record *rec);
 t_bool		hit_cylinder(t_objects *obj, t_ray *ray, t_hit_record *rec);
+double		hit_finite_cylinder(t_cylinder *cy, t_ray *ray, t_hit_record *rec);
+double		hit_disk(t_cylinder *cy, t_ray *ray, t_hit_record *rec, t_bool is_top);
+void		record_disk(t_cylinder *cy, t_ray *ray, t_hit_record *rec, double t);
+void		record_cylinder(t_cylinder *cy, t_ray *ray, t_hit_record *rec, double t);
 t_bool		hit_triangle(t_objects *obj, t_ray *ray, t_hit_record *rec);
 t_bool		hit_cb_rotate_check(t_objects *obj, t_ray *ray, t_hit_record *rec);
 t_bool		hit_cube(t_objects *obj, t_ray *ray, t_hit_record *rec);
@@ -58,6 +62,7 @@ t_bool		scatter_dielectric(t_ray *r_in, t_hit_record *rec, t_color3 *attenuation
 ** trace/texture
 */
 void		get_sphere_uv(t_hit_record *rec);
+void		get_disk_uv(t_hit_record *rec, t_cylinder *cy);
 void		get_cylinder_uv(t_hit_record *rec, t_cylinder *cy);
 void		get_square_uv(t_hit_record *rec, t_square *sq);
 t_color3	albedo(t_hit_record *rec);

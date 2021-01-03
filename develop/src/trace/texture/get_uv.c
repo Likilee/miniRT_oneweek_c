@@ -11,6 +11,25 @@ void	get_sphere_uv(t_hit_record *rec)
 	rec->v = theta / M_PI;
 }
 
+void		get_disk_uv(t_hit_record *rec, t_cylinder *cy)
+{
+	if (cy->axis.x == 1)
+	{
+		rec->u = rec->p.z;
+		rec->v = rec->p.y;
+	}
+	else if (cy->axis.y == 1)
+	{
+		rec->u = rec->p.x;
+		rec->v = rec->p.z;
+	}
+	else
+	{
+		rec->u = rec->p.x;
+		rec->v = rec->p.y;
+	}
+}
+
 void	get_cylinder_uv(t_hit_record *rec, t_cylinder *cy)
 {
 	double	phi;
