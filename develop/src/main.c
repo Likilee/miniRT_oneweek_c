@@ -31,7 +31,7 @@ int	main(int argc, char **argv)
 		cntl_init(&cntl, argv[1]);
 		console_msg_welcome_save();
 		bmp_save_direct(&cntl);
-		printf(">> Close Ray TRACER, Bye Bye~~\n\n");
+		ft_printf(">> Close Ray TRACER, Bye Bye~~\n\n");
 	}
 	else
 		ft_printf("Error\n: wrong argc\n");

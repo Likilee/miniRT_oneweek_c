@@ -15,7 +15,7 @@ void		cntl_render(t_cntl *cntl, int keycode)
 	else if (keycode == KEY_ESC)
 		cntl_default_mode_on(cntl);
 	else
-		printf("!! Select render mode (1 or 2)\n");
+		ft_printf("!! Select render mode (1 or 2)\n");
 }
 
 void		cntl_render_phong(t_cntl *cntl)
@@ -32,7 +32,7 @@ void		cntl_render_phong(t_cntl *cntl)
 	render_phong(cntl);
 	mlx_put_image_to_window(cntl->mlx, cntl->win, cntl->img->img, 0, 0);
 	ft_printf(">> Finish render\n");
-	printf(">> Save RENDERED img? \n>> : presss y/n\n");
+	ft_printf(">> Save RENDERED img? \n>> : presss y/n\n");
 	cntl->mode = SAVM;
 }
 
@@ -55,7 +55,7 @@ void		cntl_render_path_trace(t_cntl *cntl)
 	render_path_trace(cntl);
 	mlx_put_image_to_window(cntl->mlx, cntl->win, cntl->img->img, 0, 0);
 	ft_printf(">> Finish render\n");
-	printf(">> Save RENDERED img? \n>> : presss y/n)\n");
+	ft_printf(">> Save RENDERED img? \n>> : presss y/n)\n");
 	cntl->mode = SAVM;
 }
 

@@ -32,7 +32,7 @@ void		cntl_object(int keycode, t_cntl *cntl)
 	}
 	else
 	{
-		printf("!! Select object with mouse_l_click first!\n");
+		ft_printf("!! Select object with mouse_l_click first!\n");
 		return ;
 	}
 }
@@ -42,12 +42,12 @@ void		cntl_rotate_on_and_off(t_cntl *cntl)
 	if (cntl->rotate_on == FALSE)
 	{
 		cntl->rotate_on = TRUE;
-		printf(">> Object rotate mode\n");
+		ft_printf(">> Object rotate mode\n");
 	}
 	else
 	{
 		cntl->rotate_on = FALSE;
-		printf(">> Object move mode\n");
+		ft_printf(">> Object move mode\n");
 	}
 }
 
@@ -59,7 +59,7 @@ void		cntl_object_select(int button, int x, int y, t_cntl *cntl)
 	t_hit_record rec;
 
 	if (button != M_CLK_L)
-		printf("!! To select object, do left click!\n");
+		ft_printf("!! To select object, do left click!\n");
 	else
 	{
 		rec.tmin = 0.0001;
@@ -72,12 +72,12 @@ void		cntl_object_select(int button, int x, int y, t_cntl *cntl)
 		{
 			cntl->selected = rec.obj;
 			cntl->mode = 1;
-			printf(">> Object was selected!\n>> Deselct key : ESC\n");
+			ft_printf(">> Object was selected!\n>> Deselct key : ESC\n");
 		}
 		else
 		{
 			cntl->selected = NULL;
-			printf("!! There is no object :(\n");
+			ft_printf("!! There is no object :(\n");
 		}
 	}
 }
@@ -85,7 +85,7 @@ void		cntl_object_select(int button, int x, int y, t_cntl *cntl)
 void		cntl_object_deselect(t_cntl *cntl)
 {
 	cntl->selected = NULL;
-	printf(">> Objecr deselected\n");
+	ft_printf(">> Objecr deselected\n");
 }
 
 void		cntl_object_rotate(t_cntl *cntl, int keycode)

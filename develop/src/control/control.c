@@ -35,7 +35,7 @@ int			cntl_key_press(int keycode, t_cntl *cntl)
 	else if (cntl->mode == RENM)
 		cntl_render(cntl, keycode);
 	else
-		printf("!! Undefined keycode : %d\n", keycode);
+		ft_printf("!! Undefined keycode : %d\n", keycode);
 	return (0);
 }
 
@@ -50,6 +50,6 @@ int		cntl_mouse_click(int button, int x, int y, t_cntl *cntl)
 
 int		cntl_close(t_cntl *cntl)
 {
-    printf(">> Close Ray TRACER, Bye Bye~~\n\n");
+    ft_printf(">> Close Ray TRACER, Bye Bye~~\n\n");
 	exit(0);
 }
