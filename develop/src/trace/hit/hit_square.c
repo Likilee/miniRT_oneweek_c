@@ -33,7 +33,7 @@ static t_vec3		world2object_sq(t_matrix44 *rotate, t_square *sq, t_ray *ray)
 	return (offset);
 }
 
-t_bool		hit_sq_rotate_check(t_objects *obj, t_ray *ray, t_hit_record *rec)
+t_bool		hit_sq_rotate_check(t_objects *obj, t_ray *ray, t_hit_rec *rec)
 {
 	t_ray			ray_w2o;
 	t_square 		sq_w2o;
@@ -56,7 +56,7 @@ t_bool		hit_sq_rotate_check(t_objects *obj, t_ray *ray, t_hit_record *rec)
 	return (hit_result);
 }
 
-t_bool		hit_square(t_objects *obj, t_ray *ray, t_hit_record *rec)
+t_bool		hit_square(t_objects *obj, t_ray *ray, t_hit_rec *rec)
 {
 	double		denominator;
 	t_vec3		r0_p0; // ray origin to plane point p

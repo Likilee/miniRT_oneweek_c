@@ -1,7 +1,7 @@
 #include "trace.h"
 
 //이건 스크래치픽셀스 방식으로https://www.scratchapixel.com/lessons/3d-basic-rendering/ray-tracing-rendering-a-triangle/ray-triangle-intersection-geometric-solution
-t_bool hit_triangle(t_objects *obj, t_ray *ray, t_hit_record *rec)
+t_bool hit_triangle(t_objects *obj, t_ray *ray, t_hit_rec *rec)
 {
     // compute plane's normal
 	t_vec3		p;

@@ -1,40 +1,41 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   hit_sphere.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kihoonlee <kihoonlee@student.42.fr>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/04 03:02:30 by kihoonlee         #+#    #+#             */
+/*   Updated: 2021/01/04 03:05:39 by kihoonlee        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "trace.h"
 
-t_bool		hit_sphere(t_objects *obj, t_ray *ray, t_hit_record *rec)
+t_bool		hit_sphere(t_objects *obj, t_ray *ray, t_hit_rec *rec)
 {
 	t_sphere	*sp;
-	t_vec3		oc;
-	double		a;
-	double		half_b;
-	double		c;
-	double		discriminant;
-	double		sqrtd;
-	double		root;
+	t_sp_set	s;
 
 	sp = (t_sphere *)obj->element;
-	oc = vminus(ray->orig, sp->center);
-	a = vlength2(ray->dir);
-	half_b = vdot(oc, ray->dir);
-	c = vlength2(oc) - sp->radius2;
-	discriminant = half_b * half_b - a * c;
-	// 판별식이 0보다 작을 때 : 실근 없을 때,
-	if (discriminant < 0)
+	s.oc = vminus(ray->orig, sp->center);
+	s.a = vlength2(ray->dir);
+	s.half_b = vdot(s.oc, ray->dir);
+	s.c = vlength2(s.oc) - sp->radius2;
+	s.discriminant = s.half_b * s.half_b - s.a * s.c;
+	if (s.discriminant < 0)
 		return (FALSE);
-	sqrtd = sqrt(discriminant);
-	//두 실근(t) 중 tmin과 tmax 사이에 있는 근이 있는지 체크, 작은 근부터 체크.
-	root = (-half_b - sqrtd) / a;
-	if (root < rec->tmin || root > rec->tmax)
+	s.sqrtd = sqrt(s.discriminant);
+	s.root = (-s.half_b - s.sqrtd) / s.a;
+	if (s.root < rec->tmin || s.root > rec->tmax)
 	{
-		root = (-half_b + sqrtd) / a;
-		if (root < rec->tmin || root > rec->tmax)
+		s.root = (-s.half_b + s.sqrtd) / s.a;
+		if (s.root < rec->tmin || s.root > rec->tmax)
 			return (FALSE);
 	}
-	rec->t = root;
-	rec->p = ray_at(ray, root);
-	rec->normal = vdivide(vminus(rec->p, sp->center), sp->radius); // 정규화된 법선 벡터.
+	get_record(rec, s.root, obj, ray);
+	rec->normal = vdivide(vminus(rec->p, sp->center), sp->radius);
 	get_sphere_uv(rec);
-	set_face_normal(ray, rec); // rec의 법선벡터와 광선의 방향벡터를 비교해서 앞면인지 뒷면인지 확인해서 저장.
-	rec->material = obj->material;
-	rec->texture = obj->texture;
+	set_face_normal(ray, rec);
 	return (TRUE);
 }

@@ -7,7 +7,7 @@ static void		world2object_cb(t_matrix44 *rotate, t_vec3 *offset, t_ray *ray)
 	ray->dir =  mmult_v(ray->dir, 0, rotate);
 }
 
-t_bool		hit_cb_rotate_check(t_objects *obj, t_ray *ray, t_hit_record *rec)
+t_bool		hit_cb_rotate_check(t_objects *obj, t_ray *ray, t_hit_rec *rec)
 {
 	t_ray			ray_w2o;
 	t_cube			*cb;
@@ -34,9 +34,9 @@ t_bool		hit_cb_rotate_check(t_objects *obj, t_ray *ray, t_hit_record *rec)
 	return (hit_result);
 }
 
-t_bool		hit_cube(t_objects *obj, t_ray *ray, t_hit_record *rec)
+t_bool		hit_cube(t_objects *obj, t_ray *ray, t_hit_rec *rec)
 {
-	t_hit_record	temp_rec;
+	t_hit_rec	temp_rec;
 	t_bool			hit_cube;
 	t_cube			*cb;
 	t_objects		c;

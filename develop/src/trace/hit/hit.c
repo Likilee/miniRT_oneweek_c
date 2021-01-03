@@ -1,14 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   hit.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kihoonlee <kihoonlee@student.42.fr>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/04 02:52:25 by kihoonlee         #+#    #+#             */
+/*   Updated: 2021/01/04 03:05:04 by kihoonlee        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "trace.h"
 
-t_bool		hit(t_objects *obj, t_ray *ray, t_hit_record *rec)
+t_bool		hit(t_objects *obj, t_ray *ray, t_hit_rec *rec)
 {
 	t_bool			hit_anything;
-	t_hit_record	temp_rec;
+	t_hit_rec	temp_rec;
 
-	// temp_rec의 tmin, tmax 값 초기화.
 	temp_rec = *rec;
 	hit_anything = FALSE;
-	while(obj)
+	while (obj)
 	{
 		if (hit_obj(obj, ray, &temp_rec))
 		{
@@ -22,7 +33,7 @@ t_bool		hit(t_objects *obj, t_ray *ray, t_hit_record *rec)
 	return (hit_anything);
 }
 
-t_bool		hit_obj(t_objects *obj, t_ray *ray, t_hit_record *rec)
+t_bool		hit_obj(t_objects *obj, t_ray *ray, t_hit_rec *rec)
 {
 	t_bool	hit_result;
 
@@ -38,7 +49,7 @@ t_bool		hit_obj(t_objects *obj, t_ray *ray, t_hit_record *rec)
 	else if (obj->type == CY)
 		hit_result = hit_cy_rotate_check(obj, ray, rec);
 	else if (obj->type == TR)
-		hit_result = hit_triangle(obj->element, ray, rec);
+		hit_result = hit_triangle(obj, ray, rec);
 	else if (obj->type == CB)
 		hit_result = hit_cb_rotate_check(obj, ray, rec);
 	else if (obj->type == PM)
@@ -46,7 +57,16 @@ t_bool		hit_obj(t_objects *obj, t_ray *ray, t_hit_record *rec)
 	return (hit_result);
 }
 
-void		object2world_rec(t_hit_record *rec, t_vec3 *offset, t_matrix44 *r, t_matrix44 *r_n)
+void		get_record(t_hit_rec *rec, double root, t_objects *obj, t_ray *r)
+{
+	rec->material = obj->material;
+	rec->texture = obj->texture;
+	rec->t = root;
+	rec->p = ray_at(r, root);
+}
+
+void		object2world_rec(t_hit_rec *rec, t_vec3 *offset,
+								t_matrix44 *r, t_matrix44 *r_n)
 {
 	t_matrix44 r_inv;
 
