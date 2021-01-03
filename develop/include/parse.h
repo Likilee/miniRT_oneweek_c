@@ -34,7 +34,7 @@ void		get_cube(t_scene *scene, char *line);
 void		get_pyramid(t_scene *scene, char *line);
 
 /*
-** error_rt.c
+** error_rt.c / error_rt2.c / error_rt3.c
 */
 void		parse_error_identifier(char *line);
 void		parse_error_data_count(char **data, int n, char *line);
@@ -45,6 +45,7 @@ void		data_is_double(char *str, char *line);
 void		data_is_integer(char *str, char *line);
 void		data_is_zero_to_one(char *str, char *line);
 void		data_is_in_degree_range(char *str, char *line);
+void		data_is_in_rgb_range(char *str, char *line);
 void		parse_data_set_rgb(char **data, int n, char *line);
 void		error_malloc(void);
 

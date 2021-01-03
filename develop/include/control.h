@@ -20,9 +20,10 @@
 
 void		my_mlx_control(t_cntl *cntl);
 int			cntl_key_press(int keycode, t_cntl *cntl);
+void		cntl_key_press2(int keycode, t_cntl *cntl);
 int			cntl_key_release(int keycode, t_cntl *cntl);
 int			cntl_mouse_click(int button, int x, int y, t_cntl *cntl);
-int	        cntl_close(t_cntl *cntl);
+int	        cntl_close(void);
 void		cntl_default_mode_on(t_cntl *cntl);
 
 // init
@@ -72,6 +73,8 @@ void		cntl_light_on_and_off(t_cntl *cntl);
 
 // save
 void		cntl_save(t_cntl *cntl, int	keycode);
+t_bmph		bmp_get_header(t_scene *scene);
+void		write_bmp(t_data *image, t_scene *scene, int fd);
 void		bmp_save(t_scene *scene);
 void		bmp_save_direct(t_cntl *cntl);
 void		cntl_save_phong(t_cntl *cntl);
@@ -89,8 +92,12 @@ void		cntl_render_filter_change(t_cntl *cntl);
 void		console_msg_welcome(void);
 void		console_msg_welcome_save(void);
 void		console_msg_camera_mode(void);
+void		console_msg_camera_mode2(void);
 void		console_msg_light_mode(void);
+void		console_msg_light_mode2(void);
 void		console_msg_object_mode(void);
+void		console_msg_object_mode2(void);
 void		console_msg_render_mode(void);
+void		console_msg_render_mode2(void);
 
 #endif

@@ -106,7 +106,7 @@ t_color3	color_background(t_ray *r, t_scene *s, t_hit_record *rec)
 				vmult(color3(0.5, 0.7, 1.0), t)));
 	}
 	else if (hit_cube(s->background, r, rec))
-		return (albedo_skybox(rec, s->background->element));
+		return (albedo_skybox(rec));
 	else
 		return (color3(0.2,0.3,0.4));
 }

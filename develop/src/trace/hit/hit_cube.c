@@ -36,7 +36,6 @@ t_bool		hit_cb_rotate_check(t_objects *obj, t_ray *ray, t_hit_record *rec)
 
 t_bool		hit_cube(t_objects *obj, t_ray *ray, t_hit_record *rec)
 {
-	t_square		*side;
 	t_hit_record	temp_rec;
 	t_bool			hit_cube;
 	t_cube			*cb;

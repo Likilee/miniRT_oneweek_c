@@ -62,8 +62,6 @@ t_bool		hit_square(t_objects *obj, t_ray *ray, t_hit_record *rec)
 	t_vec3		r0_p0; // ray origin to plane point p
 	t_point3	hit_point;
 	double		root;
-	t_point3	min;
-	t_point3	max;
 	t_square	*sq;
 
 	sq = obj->element;

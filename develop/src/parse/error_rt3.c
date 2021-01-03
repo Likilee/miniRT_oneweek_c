@@ -1,19 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   control_default.c                                  :+:      :+:    :+:   */
+/*   error_rt3.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kihoonlee <kihoonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/03 19:25:18 by kihoonlee         #+#    #+#             */
-/*   Updated: 2021/01/03 19:25:19 by kihoonlee        ###   ########.fr       */
+/*   Created: 2021/01/03 19:40:10 by kihoonlee         #+#    #+#             */
+/*   Updated: 2021/01/04 01:08:23 by kihoonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "control.h"
+#include "parse.h"
 
-void	cntl_default_mode_on(t_cntl *cntl)
+void	parse_data_set_rgb(char **data, int n, char *line)
 {
-	cntl->mode = DEFM;
-	console_msg_welcome();
+	int			i;
+
+	parse_error_data_count(data, n, line);
+	i = -1;
+	while (++i < n)
+		data_is_in_rgb_range(data[i], line);
+}
+
+void	error_malloc(void)
+{
+	perror("Error\n** Malloc Failed in somewhere **");
+	exit(0);
 }

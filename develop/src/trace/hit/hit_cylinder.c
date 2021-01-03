@@ -161,15 +161,10 @@ double		hit_finite_cylinder(t_cylinder *cy, t_ray *ray, t_hit_record *rec)
 // x,y,z 축방향 실린더로 고정해서 풀어보자(https://www.cl.cam.ac.uk/teaching/1999/AGraphHCI/SMAG/node2.html
 t_bool		hit_cylinder(t_objects *obj, t_ray *ray, t_hit_record *rec)
 {
-	double 	a;
-	double 	half_b;
-	double 	discriminant;
-	double	sqrtd;
 	double	t;
 	double	t_disk_top;
 	double	t_disk_bot;
 	t_cylinder *cy;
-	t_point3 p;
 
 	cy = obj->element;
 	t = hit_finite_cylinder(cy, ray, rec);

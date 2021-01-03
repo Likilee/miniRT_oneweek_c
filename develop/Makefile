@@ -1,7 +1,7 @@
 NAME = minirt
 CC = gcc
 RM = rm -rf
-CFLAG =  -O3 -g3 -fsanitize=address # -Wall -Wextra -Werror
+CFLAG =  -O3 -g3 -fsanitize=address -Wall -Wextra -Werror
 MAKE = make
 MLX = libmlx.dylib
 MLX_DIR = ./lib/mlx

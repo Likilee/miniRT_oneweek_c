@@ -21,12 +21,7 @@ t_point3	ray_at(t_ray *ray, double t)
 
 t_color3	ray_color_phong(t_ray *r, t_scene *s)
 {
-	t_vec3			unit_dir;
-	double			t;
 	t_hit_record	rec;
-	t_color3		color;
-	t_ray			scattered;
-	t_color3		attenuation;
 
 	rec.tmin = 0.0001;
 	rec.tmax = INFINITY;
@@ -44,7 +39,6 @@ t_color3	ray_color_path_trace(t_ray *r, t_scene *s, int depth)
 	t_vec3			unit_dir;
 	double			t;
 	t_hit_record	rec;
-	t_color3		color;
 	t_ray			scattered;
 	t_color3		attenuation;
 
@@ -70,10 +64,7 @@ t_color3	ray_color_path_trace(t_ray *r, t_scene *s, int depth)
 
 t_color3	ray_color_preview(t_ray *r, t_scene *s, int light_on)
 {
-	t_vec3			unit_dir;
-	double			t;
 	t_hit_record	rec;
-	t_color3		attenuation;
 
 	rec.tmin = 0.0001;
 	rec.tmax = INFINITY;

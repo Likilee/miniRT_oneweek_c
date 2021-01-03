@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   control_object_scale.c                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kihoonlee <kihoonlee@student.42.fr>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/03 19:20:15 by kihoonlee         #+#    #+#             */
+/*   Updated: 2021/01/03 19:20:37 by kihoonlee        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "control.h"
 
 void		cntl_object_scale_sp(t_cntl *cntl, double scale)
@@ -27,7 +39,7 @@ void		cntl_object_scale_cy(t_cntl *cntl, double scale)
 
 	cy = cntl->selected->element;
 	cy_temp = cylinder(cy->center_bottom, cy->axis,
-					cy->radius * 2 * scale, cy->height *scale);
+				cy->radius * 2 * scale, cy->height * scale);
 	*cy = *cy_temp;
 	free(cy_temp);
 }

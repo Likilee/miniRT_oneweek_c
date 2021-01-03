@@ -1,16 +1,17 @@
 #include "trace.h"
 
 
-t_color3	albedo_skybox(t_hit_record *rec, t_cube *skybox)
+t_color3	albedo_skybox(t_hit_record *rec)
 {
-	int		w;
-	int		h;
-	int		h_inv;
-	char	*pixel;
-	int		color;
-	double	c_scale;
-	t_data	*data;
-	int		l;
+	int			w;
+	int			h;
+	int			h_inv;
+	char		*pixel;
+	int			color;
+	double		c_scale;
+	t_data		*data;
+	t_color3	color33;
+	int			l;
 
 	data = rec->texture->img;
 	l = data->height / 3;
@@ -55,14 +56,10 @@ t_color3	albedo_skybox(t_hit_record *rec, t_cube *skybox)
 		h += l;
 	}
 	c_scale = 1.0 / 255.0;
-	// if (w >= data->width)
-	// 	w = data->width - 1;
-	// if (h >= data->height)
-	// 	h = data->height;
 	h_inv = data->height - h - 1;
 	pixel = data->addr + (h_inv * data->size_line + w * (data->bits_per_pixel / 8));
 	color = *(int *)pixel;
-	t_color3 color33 = color3(c_scale * get_r(color), c_scale * get_g(color), c_scale * get_b(color));
+	color33 = color3(c_scale * get_r(color), c_scale * get_g(color), c_scale * get_b(color));
 
 	return (color33);
 }

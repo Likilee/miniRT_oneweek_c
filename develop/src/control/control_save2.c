@@ -1,60 +1,31 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   control_save2.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kihoonlee <kihoonlee@student.42.fr>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/03 19:00:41 by kihoonlee         #+#    #+#             */
+/*   Updated: 2021/01/03 19:06:19 by kihoonlee        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "control.h"
 
-static t_bmph	bmp_get_header(t_scene *scene)
+void		write_bmp(t_data *image, t_scene *scene, int fd)
 {
-	int		width;
-	int		height;
-	t_bmph	bmph;
+	int		i;
 
-	width = scene->canv.width;
-	height = scene->canv.height;
-	bmph.file_h.magic1 = 'B';
-	bmph.file_h.magic2 = 'M';
-	bmph.file_h.size = 54 + 4 * width * height;
-	bmph.file_h.reserved1 = 0;
-	bmph.file_h.reserved2 = 0;
-	bmph.file_h.offset = 54;
-	bmph.info_h.size = 40;
-	bmph.info_h.width = width;
-	bmph.info_h.height = -height;
-	bmph.info_h.plane = 1;
-	bmph.info_h.bit_per_pixel = 32;
-	bmph.info_h.compression = 0;
-	bmph.info_h.size_image = 4 * width * height;
-	bmph.info_h.resolution_x = width;
-	bmph.info_h.resolution_y = height;
-	bmph.info_h.color_used = 0xffffff;
-	bmph.info_h.color_important = 0;
-	return (bmph);
-}
-
-void	bmp_save(t_scene *scene)
-{
-	t_bmph	bmph;
-	char	*file_name;
-	t_data	*image;
-	int		fd;
-
-	ft_printf(">> Type save file name (MUST end with '.bmp'\n:");
-	get_next_line(0, &file_name);
-	fd = open(file_name, O_WRONLY | O_CREAT | O_TRUNC, 0666);
-	bmph = bmp_get_header(scene);
-	write(fd, &bmph, 54);
-	image = scene->img;
-
-	int i = 0;
+	i = 0;
 	while (i < (image->size_line / 4) * scene->canv.height)
 	{
 		if (i % (image->size_line / 4) < scene->canv.width)
 			write(fd, &image->addr[i * 4], 4);
-			++i;
+		++i;
 	}
-	ft_printf(">> [%s] : file has been saved\n", file_name);
-	free(file_name);
-	close(fd);
 }
 
-void	bmp_save_direct(t_cntl *cntl)
+void		bmp_save_direct(t_cntl *cntl)
 {
 	t_bmph	bmph;
 	t_bool	render_phong;
@@ -76,18 +47,11 @@ void	bmp_save_direct(t_cntl *cntl)
 	write(fd, &bmph, 54);
 	(render_phong == TRUE) ? cntl_save_phong(cntl) : cntl_save_path_trace(cntl);
 	image = cntl->img;
-	int i = 0;
-	while (i < (image->size_line / 4) * cntl->scene->canv.height)
-	{
-		if (i % (image->size_line / 4) < cntl->scene->canv.width)
-			write(fd, &image->addr[i * 4], 4);
-			++i;
-	}
+	write_bmp(image, cntl->scene, fd);
 	ft_printf("[%s] : file has been saved\n", line);
 	free(line);
 	close(fd);
 }
-
 
 void		cntl_save_phong(t_cntl *cntl)
 {

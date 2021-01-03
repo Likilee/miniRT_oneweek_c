@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kihoonlee <kihoonlee@student.42.fr>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/03 18:50:55 by kihoonlee         #+#    #+#             */
+/*   Updated: 2021/01/03 18:54:05 by kihoonlee        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdio.h>
 #include <time.h>
 #include "mlx.h"
@@ -8,7 +20,6 @@
 #include "print.h"
 #include "parse.h"
 #include "control.h"
-
 
 int	main(int argc, char **argv)
 {

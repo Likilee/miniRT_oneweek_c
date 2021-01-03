@@ -19,7 +19,6 @@ void	camera_set(t_canvas *canvas, t_camera *cam)
 	double 		half_width;
 	double 		viewport_height;
 	double 		viewport_width;
-	double		focal_len = 1.0;
 	t_vec3		w;
 	t_vec3		u;
 	t_vec3		v;

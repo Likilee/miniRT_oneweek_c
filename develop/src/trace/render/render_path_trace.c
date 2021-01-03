@@ -44,7 +44,6 @@ void	render_path_trace(t_cntl *cntl)
 	pthread_t		p_thread[COUNT];
 	t_pth_data		data[COUNT];
 	int				i;
-	double			result;
 
 	ft_printf(">> GOAL    ####################[GOAL]\n>> Current ");
 	i = -1;
