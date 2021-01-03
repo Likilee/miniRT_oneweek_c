@@ -9,7 +9,6 @@
 #	resolution	: R		width(int)			height(int)
 #	ambient		: A		range(double[0,1])	rgb(int[0,255],3)
 #	+lux		: L 	lux(int[10,~))
-#	+background : BG	imagepath			radius(double)
 #	+background : BG	imagepath			sidelen(double)
 
 ### LIGHT
@@ -39,6 +38,7 @@
 #	+rainbow		: t		3			rgb	rgb	0
 #	+image			: img	filepath
 #	+wave_uv		: t		5			rgb	rgb	0
+
 # 장면 구성
 R 800 600
 A 0.1  255,255,255

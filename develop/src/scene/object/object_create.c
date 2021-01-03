@@ -132,6 +132,15 @@ t_pyramid *pyramid(t_point3 center, t_point3 top, double side_len)
 	return (pm);
 }
 
+t_bool		check_axis_align(t_vec3 *axis)
+{
+	if (fabs(axis->x) != 1 && fabs(axis->y) != 1 && fabs(axis->z) != 1)
+		return (FALSE);
+	else if (vlength2(*axis) != 1)
+		return (FALSE);
+	return (TRUE);
+}
+
 t_cylinder	*cylinder(t_point3 center_bottom, t_vec3 axis, double diameter, double height)
 {
 	t_cylinder	*cy;
@@ -146,6 +155,11 @@ t_cylinder	*cylinder(t_point3 center_bottom, t_vec3 axis, double diameter, doubl
 		cy->center_top = center_bottom;
 	}
 	cy->axis = axis;
+	if (check_axis_align(&axis) == FALSE)
+	{
+		perror("Wrong normal intput to cylinder!");
+		exit(0);
+	}
 	cy->radius = diameter / 2;
 	cy->radius2 = cy->radius * cy->radius;
 	cy->height = height;
