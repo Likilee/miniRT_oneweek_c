@@ -50,7 +50,6 @@ int		cntl_mouse_click(int button, int x, int y, t_cntl *cntl)
 
 int		cntl_close(t_cntl *cntl)
 {
-    printf(">> Close Ray TRACER, Bye Bye~~\n");
-	// mlx_destroy_window(cntl->mlx, cntl->win);
+    printf(">> Close Ray TRACER, Bye Bye~~\n\n");
 	exit(0);
 }

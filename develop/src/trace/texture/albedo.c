@@ -89,7 +89,7 @@ t_color3	albedo_image_uv(t_hit_record *rec)
 	if (h >= data->height)
 		h = data->height;
 	h_inv = data->height - h - 1;
-	pixel = data->addr + (h_inv * data->line_length + w * (data->bits_per_pixel / 8));
+	pixel = data->addr + (h_inv * data->size_line + w * (data->bits_per_pixel / 8));
 	color = *(int *)pixel;
 	t_color3 color33 = color3(c_scale * get_r(color), c_scale * get_g(color), c_scale * get_b(color));
 	return (color33);
@@ -115,7 +115,7 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
 	char	*dst;
 
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+	dst = data->addr + (y * data->size_line + x * (data->bits_per_pixel / 8));
 	*(unsigned int*)dst = color;
 }
 */

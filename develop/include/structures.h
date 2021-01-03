@@ -227,7 +227,7 @@ struct						s_data
 	void	*img;
 	char	*addr;
 	int		bits_per_pixel;
-	int		line_length;
+	int		size_line;
 	int		endian;
 	int		width;
 	int		height;

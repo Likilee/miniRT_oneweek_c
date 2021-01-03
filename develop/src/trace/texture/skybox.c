@@ -60,7 +60,7 @@ t_color3	albedo_skybox(t_hit_record *rec, t_cube *skybox)
 	// if (h >= data->height)
 	// 	h = data->height;
 	h_inv = data->height - h - 1;
-	pixel = data->addr + (h_inv * data->line_length + w * (data->bits_per_pixel / 8));
+	pixel = data->addr + (h_inv * data->size_line + w * (data->bits_per_pixel / 8));
 	color = *(int *)pixel;
 	t_color3 color33 = color3(c_scale * get_r(color), c_scale * get_g(color), c_scale * get_b(color));
 
@@ -134,7 +134,7 @@ t_color3	albedo_skybox(t_hit_record *rec, t_cube *skybox)
 // 	if (h >= data->height)
 // 		h = data->height;
 // 	h_inv = data->height - h - 1;
-// 	pixel = data->addr + (h_inv * data->line_length + w * (data->bits_per_pixel / 8));
+// 	pixel = data->addr + (h_inv * data->size_line + w * (data->bits_per_pixel / 8));
 // 	color = *(int *)pixel;
 // 	t_color3 color33 = color3(c_scale * get_r(color), c_scale * get_g(color), c_scale * get_b(color));
 

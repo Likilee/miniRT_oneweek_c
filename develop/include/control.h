@@ -23,11 +23,13 @@ int			cntl_key_press(int keycode, t_cntl *cntl);
 int			cntl_key_release(int keycode, t_cntl *cntl);
 int			cntl_mouse_click(int button, int x, int y, t_cntl *cntl);
 int	        cntl_close(t_cntl *cntl);
-void		cntl_display_resolution(t_cntl *cntl);
 void		cntl_default_mode_on(t_cntl *cntl);
 
-// welcome
+// init
 void		my_mlx_welcome(t_cntl *cntl);
+void		cntl_init(t_cntl *cntl, char *filepath);
+void		cntl_display_resolution(t_cntl *cntl);
+
 
 // object
 void		cntl_object_mode_on(t_cntl *cntl);
@@ -71,6 +73,9 @@ void		cntl_light_on_and_off(t_cntl *cntl);
 // save
 void		cntl_save(t_cntl *cntl, int	keycode);
 void		bmp_save(t_scene *scene);
+void		bmp_save_direct(t_cntl *cntl);
+void		cntl_save_phong(t_cntl *cntl);
+void		cntl_save_path_trace(t_cntl *cntl);
 
 // render
 void		cntl_render_mode_on(t_cntl *cntl);
