@@ -215,7 +215,7 @@ PERFECT 란 당연히 완전해야하고, 잘못된 사용과 같은 심한 실�
 >- [x] **Compound element: Pyramid (4 triangles, 1 square).**
 >- [ ] **Putting caps on size-limited cylinders.**
 >- [ ] One other 2nd degree object: Cone, Hyperboloid, Paraboloid..
->- [ ] **One color filter: Sepia, R/G/B filters..**
+>- [x] **One color filter: Sepia, R/G/B filters..**
 >- [x] **Anti-aliasing.**
 >- [ ] Simple stereoscopy (like red/green glasses).
 >- [ ] Bump mapping
