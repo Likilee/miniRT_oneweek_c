@@ -95,7 +95,7 @@ SRC = $(SRC_MAIN) $(SRC_HIT) $(SRC_PARSE) $(SRC_UTIL) $(SRC_CNTL) $(SRC_PRINT) $
 OBJ = $(SRC:.c=.o)
 OBJDIR = ./obj
 all : $(NAME)
-
+	$(info ** DONE. minirt was made **)
 clean :
 	@$(MAKE) -C $(LIBFT_DIR) clean;
 	@$(RM) $(OBJ)
@@ -116,6 +116,8 @@ $(NAME) : $(OBJ) $(MLX_DIR)/$(MLX) $(LIBFT_DIR)/$(LIBFT)
 	@$(CC) $(CFLAG) -c $? -o $@ $(INCLUDE)
 $(MLX_DIR)/$(MLX) :
 	@$(MAKE) -C $(MLX_DIR) all
+	$(info ** STEP1. libmlx was made **)
 $(LIBFT_DIR)/$(LIBFT) :
 	@$(MAKE) -C $(LIBFT_DIR) all
+	$(info ** STEP2. libft was made **)
 .PHONY : all clean re ppm open run
