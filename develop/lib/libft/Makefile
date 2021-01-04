@@ -83,13 +83,13 @@ OBJECTS = $(addprefix $(OBJDIR)/, $(SRCNAME:.c=.o))
 all : $(NAME)
 
 clean :
-	rm -rf $(OBJECTS)
+	@rm -rf $(OBJECTS)
 fclean : clean
-	rm -rf $(NAME)
+	@rm -rf $(NAME)
 re : fclean all
 
 $(NAME) : $(OBJECTS)
-	ar $(AFLAGS) $@ $?
+	@ar $(AFLAGS) $@ $?
 $(OBJDIR)/%.o : $(SRCDIR)/%.c
 	@mkdir -p $(OBJDIR)
 	@$(CC) $(CFLAGS) -c $? -o $@ $(INCLUDE)

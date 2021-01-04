@@ -6,7 +6,7 @@
 /*   By: kihoonlee <kihoonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/03 19:08:00 by kihoonlee         #+#    #+#             */
-/*   Updated: 2021/01/04 16:19:08 by kihoonlee        ###   ########.fr       */
+/*   Updated: 2021/01/04 21:10:48 by kihoonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void		cntl_object_mode_on(t_cntl *cntl)
 {
-	cntl->mode = 1;
+	cntl->mode = OBJM;
+	cntl->selected = NULL;
 	console_msg_object_mode();
 }
 

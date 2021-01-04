@@ -6,7 +6,7 @@
 /*   By: kihoonlee <kihoonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/03 19:20:58 by kihoonlee         #+#    #+#             */
-/*   Updated: 2021/01/03 19:22:55 by kihoonlee        ###   ########.fr       */
+/*   Updated: 2021/01/04 21:03:40 by kihoonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,9 @@ void		cntl_light_mode_on(t_cntl *cntl)
 
 	cntl->mode = LIGM;
 	temp = cntl->scene->world;
-	if (cntl->selected == 0)
-	{
-		while (temp->type != LIGHT)
-			temp = temp->next;
-		cntl->selected = temp;
-	}
+	while (temp->type != LIGHT)
+		temp = temp->next;
+	cntl->selected = temp;
 	console_msg_light_mode();
 }
 
