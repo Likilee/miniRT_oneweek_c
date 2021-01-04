@@ -1,4 +1,4 @@
-#.SUFFIXEX : .c .o
+#.SUFFIXEX : .c .oc
 NAME = libft.a
 CC = gcc
 AFLAGS = rc

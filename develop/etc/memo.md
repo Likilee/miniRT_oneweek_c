@@ -243,3 +243,6 @@ the second method is to take into account multiple rays for each pixel and then 
 ## 실린더
 
 [교재](https://mrl.cs.nyu.edu/~dzorin/rend05/lecture2.pdf)
+
+### 메이크파일
+[이거 괜찮은듯](https://kwangja.tistory.com/entry/Makefile-%EB%82%B4%EC%97%90%EC%84%9C-%EC%82%AC%EC%9A%A9%EB%90%98%EB%8A%94-%EB%AC%B8%EB%B2%95-%EC%A0%95%EB%A6%AC)
