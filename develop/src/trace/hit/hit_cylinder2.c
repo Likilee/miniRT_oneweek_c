@@ -6,7 +6,7 @@
 /*   By: kihoonlee <kihoonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 03:07:44 by kihoonlee         #+#    #+#             */
-/*   Updated: 2021/01/04 03:17:39 by kihoonlee        ###   ########.fr       */
+/*   Updated: 2021/01/04 21:30:07 by kihoonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,23 +16,24 @@ double			hit_disk(t_cylinder *cy, t_ray *ray,
 						t_hit_rec *rec, t_bool is_top)
 {
 	t_point3	p;
+	t_point3	p0;
 	double		denominator;
 	t_vec3		r0_p0;
 	double		t;
 
 	if (is_top == TRUE)
-		p = cy->center_top;
+		p0 = cy->center_top;
 	else
-		p = cy->center_bottom;
+		p0 = cy->center_bottom;
 	denominator = vdot(cy->axis, ray->dir);
 	if (fabs(denominator) < 0.00001)
 		return (INFINITY);
-	r0_p0 = vminus(cy->center_top, ray->orig);
+	r0_p0 = vminus(p0, ray->orig);
 	t = vdot(r0_p0, cy->axis) / denominator;
 	if ((t < rec->tmin || t > rec->tmax))
 		return (INFINITY);
 	p = ray_at(ray, t);
-	if (vlength2(vminus(p, cy->center_top)) > cy->radius2)
+	if (vlength2(vminus(p, p0)) > cy->radius2)
 		return (INFINITY);
 	return (t);
 }
