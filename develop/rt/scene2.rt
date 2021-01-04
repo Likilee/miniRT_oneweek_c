@@ -40,7 +40,7 @@
 #	+wave_uv		: t		5			rgb	rgb	0
 
 # 장면 구성
-R 1600 900
+R 4096 3072
 A 0.1  255,255,255
 L 500
 BG ./png/skybox/yokohama3.png    500
