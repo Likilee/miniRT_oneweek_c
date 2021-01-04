@@ -6,7 +6,7 @@
 /*   By: kihoonlee <kihoonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/03 19:00:41 by kihoonlee         #+#    #+#             */
-/*   Updated: 2021/01/03 19:06:19 by kihoonlee        ###   ########.fr       */
+/*   Updated: 2021/01/04 17:27:26 by kihoonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void		bmp_save_direct(t_cntl *cntl)
 	free(line);
 	ft_printf(">> Type file name (MUST end with '.bmp'\n:");
 	get_next_line(0, &line);
-	fd = open(line, O_WRONLY | O_CREAT | O_TRUNC, 0666);
+	fd = open(ft_strjoin("./bmp/", line), O_WRONLY | O_CREAT | O_TRUNC, 0666);
 	bmph = bmp_get_header(cntl->scene);
 	write(fd, &bmph, 54);
 	(render_phong == TRUE) ? cntl_save_phong(cntl) : cntl_save_path_trace(cntl);

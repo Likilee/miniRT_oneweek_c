@@ -6,7 +6,7 @@
 /*   By: kihoonlee <kihoonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/03 19:00:38 by kihoonlee         #+#    #+#             */
-/*   Updated: 2021/01/03 22:21:01 by kihoonlee        ###   ########.fr       */
+/*   Updated: 2021/01/04 17:24:36 by kihoonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,17 +56,20 @@ void		bmp_save(t_scene *scene)
 {
 	t_bmph	bmph;
 	char	*file_name;
+	char	*file_path;
 	t_data	*image;
 	int		fd;
 
 	ft_printf(">> Type save file name (MUST end with '.bmp'\n:");
 	get_next_line(0, &file_name);
-	fd = open(file_name, O_WRONLY | O_CREAT | O_TRUNC, 0666);
+	file_path = ft_strjoin("./bmp/",file_name);
+	fd = open(file_path, O_WRONLY | O_CREAT | O_TRUNC, 0666);
 	bmph = bmp_get_header(scene);
 	write(fd, &bmph, 54);
 	image = scene->img;
 	write_bmp(image, scene, fd);
 	ft_printf(">> [%s] : file has been saved\n", file_name);
 	free(file_name);
+	free(file_path);
 	close(fd);
 }

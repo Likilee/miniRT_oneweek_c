@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kihoonlee <kihoonlee@student.42.fr>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/04 16:40:35 by kihoonlee         #+#    #+#             */
+/*   Updated: 2021/01/04 16:40:36 by kihoonlee        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PARSE_H
 # define PARSE_H
 
@@ -7,7 +19,7 @@
 # include "mlx.h"
 
 /*
-** read_rt.c
+** src/parse/read_rt*.c
 */
 t_scene		*read_rt(char *filepath, void *mlx);
 void		parse_rt(t_scene *scene, char *line, void *mlx);
@@ -35,7 +47,7 @@ void		get_cube(t_scene *scene, char *line);
 void		get_pyramid(t_scene *scene, char *line);
 
 /*
-** error_rt.c / error_rt2.c / error_rt3.c
+** src/parse/error_rt*.c
 */
 void		parse_error_identifier(char *line);
 void		parse_error_data_count(char **data, int n, char *line);

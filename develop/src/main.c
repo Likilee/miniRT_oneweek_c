@@ -6,7 +6,7 @@
 /*   By: kihoonlee <kihoonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/03 18:50:55 by kihoonlee         #+#    #+#             */
-/*   Updated: 2021/01/03 18:54:05 by kihoonlee        ###   ########.fr       */
+/*   Updated: 2021/01/04 16:17:26 by kihoonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 #include "parse.h"
 #include "control.h"
 
-int	main(int argc, char **argv)
+int		main(int argc, char **argv)
 {
 	t_cntl		cntl;
 

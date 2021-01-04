@@ -21,11 +21,9 @@ fclean : clean
 re : fclean all
 
 run : re
-	./$(NAME) scene.rt
-ppm : all
-	./$(NAME) > result.ppm
-open : ppm
-	open ./result.ppm
+	./$(NAME) ./bmp/scene.rt
+bonus : all
+
 $(NAME) : $(MLX_DIR)/$(MLX) $(LIBFT_DIR)/$(LIBFT)
 	$(CC) $(CFLAG) $(LIB_FLAG) ./src/*.c ./src/*/*.c ./src/*/*/*.c $(INCLUDE) -o $(NAME)
 	install_name_tool -change $(MLX) $(MLX_DIR)/$(MLX) $(NAME)

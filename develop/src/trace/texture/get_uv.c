@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_uv.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kihoonlee <kihoonlee@student.42.fr>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/04 15:25:25 by kihoonlee         #+#    #+#             */
+/*   Updated: 2021/01/04 15:25:32 by kihoonlee        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "trace.h"
 
-void	get_sphere_uv(t_hit_rec *rec)
+void		get_sphere_uv(t_hit_rec *rec)
 {
 	double	theta;
 	double	phi;
@@ -30,7 +42,7 @@ void		get_disk_uv(t_hit_rec *rec, t_cylinder *cy)
 	}
 }
 
-void	get_cylinder_uv(t_hit_rec *rec, t_cylinder *cy)
+void		get_cylinder_uv(t_hit_rec *rec, t_cylinder *cy)
 {
 	double	phi;
 
@@ -39,7 +51,7 @@ void	get_cylinder_uv(t_hit_rec *rec, t_cylinder *cy)
 	rec->v = cy->height / (rec->p.y - cy->center_bottom.y) / M_PI;
 }
 
-void	get_square_uv(t_hit_rec *rec, t_square *sq)
+void		get_square_uv(t_hit_rec *rec, t_square *sq)
 {
 	double	inv_len;
 

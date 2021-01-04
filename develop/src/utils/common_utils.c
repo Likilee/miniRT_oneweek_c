@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   common_utils.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kihoonlee <kihoonlee@student.42.fr>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/04 15:43:57 by kihoonlee         #+#    #+#             */
+/*   Updated: 2021/01/04 15:48:49 by kihoonlee        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "utils.h"
 
 double		deg_to_rad(double degrees)
@@ -14,77 +26,28 @@ double		saturate(double value)
 	return (value);
 }
 
-t_bool	near_zero(t_vec3 *v)
+int			saturate_min_max_int(int value, int min, int max)
 {
-	// 벡타가 모든 차원으로 0에 근접하면 트루 리턴
-	double s = 1e-8;
+	if (value < min)
+		return (min);
+	if (value > max)
+		return (max);
+	return (value);
+}
+
+/*
+** 벡터가 모든 차원으로 0에 근접하면 트루 리턴
+*/
+
+t_bool		near_zero(t_vec3 *v)
+{
+	double s;
+
+	s = 1e-8;
 	if ((v->x < s) && (v->y < s) && (v->z < s))
 		return (TRUE);
 	else
 		return (FALSE);
-}
-
-double		random_double(void)
-{
-	return (rand() / (RAND_MAX + 1.0));
-}
-
-double		random_double_(double min, double max)
-{
-	return (min + (max - min) * random_double());
-}
-
-double		random_jitter(int spp, int k)
-{
-	if (spp == 1)
-		return (0);
-	else
-		return (random_double() / (k % 4 + 1));
-}
-
-t_vec3		random_vec(void)
-{
-	return (vec3(random_double(), random_double(), random_double()));
-}
-
-t_vec3		random_vec_(double min, double max)
-{
-	return (vec3(random_double_(min, max), random_double_(min, max), random_double_(min, max)));
-}
-
-t_vec3		random_in_unit_sphere(void)
-{
-	t_vec3	p;
-
-	while(1)
-	{
-		p = random_vec_(-1, 1);
-		if (vlength2(p) < 1)
-			return (p);
-	}
-}
-
-t_vec3		random_unit_vector(void)
-{
-	double	a;
-	double	z;
-	double	r;
-
-	a = random_double_(0, 2 * M_PI);
-	z = random_double_(-1, 1);
-	r = sqrt(1 - z * z);
-	return (vec3(r * cos(a), r * sin(a), z));
-}
-
-t_vec3 		random_in_hemisphere(t_vec3 *normal)
-{
-	t_vec3	in_unit_sphere;
-
-	in_unit_sphere = random_in_unit_sphere();
-	if (vdot(in_unit_sphere, *normal) > 0.0) // 법선과 같은 반구에 있으면
-		return (in_unit_sphere);
-	else
-		return (vmult(in_unit_sphere, -1));
 }
 
 double		atod(char *str)
@@ -112,16 +75,4 @@ double		atod(char *str)
 	num = integer + point;
 	ft_free_arr(split);
 	return (num);
-}
-
-double		dmin3(double a, double b, double c)
-{
-	double min;
-
-	min = a;
-	if (b < min)
-		min = b;
-	if (c < min)
-		min = c;
-	return (min);
 }

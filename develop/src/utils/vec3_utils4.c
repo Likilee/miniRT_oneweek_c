@@ -1,22 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   reflect.c                                          :+:      :+:    :+:   */
+/*   vec3_utils4.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kihoonlee <kihoonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/04 13:56:03 by kihoonlee         #+#    #+#             */
-/*   Updated: 2021/01/04 13:57:31 by kihoonlee        ###   ########.fr       */
+/*   Created: 2021/01/04 15:54:08 by kihoonlee         #+#    #+#             */
+/*   Updated: 2021/01/04 15:57:36 by kihoonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "trace.h"
+#include "utils.h"
 
-/*
-** v - 2 * dot(v, n) * n;
-*/
-
-t_vec3	reflect(t_vec3 v, t_vec3 n)
+t_vec3	vunit(t_vec3 vec)
 {
-	return (vminus(v, vmult(n, vdot(v, n) * 2)));
+	double len;
+
+	len = vlength(vec);
+	if (len == 0)
+	{
+		ft_printf("Error\n:** Divdide by 0 to make unit vec");
+		exit(0);
+	}
+	vec.x /= len;
+	vec.y /= len;
+	vec.z /= len;
+	return (vec);
+}
+
+t_vec3	vmin(t_vec3 vec1, t_vec3 vec2)
+{
+	if (vec1.x > vec2.x)
+		vec1.x = vec2.x;
+	if (vec1.y > vec2.y)
+		vec1.y = vec2.y;
+	if (vec1.z > vec2.z)
+		vec1.z = vec2.z;
+	return (vec1);
 }

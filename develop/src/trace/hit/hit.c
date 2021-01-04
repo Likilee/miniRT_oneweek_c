@@ -6,7 +6,7 @@
 /*   By: kihoonlee <kihoonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 02:52:25 by kihoonlee         #+#    #+#             */
-/*   Updated: 2021/01/04 03:05:04 by kihoonlee        ###   ########.fr       */
+/*   Updated: 2021/01/04 13:17:04 by kihoonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_bool		hit(t_objects *obj, t_ray *ray, t_hit_rec *rec)
 {
-	t_bool			hit_anything;
+	t_bool		hit_anything;
 	t_hit_rec	temp_rec;
 
 	temp_rec = *rec;

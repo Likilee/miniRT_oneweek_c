@@ -6,7 +6,7 @@
 /*   By: kihoonlee <kihoonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 02:15:54 by kihoonlee         #+#    #+#             */
-/*   Updated: 2021/01/04 02:23:21 by kihoonlee        ###   ########.fr       */
+/*   Updated: 2021/01/04 16:18:43 by kihoonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_camera	*camera_init(t_point3 lookfrom, t_vec3 look_dir, double hfov)
 ** up vector is y aixs unit vector
 */
 
-void	camera_set(t_canvas *canvas, t_camera *cam)
+void		camera_set(t_canvas *canvas, t_camera *cam)
 {
 	t_cam_set	s;
 
