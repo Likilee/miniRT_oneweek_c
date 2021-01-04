@@ -1,0 +1,70 @@
+#### RULE ####
+#	Comment line must start with '#'
+#	Name start with '+' is bonus
+#	Element must divide with ' ' (don't use '\t')
+#	! Material / Texture must be start with one '\t'
+#	! Material / Texture must be wrote in next line to target object
+
+### DEFAULT OPTION
+#	resolution	: R		width(int)			height(int)
+#	ambient		: A		range(double[0,1])	rgb(int[0,255],3)
+#	+lux		: L 	lux(int[10,~))
+#	+background : BG	imagepath			sidelen(double)
+
+### LIGHT
+#	point_light : l		point(double,3)		brightness(double[0,1])	rgb
+#	+dir_light	: dl	dir(double,3)		brightness(double[0,1])	rgb
+
+### CAMERA
+#   camera		: c		lookfrom(double,3)	lookdir(double,3)	hfov(int[0,180])
+
+###	OBJECT
+#	sphere		: sp	enter(double,3)		diameter(double)	rgb
+#	plane		: pl	point(double,3)		dir_vec(double,3)	rgb
+#	square		: sq	center(double,3)	dir_vec(double,3)  	side_len(double)  	rgb
+#	cylinder	: cy	center(double,3)	dir_vec(double,3)  	diameter(double)  	height(double)  rgb
+#	triangle	: tr	p0(double,3)		p1(double,3) 		p2(double,3) 		rgb
+#	+cube		: cb	center(double,3)	side_len   			rgb
+#	+pyramid	: pm	center(double,3)	top_p(double,3)	side_len(double)		rgb
+
+### MATERIAL
+#	+metal		: m	1  	fuzz([0,1])
+#	+dielectric	: m	2 	n(ex.glass 1.5)
+#	+lambertian	: m	3  	0
+
+### TEXTURE
+#	+checker_normal	: t		1			rgb	rgb	Checker_interval(int)
+#	+checker_uv		: t		2			rgb	rgb	Checker_interval(int)
+#	+rainbow		: t		3			rgb	rgb	0
+#	+image			: img	filepath
+#	+wave_uv		: t		5			rgb	rgb	0
+
+# 장면 구성
+R 1600 900
+A 0.1  255,255,255
+L 500
+BG ./png/skybox/yokohama3.png    500
+# 카메라
+c 0,0,0  0,0,-1  90
+c 0,0,0  0,-1,0  90
+c 0,0,0  0,0,1  90
+c 0,0,0  1,0,0  90
+c 0,0,0  0,1,0  70
+c 0,0,0  1,0,0  70
+# 라이트
+dl 0,-1,-1   0.2   255,255,255
+# l 5,0,-15   0.2   255,255,255
+# 오브젝트
+sp -10,0,-20  10  200,100,100
+	m  2    1.5
+sp  10,0,-20  9.8 255,255,255
+	m  3  0
+	t  2   255,0,0  255,255,255  40
+#cy   0,5,-20  0,1,0  10  10  233,233,233
+#	m  1    0
+pm   0,-5,-20  0,10,-20  10  200,159,35
+	m  1   0
+
+# img  ./png/kilee2.png
+# square		: sq	center(double,3)	dir_vec(double,3)  	side_len(double)  	rgb
+#	cylinder	: cy	center(double,3)	dir_vec(double,3)  	diameter(double)  	height(double)  rgb
