@@ -6,7 +6,7 @@
 /*   By: kihoonlee <kihoonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/03 19:46:33 by kihoonlee         #+#    #+#             */
-/*   Updated: 2021/01/04 02:07:35 by kihoonlee        ###   ########.fr       */
+/*   Updated: 2021/01/04 23:08:27 by kihoonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void		get_plane(t_scene *scene, char *line)
 	point = point3(atod(data[1][0]), atod(data[1][1]), atod(data[1][2]));
 	normal = vec3(atod(data[2][0]), atod(data[2][1]), atod(data[2][2]));
 	solid = texture(SOLID, vdivide(to_vec3(data[3]), 255), color3(0, 0, 0), 0);
-	diffuse = material(DIFFUSE, 32);
+	diffuse = material(DIFFUSE, KSN);
 	oadd(&scene->world, object(PL, plane(point, normal), diffuse, solid));
 	parse_free4(data[0], data[1], data[2], data[3]);
 }

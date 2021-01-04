@@ -6,7 +6,7 @@
 /*   By: kihoonlee <kihoonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/03 19:46:33 by kihoonlee         #+#    #+#             */
-/*   Updated: 2021/01/04 02:06:05 by kihoonlee        ###   ########.fr       */
+/*   Updated: 2021/01/05 01:16:45 by kihoonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void		get_texture(t_scene *scene, char *line)
 	data = ft_split(line + 3, ' ');
 	parse_error_data_count(data, 4, line);
 	data_is_integer(data[0], line);
-	if (ft_atoi(data[0]) < 0 || ft_atoi(data[0]) > 4)
+	if (ft_atoi(data[0]) < 0 || ft_atoi(data[0]) > 5)
 		parse_error_identifier(line);
 	albedo1 = ft_split(data[1], ',');
 	parse_data_set_rgb(albedo1, 3, line);
