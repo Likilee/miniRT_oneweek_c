@@ -6,7 +6,7 @@
 /*   By: kihoonlee <kihoonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/03 18:50:55 by kihoonlee         #+#    #+#             */
-/*   Updated: 2021/01/04 16:17:26 by kihoonlee        ###   ########.fr       */
+/*   Updated: 2021/01/04 21:38:03 by kihoonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int		main(int argc, char **argv)
 	{
 		if (ft_strncmp(argv[2], "--save", 10) != 0)
 		{
-			ft_printf("Error\n:Second arg must be \"--save\"");
+			ft_printf("Error\n: Second arg must be \"--save\"");
 			exit(0);
 		}
 		cntl_init(&cntl, argv[1]);

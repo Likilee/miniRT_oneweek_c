@@ -6,7 +6,7 @@
 /*   By: kihoonlee <kihoonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 02:15:59 by kihoonlee         #+#    #+#             */
-/*   Updated: 2021/01/04 02:16:00 by kihoonlee        ###   ########.fr       */
+/*   Updated: 2021/01/04 21:36:41 by kihoonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_scene	*scene_init(void)
 	t_scene *scene;
 
 	if (!(scene = (t_scene *)malloc(sizeof(t_scene))))
-		return (NULL);
+		error_malloc();
 	scene->world = NULL;
 	scene->cam_list = NULL;
 	scene->img = NULL;

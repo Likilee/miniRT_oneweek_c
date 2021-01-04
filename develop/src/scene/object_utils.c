@@ -6,7 +6,7 @@
 /*   By: kihoonlee <kihoonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 02:26:14 by kihoonlee         #+#    #+#             */
-/*   Updated: 2021/01/04 02:26:49 by kihoonlee        ###   ########.fr       */
+/*   Updated: 2021/01/04 21:36:32 by kihoonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_objects	*object(t_obj_type type, void *element, t_material *m, t_texture *t)
 	t_objects	*new;
 
 	if (!(new = (t_objects *)malloc(sizeof(t_objects) * 1)))
-		return (NULL);
+		error_malloc();
 	new->type = type;
 	new->element = element;
 	new->rotate = NULL;

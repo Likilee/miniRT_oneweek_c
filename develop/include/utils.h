@@ -6,7 +6,7 @@
 /*   By: kihoonlee <kihoonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 17:05:45 by kihoonlee         #+#    #+#             */
-/*   Updated: 2021/01/04 17:10:39 by kihoonlee        ###   ########.fr       */
+/*   Updated: 2021/01/04 21:41:26 by kihoonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include "libftprintf.h"
 # include "get_next_line.h"
 # include "structures.h"
+# include "parse.h"
 
 /*
 ** src/utils/vec3_utils*.c
