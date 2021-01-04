@@ -6,7 +6,7 @@
 /*   By: kihoonlee <kihoonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/03 19:00:41 by kihoonlee         #+#    #+#             */
-/*   Updated: 2021/01/04 17:27:26 by kihoonlee        ###   ########.fr       */
+/*   Updated: 2021/01/04 21:38:43 by kihoonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void		bmp_save_direct(t_cntl *cntl)
 	(render_phong == TRUE) ? cntl_save_phong(cntl) : cntl_save_path_trace(cntl);
 	image = cntl->img;
 	write_bmp(image, cntl->scene, fd);
-	ft_printf("[%s] : file has been saved\n", line);
+	ft_printf(">> [%s] : file has been saved\n", line);
 	free(line);
 	close(fd);
 }

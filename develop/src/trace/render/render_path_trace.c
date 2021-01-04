@@ -6,7 +6,7 @@
 /*   By: kihoonlee <kihoonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 14:25:33 by kihoonlee         #+#    #+#             */
-/*   Updated: 2021/01/04 14:25:48 by kihoonlee        ###   ########.fr       */
+/*   Updated: 2021/01/04 21:45:12 by kihoonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,8 @@ void			render_path_trace(t_cntl *cntl)
 	t_pth_data		data[COUNT];
 	int				i;
 
-	ft_printf(">> GOAL    ####################[GOAL]\n>> Current ");
+	ft_printf(">> GOAL    ########################################[RENDERING]");
+	ft_printf("\n>> Current ");
 	pth_data_init(data, cntl);
 	i = -1;
 	while (++i < COUNT)
@@ -83,5 +84,5 @@ void			render_path_trace(t_cntl *cntl)
 	i = -1;
 	while (++i < COUNT)
 		pthread_join(p_thread[i], NULL);
-	ft_printf("\n");
+	ft_printf("[DONE]\n");
 }

@@ -6,7 +6,7 @@
 /*   By: kihoonlee <kihoonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 14:21:08 by kihoonlee         #+#    #+#             */
-/*   Updated: 2021/01/04 14:24:18 by kihoonlee        ###   ########.fr       */
+/*   Updated: 2021/01/04 21:45:22 by kihoonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void		pth_data_init(t_pth_data *data, t_cntl *cntl)
 	{
 		data[i].count = COUNT;
 		data[i].c = cntl;
-		data[i].progress = cntl->scene->canv.height / 20;
+		data[i].progress = cntl->scene->canv.height / 40;
 	}
 }
 
@@ -79,7 +79,8 @@ void		render_phong(t_cntl *cntl)
 	t_pth_data		data[COUNT];
 	int				i;
 
-	ft_printf(">> GOAL    ####################[GOAL]\n>> Current ");
+	ft_printf(">> GOAL    ########################################[RENDERING]");
+	ft_printf("\n>> Current ");
 	pth_data_init(data, cntl);
 	i = -1;
 	while (++i < COUNT)
@@ -95,5 +96,5 @@ void		render_phong(t_cntl *cntl)
 	i = -1;
 	while (++i < COUNT)
 		pthread_join(p_thread[i], NULL);
-	ft_printf("\n");
+	ft_printf("[DONE]\n");
 }

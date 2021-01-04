@@ -6,7 +6,7 @@
 /*   By: kihoonlee <kihoonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 16:09:26 by kihoonlee         #+#    #+#             */
-/*   Updated: 2021/01/04 16:15:58 by kihoonlee        ###   ########.fr       */
+/*   Updated: 2021/01/04 21:36:53 by kihoonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_matrix44		*munit(void)
 	int			j;
 
 	if (!(matrix = (t_matrix44 *)malloc(sizeof(t_matrix44))))
-		return (NULL);
+		error_malloc();
 	i = -1;
 	while (++i < 4)
 	{
