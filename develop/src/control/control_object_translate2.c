@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   control_object_translate2.c                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kihoonlee <kihoonlee@student.42.fr>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/03 19:19:43 by kihoonlee         #+#    #+#             */
+/*   Updated: 2021/01/03 19:19:50 by kihoonlee        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "control.h"
 
 void		cntl_object_translate_cb(t_cntl *cntl, t_vec3 *move)
 {
-	t_cube 		*cb;
+	t_cube		*cb;
 	int			i;
 
 	cb = cntl->selected->element;

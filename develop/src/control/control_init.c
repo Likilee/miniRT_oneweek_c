@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   control_init.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kihoonlee <kihoonlee@student.42.fr>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/03 19:23:37 by kihoonlee         #+#    #+#             */
+/*   Updated: 2021/01/03 19:24:43 by kihoonlee        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "control.h"
 
 void		my_mlx_welcome(t_cntl *cntl)
@@ -19,7 +31,7 @@ void		cntl_display_resolution(t_cntl *cntl)
 		cntl->scene->canv.height = y;
 }
 
-void  cntl_init(t_cntl *cntl, char *filepath)
+void		cntl_init(t_cntl *cntl, char *filepath)
 {
 	t_data		*image;
 
@@ -30,11 +42,14 @@ void  cntl_init(t_cntl *cntl, char *filepath)
 	cntl->light_on = 1;
 	cntl->rotate_on = 0;
 	cntl_display_resolution(cntl);
-	cntl->win = mlx_new_window(cntl->mlx, cntl->scene->canv.width, cntl->scene->canv.height, "Kilee's raytracer");
+	cntl->win = mlx_new_window(cntl->mlx, cntl->scene->canv.width,
+				cntl->scene->canv.height, "Kilee's raytracer");
 	if (!(image = (t_data *)malloc(sizeof(t_data))))
 		error_malloc();
-	image->img = mlx_new_image(cntl->mlx, cntl->scene->canv.width, cntl->scene->canv.height);
-	image->addr =  mlx_get_data_addr(image->img, &image->bits_per_pixel, &image->size_line, &image->endian);
+	image->img = mlx_new_image(cntl->mlx,
+				cntl->scene->canv.width, cntl->scene->canv.height);
+	image->addr = mlx_get_data_addr(image->img, &image->bits_per_pixel,
+					&image->size_line, &image->endian);
 	cntl->img = image;
 	cntl->scene->img = image;
 	cntl->scene->cam_onair = cntl->scene->cam_list->element;

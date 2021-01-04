@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   control_render.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kihoonlee <kihoonlee@student.42.fr>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/03 19:07:28 by kihoonlee         #+#    #+#             */
+/*   Updated: 2021/01/03 19:07:38 by kihoonlee        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "control.h"
 
 void		cntl_render_mode_on(t_cntl *cntl)
@@ -59,7 +71,7 @@ void		cntl_render_path_trace(t_cntl *cntl)
 	cntl->mode = SAVM;
 }
 
-void	cntl_render_filter_change(t_cntl *cntl)
+void		cntl_render_filter_change(t_cntl *cntl)
 {
 	t_filter	*filter;
 

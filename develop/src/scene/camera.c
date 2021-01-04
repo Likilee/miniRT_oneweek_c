@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   camera.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kihoonlee <kihoonlee@student.42.fr>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/04 02:15:54 by kihoonlee         #+#    #+#             */
+/*   Updated: 2021/01/04 16:18:43 by kihoonlee        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "scene.h"
 
 t_camera	*camera_init(t_point3 lookfrom, t_vec3 look_dir, double hfov)
@@ -12,72 +24,28 @@ t_camera	*camera_init(t_point3 lookfrom, t_vec3 look_dir, double hfov)
 	return (cam);
 }
 
-// 요기 포지셔닝 카메라파트 고대로! https://raytracing.github.io/books/RayTracingInOneWeekend.html#positionablecamera
-void	camera_set(t_canvas *canvas, t_camera *cam)
+/*
+** 기준 왼쪽 아래 코너점 좌표, origin - horizontal / 2 - vertical / 2 - vec3(0,0,w)
+** up vector is y aixs unit vector
+*/
+
+void		camera_set(t_canvas *canvas, t_camera *cam)
 {
-	double 		theta;
-	double 		half_width;
-	double 		viewport_height;
-	double 		viewport_width;
-	double		focal_len = 1.0;
-	t_vec3		w;
-	t_vec3		u;
-	t_vec3		v;
-	t_vec3		vup;
-	t_vec3		lookat;
+	t_cam_set	s;
 
 	if (cam->dir.x == 0 && cam->dir.z == 0)
 		cam->dir.z = 0.00001;
-	lookat = vplus(cam->orig, cam->dir);
-	vup = vec3(0,1,0); //up vector is y aixs unit vector
-	theta = deg_to_rad(cam->hfov);
-	half_width = tan(theta / 2);
-	viewport_width = 2.0 * half_width;
-	viewport_height = viewport_width / canvas->aspect_ratio;
-	w = vunit(vmult(cam->dir, -1));
-	u = vunit(vcross(vup, w));
-	v = vcross(w, u);
-	cam->horizontal = vmult(u, viewport_width);
-	cam->vertical = vmult(v, viewport_height);
-	// 왼쪽 아래 코너점 좌표, origin - horizontal / 2 - vertical / 2 - vec3(0,0,focal_length)
-	cam->left_bottom = vminus(vminus(vminus(cam->orig, vdivide(cam->horizontal, 2)),
-								vdivide(cam->vertical, 2)), w);
+	s.lookat = vplus(cam->orig, cam->dir);
+	s.vup = vec3(0.0, 1.0, 0.0);
+	s.theta = deg_to_rad(cam->hfov);
+	s.half_width = tan(s.theta / 2);
+	s.viewport_width = 2.0 * s.half_width;
+	s.viewport_height = s.viewport_width / canvas->aspect_ratio;
+	s.w = vunit(vmult(cam->dir, -1));
+	s.u = vunit(vcross(s.vup, s.w));
+	s.v = vcross(s.w, s.u);
+	cam->horizontal = vmult(s.u, s.viewport_width);
+	cam->vertical = vmult(s.v, s.viewport_height);
+	cam->left_bottom = vminus(vminus(vminus(cam->orig,
+			vdivide(cam->horizontal, 2)), vdivide(cam->vertical, 2)), s.w);
 }
-
-// // 요기 포지셔닝 카메라파트 고대로! https://raytracing.github.io/books/RayTracingInOneWeekend.html#positionablecamera
-// t_camera	camera(t_canvas *canvas, t_point3 lookfrom, t_vec3 dir, double hfov)
-// {
-// 	t_camera	cam;
-// 	double 		theta;
-// 	double 		half_width;
-// 	double 		viewport_height;
-// 	double 		viewport_width;
-// 	double		focal_len = 1.0;
-// 	t_vec3		w;
-// 	t_vec3		u;
-// 	t_vec3		v;
-// 	t_vec3		vup;
-// 	t_vec3		lookat;
-
-// 	lookat = vplus(lookfrom, dir);
-// 	vup = vec3(0,1,0); //up vector is y aixs unit vector
-// 	theta = deg_to_rad(hfov);
-// 	half_width = tan(theta / 2);
-// 	viewport_width = 2.0 * half_width;
-// 	viewport_height = viewport_width / canvas->aspect_ratio;
-// 	w = vunit(vminus(lookfrom, lookat));
-// 	// if (w.x == 0 && w.z == 0)
-// 	// 	w.x = 0.001;
-// 	u = vunit(vcross(vup, w));
-// 	v = vcross(w, u);
-
-// 	cam.orig = lookfrom;
-// 	cam.dir = lookat;
-// 	cam.hfov = hfov;
-// 	cam.horizontal = vmult(u, viewport_width);
-// 	cam.vertical = vmult(v, viewport_height);
-// 	// 왼쪽 아래 코너점 좌표, origin - horizontal / 2 - vertical / 2 - vec3(0,0,focal_length)
-// 	cam.left_bottom = vminus(vminus(vminus(cam.orig, vdivide(cam.horizontal, 2)),
-// 								vdivide(cam.vertical, 2)), vec3(0, 0, focal_len));
-// 	return (cam);
-// }

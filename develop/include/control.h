@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   control.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kihoonlee <kihoonlee@student.42.fr>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/04 16:38:58 by kihoonlee         #+#    #+#             */
+/*   Updated: 2021/01/04 16:39:14 by kihoonlee        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CONTROL_H
 # define CONTROL_H
 
@@ -18,20 +30,30 @@
 # include "parse.h"
 # include "key_macos.h"
 
+/*
+**	src/control/control.c
+*/
 void		my_mlx_control(t_cntl *cntl);
 int			cntl_key_press(int keycode, t_cntl *cntl);
-int			cntl_key_release(int keycode, t_cntl *cntl);
+void		cntl_key_press2(int keycode, t_cntl *cntl);
 int			cntl_mouse_click(int button, int x, int y, t_cntl *cntl);
-int	        cntl_close(t_cntl *cntl);
+int			cntl_close(void);
+
+/*
+**  src/control/control_default.c
+*/
 void		cntl_default_mode_on(t_cntl *cntl);
 
-// init
+/*
+**	src/control/control_init.c
+*/
 void		my_mlx_welcome(t_cntl *cntl);
 void		cntl_init(t_cntl *cntl, char *filepath);
 void		cntl_display_resolution(t_cntl *cntl);
 
-
-// object
+/*
+** src/control/control_object*.c
+*/
 void		cntl_object_mode_on(t_cntl *cntl);
 void		cntl_object(int keycode, t_cntl *cntl);
 void		cntl_rotate_on_and_off(t_cntl *cntl);
@@ -53,14 +75,20 @@ void		cntl_object_translate_tr(t_cntl *cntl, t_vec3 *move);
 void		cntl_object_translate_cb(t_cntl *cntl, t_vec3 *move);
 void		cntl_object_translate_pm(t_cntl *cntl, t_vec3 *move);
 void		cntl_object_rotate(t_cntl *cntl, int keycode);
-// camera
+
+/*
+** src/control/control_camera*.c
+*/
 void		cntl_camera_mode_on(t_cntl *cntl);
 void		cntl_camera_select(t_cntl *cntl);
 void		cntl_cam_rotate(int keycode, t_cntl *cntl);
 void		cntl_camera_translate(int keycode, t_cntl *cntl);
 void		cntl_camera(t_cntl *cntl, int keycode);
 void		cntl_camera_hfov(int keycode, t_cntl *cntl);
-// light
+
+/*
+** src/control/control_light*.c
+*/
 void		cntl_light_deselect(t_cntl *cntl);
 void		cntl_light_translate(t_cntl *cntl, int keycode);
 void		cntl_light_bright_up(t_cntl *cntl);
@@ -70,27 +98,38 @@ void		cntl_light_select(t_cntl *cntl);
 void		cntl_light_mode_on(t_cntl *cntl);
 void		cntl_light_on_and_off(t_cntl *cntl);
 
-// save
+/*
+** src/control/contorl_save*.c
+*/
 void		cntl_save(t_cntl *cntl, int	keycode);
+t_bmph		bmp_get_header(t_scene *scene);
+void		write_bmp(t_data *image, t_scene *scene, int fd);
 void		bmp_save(t_scene *scene);
 void		bmp_save_direct(t_cntl *cntl);
 void		cntl_save_phong(t_cntl *cntl);
 void		cntl_save_path_trace(t_cntl *cntl);
 
-// render
+/*
+** src/control/control_object*.c
+*/
 void		cntl_render_mode_on(t_cntl *cntl);
-void		cntl_render_start(t_cntl *cntl);
 void		cntl_render(t_cntl *cntl, int keycode);
 void		cntl_render_phong(t_cntl *cntl);
 void		cntl_render_path_trace(t_cntl *cntl);
 void		cntl_render_filter_change(t_cntl *cntl);
 
-// console message
+/*
+** src/control/control_object*.c
+*/
 void		console_msg_welcome(void);
 void		console_msg_welcome_save(void);
 void		console_msg_camera_mode(void);
+void		console_msg_camera_mode2(void);
 void		console_msg_light_mode(void);
+void		console_msg_light_mode2(void);
 void		console_msg_object_mode(void);
+void		console_msg_object_mode2(void);
 void		console_msg_render_mode(void);
+void		console_msg_render_mode2(void);
 
 #endif

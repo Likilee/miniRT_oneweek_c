@@ -1,26 +1,38 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   control_light.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kihoonlee <kihoonlee@student.42.fr>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/03 19:20:58 by kihoonlee         #+#    #+#             */
+/*   Updated: 2021/01/03 19:22:55 by kihoonlee        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "control.h"
 
-void	cntl_light(t_cntl *cntl, int keycode)
+void		cntl_light(t_cntl *cntl, int keycode)
 {
-	if (keycode == KEY_TAB) // 광원 바꾸기. 오른쪽 방향키
+	if (keycode == KEY_TAB)
 		cntl_light_select(cntl);
 	else if (keycode == KEY_Q || keycode == KEY_A || keycode == KEY_E
 			|| keycode == KEY_W || keycode == KEY_S || keycode == KEY_D)
 		cntl_light_translate(cntl, keycode);
-	else if (keycode == KEY_ESC) // 선택 종료 esc
+	else if (keycode == KEY_ESC)
 	{
 		cntl->selected = NULL;
 		cntl_default_mode_on(cntl);
 	}
-	else if (keycode == KEY_AR_U) // 밝기 밝게 =
+	else if (keycode == KEY_AR_U)
 		cntl_light_bright_up(cntl);
-	else if (keycode == KEY_AR_D) // 밝기 어둡게 -
+	else if (keycode == KEY_AR_D)
 		cntl_light_bright_down(cntl);
 	render_preview(cntl);
 	mlx_put_image_to_window(cntl->mlx, cntl->win, cntl->img->img, 0, 0);
 }
 
-void	cntl_light_mode_on(t_cntl *cntl)
+void		cntl_light_mode_on(t_cntl *cntl)
 {
 	t_objects	*temp;
 
@@ -35,7 +47,7 @@ void	cntl_light_mode_on(t_cntl *cntl)
 	console_msg_light_mode();
 }
 
-void	cntl_light_on_and_off(t_cntl *cntl)
+void		cntl_light_on_and_off(t_cntl *cntl)
 {
 	if (cntl->light_on == LIGHT_OFF)
 	{
@@ -51,11 +63,11 @@ void	cntl_light_on_and_off(t_cntl *cntl)
 	mlx_put_image_to_window(cntl->mlx, cntl->win, cntl->img->img, 0, 0);
 }
 
-void	cntl_light_select(t_cntl *cntl)
+void		cntl_light_select(t_cntl *cntl)
 {
 	t_objects	*temp;
 
-	if (cntl->selected == NULL  || cntl->selected->next == NULL)
+	if (cntl->selected == NULL || cntl->selected->next == NULL)
 		temp = (t_objects *)cntl->scene->world;
 	else
 		temp = (t_objects *)cntl->selected->next;
@@ -74,66 +86,4 @@ void	cntl_light_select(t_cntl *cntl)
 		cntl->selected = temp;
 		ft_printf(">> Next light\n");
 	}
-}
-
-void	cntl_light_bright_up(t_cntl *cntl)
-{
-	double		brightness;
-	t_color3	*light_color;
-	t_light		*light;
-
-	light = ((t_light *)(cntl->selected->element));
-
-	brightness = light->brightness;
-	light_color = &light->light_color;
-	if (cntl->selected->type == LIGHT)
-	{
-		light->brightness += 0.1;
-		if (light->brightness > 1)
-			light->brightness = 1;
-		*light_color = vdivide(*light_color, brightness);
-		brightness = light->brightness;
-		*light_color = vmult(*light_color, brightness);
-	}
-	ft_printf(">> Increased brightness : (%f,%f,%f)\n", light_color->x, light_color->y, light_color->z);
-}
-
-void	cntl_light_bright_down(t_cntl *cntl)
-{
-	double		brightness;
-	t_color3	*light_color;
-
-	brightness = ((t_light *)(cntl->selected->element))->brightness;
-	light_color = &((t_light *)(cntl->selected->element))->light_color;
-	if (cntl->selected->type == LIGHT)
-	{
-		((t_light *)(cntl->selected->element))->brightness -= 0.1;
-		if (((t_light *)(cntl->selected->element))->brightness <= 0)
-			((t_light *)(cntl->selected->element))->brightness = 0.000001;
-		*light_color = vdivide(*light_color, brightness);
-		brightness = ((t_light *)(cntl->selected->element))->brightness;
-		*light_color = vmult(*light_color, brightness);
-	}
-	ft_printf(">> Decreased brightness : (%f,%f,%f)\n", light_color->x, light_color->y, light_color->z);
-}
-
-void		cntl_light_translate(t_cntl *cntl, int keycode)
-{
-	t_vec3	move;
-	t_light *l;
-
-	l = cntl->selected->element;
-	if (keycode == KEY_Q)
-		move = vec3(1, 0, 0);
-	else if (keycode == KEY_A)
-		move = vec3(-1, 0, 0);
-	else if (keycode == KEY_W)
-		move = vec3(0, 1, 0);
-	else if (keycode == KEY_S)
-		move = vec3(0, -1, 0);
-	else if (keycode == KEY_E)
-		move = vec3(0, 0, 1);
-	else
-		move = vec3(0, 0, -1);
-	l->p = vplus(l->p, move);
 }

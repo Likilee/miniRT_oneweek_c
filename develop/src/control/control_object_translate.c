@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   control_object_translate.c                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kihoonlee <kihoonlee@student.42.fr>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/03 19:19:28 by kihoonlee         #+#    #+#             */
+/*   Updated: 2021/01/03 19:19:29 by kihoonlee        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "control.h"
 
 void		cntl_object_translate_sp(t_cntl *cntl, t_vec3 *move)
 {
-	t_sphere *sp;
+	t_sphere	*sp;
 
 	sp = cntl->selected->element;
 	sp->center = vplus(sp->center, *move);
@@ -10,7 +22,7 @@ void		cntl_object_translate_sp(t_cntl *cntl, t_vec3 *move)
 
 void		cntl_object_translate_pl(t_cntl *cntl, t_vec3 *move)
 {
-	t_plane *pl;
+	t_plane	*pl;
 
 	pl = cntl->selected->element;
 	pl->p = vplus(pl->p, *move);
@@ -18,17 +30,17 @@ void		cntl_object_translate_pl(t_cntl *cntl, t_vec3 *move)
 
 void		cntl_object_translate_sq(t_cntl *cntl, t_vec3 *move)
 {
-	t_square *sq;
+	t_square	*sq;
 
 	sq = cntl->selected->element;
-	sq->center =  vplus(sq->center, *move);
-	sq->min =  vplus(sq->min, *move);
-	sq->max =  vplus(sq->max, *move);
+	sq->center = vplus(sq->center, *move);
+	sq->min = vplus(sq->min, *move);
+	sq->max = vplus(sq->max, *move);
 }
 
 void		cntl_object_translate_cy(t_cntl *cntl, t_vec3 *move)
 {
-	t_cylinder *cy;
+	t_cylinder	*cy;
 
 	cy = cntl->selected->element;
 	cy->center_bottom = vplus(cy->center_bottom, *move);
