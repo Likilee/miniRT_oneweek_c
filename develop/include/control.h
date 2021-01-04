@@ -6,7 +6,7 @@
 /*   By: kihoonlee <kihoonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 16:38:58 by kihoonlee         #+#    #+#             */
-/*   Updated: 2021/01/04 16:39:14 by kihoonlee        ###   ########.fr       */
+/*   Updated: 2021/01/04 21:51:56 by kihoonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void		cntl_default_mode_on(t_cntl *cntl);
 */
 void		my_mlx_welcome(t_cntl *cntl);
 void		cntl_init(t_cntl *cntl, char *filepath);
+void		cntl_init_except_resolution(t_cntl *cntl, char *filepath);
 void		cntl_display_resolution(t_cntl *cntl);
 
 /*

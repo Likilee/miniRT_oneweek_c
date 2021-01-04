@@ -6,7 +6,7 @@
 /*   By: kihoonlee <kihoonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/03 18:50:55 by kihoonlee         #+#    #+#             */
-/*   Updated: 2021/01/04 21:38:03 by kihoonlee        ###   ########.fr       */
+/*   Updated: 2021/01/04 21:51:00 by kihoonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int		main(int argc, char **argv)
 			ft_printf("Error\n: Second arg must be \"--save\"");
 			exit(0);
 		}
-		cntl_init(&cntl, argv[1]);
+		cntl_init_except_resolution(&cntl, argv[1]);
 		console_msg_welcome_save();
 		bmp_save_direct(&cntl);
 		ft_printf(">> Close Ray TRACER, Bye Bye~~\n\n");
