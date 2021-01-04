@@ -3,3 +3,4 @@
 *.ppm
 minirt
 minirt.dSYM
+*.o
