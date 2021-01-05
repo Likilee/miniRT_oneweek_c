@@ -224,3 +224,10 @@ the second method is to take into account multiple rays for each pixel and then 
 [바람직한 멀티스레딩 구조](https://www.youtube.com/watch?v=M1e9nmmD3II)
 
 [멀티쓰레드 예제](https://doorbw.tistory.com/27%E3%85%81)
+
+
+## 비트맵 구조체 만들기
+
+[비트맵 파일 구조](https://dojang.io/mod/page/view.php?id=702)
+
+[구조체 만들기](https://dojang.io/mod/page/view.php?id=703)
