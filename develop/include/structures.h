@@ -6,7 +6,7 @@
 /*   By: kihoonlee <kihoonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 16:46:59 by kihoonlee         #+#    #+#             */
-/*   Updated: 2021/01/04 23:05:45 by kihoonlee        ###   ########.fr       */
+/*   Updated: 2021/01/05 11:41:13 by kihoonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ typedef int					t_filter;
 ** Global macro
 */
 # define COUNT 20
-# define KSN 128
+# define KSN 256
 
 /*
 ** 1. Common  structures
