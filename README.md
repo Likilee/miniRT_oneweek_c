@@ -7,8 +7,4 @@
 - 실습 교재 [`/book`](./book) (제작 중.. develop branch)
 
 ## Examples
-![예시1](./miniRT/bmp/spheres.bmp)
 
-
-
-![예시2](./miniRT/bmp/scene2.bmp)
