@@ -6,7 +6,7 @@
 /*   By: kihoonlee <kihoonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 15:25:25 by kihoonlee         #+#    #+#             */
-/*   Updated: 2021/01/04 15:25:32 by kihoonlee        ###   ########.fr       */
+/*   Updated: 2021/01/05 00:00:00 by kihoonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void		get_cylinder_uv(t_hit_rec *rec, t_cylinder *cy)
 
 	phi = atan2(-(rec->normal.z), rec->normal.x) + M_PI;
 	rec->u = phi / (2 * M_PI);
-	rec->v = cy->height / (rec->p.y - cy->center_bottom.y) / M_PI;
+	rec->v = (rec->p.y - cy->center_bottom.y) / cy->height;
 }
 
 void		get_square_uv(t_hit_rec *rec, t_square *sq)

@@ -6,7 +6,7 @@
 /*   By: kihoonlee <kihoonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/03 19:46:33 by kihoonlee         #+#    #+#             */
-/*   Updated: 2021/01/04 02:08:58 by kihoonlee        ###   ########.fr       */
+/*   Updated: 2021/01/04 23:08:27 by kihoonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void		get_triangle(t_scene *scene, char *line)
 	while (++i < 3)
 		pp[i] = to_vec3(data[i + 1]);
 	solid = texture(SOLID, vdivide(to_vec3(data[4]), 255), color3(0, 0, 0), 0);
-	diffuse = material(DIFFUSE, 32);
+	diffuse = material(DIFFUSE, KSN);
 	oadd(&scene->world, object(TR,
 	triangle(pp[0], pp[1], pp[2]), diffuse, solid));
 	parse_free4(data[0], data[1], data[2], data[3]);
@@ -57,7 +57,7 @@ void		get_cube(t_scene *scene, char *line)
 	albedo = ft_split(data[2], ',');
 	parse_data_set_rgb(albedo, 3, line);
 	solid = texture(SOLID, vdivide(to_vec3(albedo), 255), color3(0, 0, 0), 0);
-	diffuse = material(DIFFUSE, 32);
+	diffuse = material(DIFFUSE, KSN);
 	oadd(&scene->world, object(CB,
 		cube(to_vec3(center), atod(data[1])), diffuse, solid));
 	parse_free4(data, center, albedo, NULL);
@@ -87,7 +87,7 @@ void		get_pyramid(t_scene *scene, char *line)
 	data[3] = ft_split(data[0][3], ',');
 	parse_data_set_rgb(data[3], 3, line);
 	solid = texture(SOLID, vdivide(to_vec3(data[3]), 255), color3(0, 0, 0), 0);
-	diffuse = material(DIFFUSE, 32);
+	diffuse = material(DIFFUSE, KSN);
 	oadd(&scene->world, object(PM, pyramid(to_vec3(data[1]), to_vec3(data[2]),
 											atod(data[0][2])), diffuse, solid));
 	parse_free4(data[0], data[1], data[2], data[3]);

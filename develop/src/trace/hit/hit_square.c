@@ -6,7 +6,7 @@
 /*   By: kihoonlee <kihoonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 03:26:16 by kihoonlee         #+#    #+#             */
-/*   Updated: 2021/01/04 03:27:19 by kihoonlee        ###   ########.fr       */
+/*   Updated: 2021/01/04 22:50:18 by kihoonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ t_bool			hit_square(t_objects *obj, t_ray *ray, t_hit_rec *rec)
 
 	sq = obj->element;
 	denominator = vdot(sq->normal, ray->dir);
-	if (fabs(denominator) < 0.0001)
+	if (fabs(denominator) < 0.000001)
 		return (FALSE);
 	r0_p0 = vminus(sq->center, ray->orig);
 	root = vdot(r0_p0, sq->normal) / denominator;

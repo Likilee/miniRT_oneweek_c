@@ -33,8 +33,8 @@
 #	+lambertian	: m	3  	0
 
 ### TEXTURE
-#	+checker_normal	: t		1			rgb	rgb	Checker_interval(int)
-#	+checker_uv		: t		2			rgb	rgb	Checker_interval(int)
+#	+checker_normal	: t		1			rgb	rgb	Checker_interval(double)
+#	+checker_uv		: t		2			rgb	rgb	Checker_interval(double)
 #	+rainbow		: t		3			rgb	rgb	0
 #	+image			: img	filepath
-#	+wave_uv		: t		5			rgb	rgb	0
+#	+wave_uv		: t		5			rgb	rgb	interval

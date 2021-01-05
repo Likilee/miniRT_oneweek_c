@@ -6,7 +6,7 @@
 /*   By: kihoonlee <kihoonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 15:40:00 by kihoonlee         #+#    #+#             */
-/*   Updated: 2021/01/04 15:41:13 by kihoonlee        ###   ########.fr       */
+/*   Updated: 2021/01/04 23:31:11 by kihoonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,5 +84,5 @@ t_color3		color_background(t_ray *r, t_scene *s, t_hit_rec *rec)
 	else if (hit_cube(s->background, r, rec))
 		return (albedo_skybox(rec));
 	else
-		return (color3(0.2, 0.3, 0.4));
+		return (color3(0, 0, 0));
 }

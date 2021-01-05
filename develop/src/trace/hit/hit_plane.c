@@ -6,7 +6,7 @@
 /*   By: kihoonlee <kihoonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/04 03:03:52 by kihoonlee         #+#    #+#             */
-/*   Updated: 2021/01/04 03:06:07 by kihoonlee        ###   ########.fr       */
+/*   Updated: 2021/01/05 00:54:09 by kihoonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ t_bool			hit_plane(t_objects *obj, t_ray *ray, t_hit_rec *rec)
 
 	pl = obj->element;
 	denominator = vdot(pl->normal, ray->dir);
-	if (fabs(denominator) < 0.00001)
+	if (fabs(denominator) < 0.0000001)
 		return (FALSE);
 	r0_p0 = vminus(pl->p, ray->orig);
 	root = vdot(r0_p0, pl->normal) / denominator;
