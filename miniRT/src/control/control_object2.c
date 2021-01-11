@@ -6,7 +6,7 @@
 /*   By: kihoonlee <kihoonlee@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/03 19:08:00 by kihoonlee         #+#    #+#             */
-/*   Updated: 2021/01/03 22:20:51 by kihoonlee        ###   ########.fr       */
+/*   Updated: 2021/01/11 16:07:15 by kihoonlee        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void		cntl_object_rotate(t_cntl *cntl, int keycode)
 	else if (keycode == KEY_E)
 		r_deg = vplus(r_deg, vec3(0, 0, 15));
 	else
-		r_deg = vec3(0, 0, -15);
+		r_deg = vplus(r_deg, vec3(0, 0, -15));
 	if (cntl->selected->rotate != NULL)
 	{
 		free(cntl->selected->rotate);
